@@ -20,6 +20,8 @@ namespace eleven.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        //public DbSet<Project> Courses 
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
