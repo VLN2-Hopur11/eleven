@@ -1,5 +1,8 @@
-﻿using eleven.Models;
+﻿using eleven.DAL;
+using eleven.Models;
 using eleven.Models.Entities;
+using eleven.Models.ViewModels;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +13,25 @@ namespace eleven.Controllers
 {
     public class ProjectController : Controller
     {
+        private ProjectContext db = new ProjectContext();
+
         // GET: Project
-        public ActionResult Index(Project model)
+        public ActionResult Index()
         {
-            return View(model);
+            var userId = User.Identity.GetUserId();
+
+            ProjectViewModel viewModel = new ProjectViewModel();
+
+            if (userId == null)
+            {
+                return RedirectToAction("Error");
+            }
+            else
+            {
+
+            }
+
+            return View(viewModel);
         }
         public ActionResult MyProjects(IndexViewModel model)
         {
