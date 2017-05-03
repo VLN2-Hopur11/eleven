@@ -13,6 +13,8 @@ namespace eleven.Controllers
             return View();
         }
 
+        //Virkar þetta kv. Godi
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
