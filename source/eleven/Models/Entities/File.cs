@@ -7,9 +7,10 @@ namespace eleven.Models.Entities
 {
     public class File
     {
-        private string name { get; set; }
-        private string type { get; set; }
-        private string content { get; set; }
-        private int fileId { get; set; }
+        public string name { get; set; }
+        public string type { get; set; }
+        public string content { get; set; }
+        public int Id { get; set; }
+        public virtual Project project { get; set; }
     }
 }

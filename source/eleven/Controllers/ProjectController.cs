@@ -18,18 +18,17 @@ namespace eleven.Controllers
         // GET: Project
         public ActionResult Index()
         {
+            // Get ID of logged in user
             var userId = User.Identity.GetUserId();
 
             ProjectViewModel viewModel = new ProjectViewModel();
 
+            /*
             if (userId == null)
             {
                 return RedirectToAction("Error");
             }
-            else
-            {
-
-            }
+            */
 
             return View(viewModel);
         }

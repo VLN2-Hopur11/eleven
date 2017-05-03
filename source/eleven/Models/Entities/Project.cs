@@ -7,8 +7,9 @@ namespace eleven.Models.Entities
 {
     public class Project
     {
-        private string name { get; set; }
-        private int projectId { get; set; }
-
+        public string name { get; set; }
+        public int Id { get; set; }
+        public virtual ICollection<File> files { get; set; }
+        public virtual ICollection<ApplicationUser> users { get; set; }
     }
 }
