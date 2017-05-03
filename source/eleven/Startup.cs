@@ -52,7 +52,7 @@ namespace eleven
             if (!roleManager.RoleExists("Teacher"))
             {
                 var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-                role.Name = "Manager";
+                role.Name = "Teacher";
                 roleManager.Create(role);
             }
 
@@ -60,7 +60,7 @@ namespace eleven
             if (!roleManager.RoleExists("Student"))
             {
                 var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-                role.Name = "Manager";
+                role.Name = "Student";
                 roleManager.Create(role);
             }
 
@@ -69,6 +69,14 @@ namespace eleven
             {
                 var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
                 role.Name = "Specialist";
+                roleManager.Create(role);
+            }
+
+            // Create Teacher role    
+            if (!roleManager.RoleExists("Other"))
+            {
+                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                role.Name = "Other";
                 roleManager.Create(role);
             }
 
