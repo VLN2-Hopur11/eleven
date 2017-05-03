@@ -14,6 +14,7 @@ namespace eleven.Controllers
         }
 
         //Virkar þetta kv. Godi
+        //yass biaatchhhh 
 
         public ActionResult About()
         {
