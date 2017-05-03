@@ -14,6 +14,7 @@ namespace eleven.Controllers
         }
 
         //Virkar þetta kv. Godi
+        //NEI kv. Tommi
 
         public ActionResult About()
         {
