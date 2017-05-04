@@ -12,7 +12,7 @@ namespace eleven.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Project
-        public ActionResult Index()
+        public ActionResult Index(Project project)
         {
             // Get ID of logged in user
             var userId = User.Identity.GetUserId();
@@ -30,9 +30,14 @@ namespace eleven.Controllers
 
             return View(viewModel);
         }
-        public ActionResult MyProjects(IndexViewModel model)
+        public ActionResult MyProjects()
         {
-            return View(model);
+            // Get ID of logged in user
+            var userId = User.Identity.GetUserId();
+            ProjectViewModel viewModel = new ProjectViewModel();
+            viewModel.projects = db.projects.Where(x => x.users.Any(y => y.Id == userId)).ToList();
+
+            return View(viewModel);
         }
         [HttpGet]
         public ActionResult NewFile()

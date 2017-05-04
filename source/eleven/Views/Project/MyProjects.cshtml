@@ -1,0 +1,17 @@
+﻿@model eleven.Models.ViewModels.ProjectViewModel
+
+@{
+    ViewBag.Title = "MyProjects";
+}
+
+<h2>MyProjects</h2>
+
+<section class="row">
+    @foreach (var itemj in Model.projects)
+    {
+        <section class="col-sm-4">
+            <section class="well">
+                <h3>@Html.DisplayFor(modelItem => itemj.name)</h3>
+            </section>
+        </section>
+    }
