@@ -10,7 +10,7 @@ namespace eleven.Controllers
     {
         public ActionResult Index()
         {
-            // breyting
+            // BREYTING
             return View(); 
         }
 
