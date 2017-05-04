@@ -1,19 +1,31 @@
 ﻿using eleven.Models;
 using eleven.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using eleven.Models.ViewModels;
+using Microsoft.AspNet.Identity;
 using System.Web.Mvc;
 
 namespace eleven.Controllers
 {
     public class ProjectController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
         // GET: Project
-        public ActionResult Index(Project model)
+        public ActionResult Index()
         {
-            return View(model);
+            // Get ID of logged in user
+            var userId = User.Identity.GetUserId();
+
+            ProjectViewModel viewModel = new ProjectViewModel();
+
+            /*
+            if (userId == null)
+            {
+                return RedirectToAction("Error");
+            }
+            */
+
+            return View(viewModel);
         }
         public ActionResult MyProjects(IndexViewModel model)
         {
