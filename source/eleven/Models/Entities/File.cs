@@ -5,6 +5,10 @@ using System.Web;
 
 namespace eleven.Models.Entities
 {
+    /// <summary>
+    /// many files can me created in 
+    /// one project. 
+    /// </summary>
     public class File
     {
         public string name { get; set; }
