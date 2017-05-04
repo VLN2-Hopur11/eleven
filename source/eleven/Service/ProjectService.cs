@@ -64,10 +64,9 @@ namespace eleven.Service
             return false; 
         }
 
-        public bool addProjects(ProjectContext project)
+        public bool addProject(Project project)
         {
             return false; 
         }
-            
     }
 }

@@ -3,7 +3,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using eleven.DAL;
 using System.Collections.Generic;
 using eleven.Models.Entities;
 
@@ -30,6 +29,9 @@ namespace eleven.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+
+        public DbSet<Project> projects { get; set; }
+        public DbSet<File> files { get; set; }
 
         public static ApplicationDbContext Create()
         {

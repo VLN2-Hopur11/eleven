@@ -1,4 +1,4 @@
-namespace eleven.Migrations.ApplicationDbContext
+namespace eleven.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
