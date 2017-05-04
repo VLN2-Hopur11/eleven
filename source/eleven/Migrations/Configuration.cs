@@ -9,7 +9,7 @@ namespace eleven.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             ContextKey = "eleven.Models.ApplicationDbContext";
         }
 
