@@ -27,5 +27,11 @@ namespace eleven.Controllers
 
             return View();
         }
+
+        public ActionResult Highlights()
+        {
+
+            return View();
+        }
     }
 }
