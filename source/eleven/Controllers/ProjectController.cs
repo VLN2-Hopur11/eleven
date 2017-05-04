@@ -30,7 +30,7 @@ namespace eleven.Controllers
 
             return View(viewModel);
         }
-        public ActionResult MyProjects(IndexViewModel model)
+        public ActionResult MyProjects()
         {
             // Get ID of logged in user
             var userId = User.Identity.GetUserId();
