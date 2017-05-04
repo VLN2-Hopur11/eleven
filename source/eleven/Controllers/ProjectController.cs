@@ -1,19 +1,14 @@
-﻿using eleven.DAL;
-using eleven.Models;
+﻿using eleven.Models;
 using eleven.Models.Entities;
 using eleven.Models.ViewModels;
 using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace eleven.Controllers
 {
     public class ProjectController : Controller
     {
-        private ProjectContext db = new ProjectContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Project
         public ActionResult Index()

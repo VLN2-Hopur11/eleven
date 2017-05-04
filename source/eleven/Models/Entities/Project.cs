@@ -11,5 +11,6 @@ namespace eleven.Models.Entities
         public int Id { get; set; }
         public virtual ICollection<File> files { get; set; }
         public virtual ICollection<ApplicationUser> users { get; set; }
+        public virtual ApplicationUser owner { get; set; }
     }
 }
