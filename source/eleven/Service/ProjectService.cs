@@ -1,4 +1,5 @@
 ﻿using eleven.DAL;
+using eleven.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,21 +9,34 @@ namespace eleven.Service
 {
     public class ProjectService
     {
-        private ProjectContext db; 
+        private ProjectContext db;
+        private ApplicationDbContext dbMain;
 
         public ProjectService()
         {
             db = new ProjectContext();
+            dbMain = new ApplicationDbContext();
+
         }
 
         public bool changeProjectName(int projectID, string newName)
         {
-            return false; 
+            var projectName = db.projects.SingleOrDefault(x => x.name == newName);
+            if (projectName == null)
+            {
+                return false; 
+            }
+            return true; 
         }
 
         public bool changeFileName( int field, string newName)
         {
-            return false; 
+            var fileName = db.files.SingleOrDefault(x => x.name == newName);
+            if(fileName == null)
+            {
+                return false;
+            }
+            return true; 
         }
 
         public void addFile()
@@ -37,7 +51,12 @@ namespace eleven.Service
 
         public bool userExists(string email)
         {
-            return false; 
+            var beThereEmail = dbMain.Users.Where(x => x.Email == email);
+            if(beThereEmail == null)
+            {
+                return false;
+            }
+            return true; 
         }
 
         public bool removePojectId(int id)
