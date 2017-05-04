@@ -2,6 +2,7 @@
 using eleven.Models.Entities;
 using eleven.Models.ViewModels;
 using Microsoft.AspNet.Identity;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace eleven.Controllers
@@ -24,6 +25,8 @@ namespace eleven.Controllers
                 return RedirectToAction("Error");
             }
             */
+
+            viewModel.projects = db.projects.Where(x => x.users.Any(y => y.Id == userId)).ToList();
 
             return View(viewModel);
         }
