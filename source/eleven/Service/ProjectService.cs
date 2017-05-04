@@ -1,5 +1,4 @@
-﻿using eleven.DAL;
-using eleven.Models;
+﻿using eleven.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +8,11 @@ namespace eleven.Service
 {
     public class ProjectService
     {
-        private ProjectContext db;
-        private ApplicationDbContext dbMain;
+        private ApplicationDbContext db;
 
         public ProjectService()
         {
-            db = new ProjectContext();
-            dbMain = new ApplicationDbContext();
-
+            db = new ApplicationDbContext();
         }
 
         public bool changeProjectName(int projectID, string newName)
@@ -51,7 +47,7 @@ namespace eleven.Service
 
         public bool userExists(string email)
         {
-            var beThereEmail = dbMain.Users.Where(x => x.Email == email);
+            var beThereEmail = db.Users.Where(x => x.Email == email);
             if(beThereEmail == null)
             {
                 return false;
@@ -64,7 +60,7 @@ namespace eleven.Service
             return false; 
         }
 
-        public bool addProject(Project project)
+        public bool addProject(string project)
         {
             return false; 
         }
