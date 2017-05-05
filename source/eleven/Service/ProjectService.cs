@@ -15,7 +15,7 @@ namespace eleven.Service
         {
             db = new ApplicationDbContext();
         }
-
+        //changes project name if requested
         public bool changeProjectName(int projectID, string newName)
         {
             Project id = db.projects.SingleOrDefault(x => x.Id == projectID);
@@ -26,47 +26,11 @@ namespace eleven.Service
             }
             return false;  
         }
-
-        public bool changeFileName( int field, string newName)
-        {
-            File fileId = db.files.SingleOrDefault(x => x.Id == field);
-            if(fileId == null)
-            {
-                fileId.name = newName;
-                return true;
-            }
-            return false; 
-        }
-
-        public void addFile()
-        {
-        
-        }
-
-        public bool inviteUser(string email)
-        {
-            return false;
-        }
-
-        public bool userExists(string email)
-        {
-            var beThereEmail = db.Users.Where(x => x.Email == email);
-            if(beThereEmail == null)
-            {
-                return false;
-            }
-            else return true; 
-        }
-
-        public bool removePojectId(int id)
-        {
-            return false; 
-        }
-
+        // adds a new project if there dosent exist project with the same id
         public bool addProject(Project project)
         {
             Project id = db.projects.SingleOrDefault(x => x.Id == project.Id);
-            if (id != null)
+            if (id == null)
             {
                 Project newProject = new Project();
                 newProject.Id = project.Id;
@@ -77,10 +41,62 @@ namespace eleven.Service
 
                 db.projects.Add(newProject);
                 db.SaveChanges();
-    
+
+                return true;
+            }
+            return false;
+        }
+        //remove project by removing id
+        public bool removePojectId(int id)
+        {
+            return false;
+        }
+        // changes file name if requiested by user
+        public bool changeFileName( int field, string newName)
+        {
+            File fileId = db.files.SingleOrDefault(x => x.Id == field);
+            if(fileId == null)
+            {
+                fileId.name = newName;
                 return true;
             }
             return false; 
         }
+        // adds a new file to existing project, file cannot have the same name as
+        // another file 
+        public bool addFile(File file)
+        {
+            File name  = db.files.SingleOrDefault(x => x.name == file.name);
+            if (name == null)
+            {
+                File newFile = new File();
+                newFile.Id = file.Id;
+                newFile.name = file.name;
+                newFile.project = file.project;
+                newFile.type = file.type;
+                newFile.content = file.content;
+
+                db.files.Add(newFile);
+                db.SaveChanges();
+
+                return true;
+            }
+            return false;
+        }
+        //only owner can invite a user to the project 
+        public bool inviteUser(string email)
+        {
+            return false;
+        }
+        //checks if a user exists 
+        public bool userExists(string email)
+        {
+            var beThereEmail = db.Users.Where(x => x.Email == email);
+            if(beThereEmail == null)
+            {
+                return false;
+            }
+            else return true; 
+        }   
     }
 }
