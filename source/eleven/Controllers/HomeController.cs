@@ -1,4 +1,7 @@
-﻿using System;
+﻿using eleven.Models;
+using eleven.Models.Entities;
+using eleven.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +11,8 @@ namespace eleven.Controllers
 {
     public class HomeController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
         public ActionResult Index()
         {
             // BREYTING
@@ -16,7 +21,10 @@ namespace eleven.Controllers
 
         public ActionResult Highlights()
         {
-            return View();
+            MainPage highlightview = new MainPage();
+            highlightview.highlights = db.highlights.ToList();
+
+            return View(highlightview);
         }
     }
 }
