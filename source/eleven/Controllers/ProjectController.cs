@@ -5,7 +5,6 @@ using eleven.Service;
 using Microsoft.AspNet.Identity;
 using System.Linq;
 using System.Web.Mvc;
-using eleven.Service;
 
 namespace eleven.Controllers
 {
@@ -13,24 +12,6 @@ namespace eleven.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private ProjectService service = new ProjectService();
-
-        // GET: Project
-        /*
-        public ActionResult Index()
-        {
-            // Get ID of logged in user
-            var userId = User.Identity.GetUserId();
-            
-            ProjectViewModel viewModel = new ProjectViewModel();
-       
-            if (userId == null)
-            {
-                return RedirectToAction("Error");
-            }
-
-            return View(viewModel);
-        }
-        */
 
         public ActionResult Index(int id)
         {
@@ -43,15 +24,20 @@ namespace eleven.Controllers
 
             model.project = db.projects.Where(x => x.Id == id).SingleOrDefault();
 
+            if (model.project == null)
+            {
+                return View("Error");
+            }
+
             return View(model); 
         }
         public ActionResult MyProjects()
         {
-            // Get ID of logged in user
-            var userId = User.Identity.GetUserId();
+            // Get currently logged in user
+            ApplicationUser currentUser = db.Users.Where(x => x.Id == User.Identity.GetUserId()).FirstOrDefault();
 
-            ProjectViewModel viewModel = new ProjectViewModel();
-            //viewModel.projects = db.projects.Where(x => x.users.Any(y => y.Id == userId)).ToList();
+            MyProjectViewModel viewModel = new MyProjectViewModel();
+            viewModel.projects = db.projects.Where(x => x.users.Contains(currentUser)).ToList();
 
             return View(viewModel);
         }
