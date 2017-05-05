@@ -282,6 +282,7 @@
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Project\MyProjects.cshtml" />
     <Content Include="Views\Project\NewProject.cshtml" />
+    <Content Include="Views\Home\Highlights.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
