@@ -61,7 +61,7 @@ namespace eleven.Controllers
         {
             db.projects.Add(project);
 
-            return View(project);
+            return Redirect("");
         }
     }
 }
