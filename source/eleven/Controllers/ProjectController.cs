@@ -19,14 +19,12 @@ namespace eleven.Controllers
             var userId = User.Identity.GetUserId();
             
             ProjectViewModel viewModel = new ProjectViewModel();
-
-            
+       
             if (userId == null)
             {
                 return RedirectToAction("Error");
             }
             
-
             viewModel.projects = db.projects.Where(x => x.users.Any(y => y.Id == userId)).ToList();
 
             return View(viewModel);
