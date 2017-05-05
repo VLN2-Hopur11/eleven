@@ -27,18 +27,22 @@ namespace eleven.Controllers
             {
                 return RedirectToAction("Error");
             }
-<<<<<<< HEAD
-=======
-            
-            viewModel.projects = db.projects.Where(x => x.users.Any(y => y.Id == userId)).ToList();
->>>>>>> 51dfe5a1731b9bb8eec07782998d13d884db8b67
 
             return View(viewModel);
         }
         */
 
-        public ActionResult Index(ProjectViewModel model)
+        public ActionResult Index(int id)
         {
+            if (id == 0)
+            {
+                return View("Error");
+            }
+
+            ProjectViewModel model = new ProjectViewModel();
+
+            model.project = db.projects.Where(x => x.Id == id).SingleOrDefault();
+
             return View(model); 
         }
         public ActionResult MyProjects()
@@ -74,13 +78,14 @@ namespace eleven.Controllers
         {
             var userId = User.Identity.GetUserId();
 
+            if (userId == null)
+            {
+                return View("Error");
+            }
+
             int projectId = service.addProject(project, userId);
 
-            ProjectViewModel model = new ProjectViewModel();
-
-            model.project = db.projects.Where(x => x.Id == projectId).SingleOrDefault();
-
-            return RedirectToAction("Index", new { viewModel = model });
+            return RedirectToAction("Index", new { id = projectId });
         }
     }
 }
