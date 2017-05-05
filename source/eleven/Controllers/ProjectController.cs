@@ -12,23 +12,28 @@ namespace eleven.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Project
-        public ActionResult Index(Project project)
+        public ActionResult Index()
         {
             // Get ID of logged in user
             var userId = User.Identity.GetUserId();
-
+            
             ProjectViewModel viewModel = new ProjectViewModel();
 
-            /*
+            
             if (userId == null)
             {
                 return RedirectToAction("Error");
             }
-            */
+            
 
             viewModel.projects = db.projects.Where(x => x.users.Any(y => y.Id == userId)).ToList();
 
             return View(viewModel);
+        }
+
+        public ActionResult Index(Project project)
+        {
+            return View(); 
         }
         public ActionResult MyProjects()
         {
@@ -61,7 +66,7 @@ namespace eleven.Controllers
         {
             db.projects.Add(project);
 
-            return Redirect("");
+            return RedirectToAction("Index", new { projectModel = project });
         }
     }
 }
