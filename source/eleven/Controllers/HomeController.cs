@@ -26,5 +26,11 @@ namespace eleven.Controllers
 
             return View(highlightview);
         }
+
+        public ActionResult PickedProjects()
+        {
+
+            return View();
+        }
     }
 }

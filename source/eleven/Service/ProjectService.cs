@@ -6,7 +6,6 @@ using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace eleven.Service
 {
@@ -32,7 +31,6 @@ namespace eleven.Service
         // adds a new project if there dosent exist project with the same id
         public int addProject(Project project, string userId)
         {
-
             ApplicationUser owner = db.Users.Where(x => x.Id == userId).FirstOrDefault();
 
             //Project id = db.projects.SingleOrDefault(x => x.Id == project.Id);
@@ -86,7 +84,8 @@ namespace eleven.Service
             }
             return false;
         }
-        //only owner can invite a user to the project 
+        //only owner can invite a user to the project and choose if he 
+        //wants another owner or a simple user
         public bool inviteUser(string email)
         {
             return false;

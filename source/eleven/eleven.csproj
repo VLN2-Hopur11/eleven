@@ -214,10 +214,12 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Entities\File.cs" />
     <Compile Include="Models\Entities\Highlights.cs" />
+    <Compile Include="Models\Entities\PickedProjects.cs" />
     <Compile Include="Models\Entities\Project.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ViewModels\MainPage.cs" />
+    <Compile Include="Models\ViewModels\MyProjectViewModel.cs" />
     <Compile Include="Models\ViewModels\ProjectViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ProjectService.cs" />
@@ -227,6 +229,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\NavBarSide.css" />
+    <Content Include="Content\AceEdit.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -285,6 +288,7 @@
     <Content Include="Views\Project\MyProjects.cshtml" />
     <Content Include="Views\Project\NewProject.cshtml" />
     <Content Include="Views\Home\Highlights.cshtml" />
+    <Content Include="Views\Home\PickedProjects.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

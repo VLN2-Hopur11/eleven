@@ -5,6 +5,7 @@ using eleven.Service;
 using Microsoft.AspNet.Identity;
 using System.Linq;
 using System.Web.Mvc;
+using eleven.Service;
 
 namespace eleven.Controllers
 {
@@ -21,12 +22,16 @@ namespace eleven.Controllers
             var userId = User.Identity.GetUserId();
             
             ProjectViewModel viewModel = new ProjectViewModel();
-
-            
+       
             if (userId == null)
             {
                 return RedirectToAction("Error");
             }
+<<<<<<< HEAD
+=======
+            
+            viewModel.projects = db.projects.Where(x => x.users.Any(y => y.Id == userId)).ToList();
+>>>>>>> 51dfe5a1731b9bb8eec07782998d13d884db8b67
 
             return View(viewModel);
         }
