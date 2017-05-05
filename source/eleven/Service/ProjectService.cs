@@ -1,9 +1,6 @@
 ﻿using eleven.Models;
 using eleven.Models.Entities;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace eleven.Service
 {
@@ -30,13 +27,13 @@ namespace eleven.Service
         public bool addProject(Project project)
         {
             Project id = db.projects.SingleOrDefault(x => x.Id == project.Id);
-
+            // var userId = db.Users.SingleOrDefault(x => x.Id == );
             if (id == null)
             {
                 Project newProject = new Project();
                 newProject.Id = project.Id;
                 newProject.name = project.name;
-                newProject.owners = project.owners;
+                //newProject.owners = 
                 newProject.users = project.users;
                 newProject.files = project.files;
 
@@ -84,7 +81,8 @@ namespace eleven.Service
             }
             return false;
         }
-        //only owner can invite a user to the project 
+        //only owner can invite a user to the project and choose if he 
+        //wants another owner or a simple user
         public bool inviteUser(string email)
         {
             return false;
