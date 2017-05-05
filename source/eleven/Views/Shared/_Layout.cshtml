@@ -24,11 +24,10 @@
             {
                 <li>@Html.ActionLink("My Projects", "MyProjects", "Project")</li>
             }
-        </ul>
-        @Html.Partial("_LoginPartial")
+        </ul>      
     </div>
-
     <div class="container body-content">
+        @Html.Partial("_LoginPartial")
         @RenderBody()
         <hr />
         <footer>
