@@ -8,7 +8,7 @@ namespace eleven.Models.ViewModels
 {
     public class ProjectViewModel
     {
-        public List<Project> projects { get; set; }
+        public Project project { get; set; }
         public List<File> files { get; set; }
     }
 }

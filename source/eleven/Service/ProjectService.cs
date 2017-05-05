@@ -1,5 +1,8 @@
 ﻿using eleven.Models;
 using eleven.Models.Entities;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +13,7 @@ namespace eleven.Service
     public class ProjectService
     {
         private ApplicationDbContext db;
-  
+
         public ProjectService()
         {
             db = new ApplicationDbContext();
@@ -27,24 +30,24 @@ namespace eleven.Service
             return false;  
         }
         // adds a new project if there dosent exist project with the same id
-        public bool addProject(Project project)
+        public int addProject(Project project, string userId)
         {
-            Project id = db.projects.SingleOrDefault(x => x.Id == project.Id);
-            if (id == null)
+
+            ApplicationUser owner = db.Users.Where(x => x.Id == userId).FirstOrDefault();
+
+            //Project id = db.projects.SingleOrDefault(x => x.Id == project.Id);
+            if (userId != null)
             {
                 Project newProject = new Project();
-                newProject.Id = project.Id;
                 newProject.name = project.name;
-                newProject.owners = project.owners;
-                newProject.users = project.users;
-                newProject.files = project.files;
-
+                newProject.owners = new List<ApplicationUser>();
+                newProject.owners.Add(owner);
                 db.projects.Add(newProject);
                 db.SaveChanges();
 
-                return true;
+                return newProject.Id;
             }
-            return false;
+            return 0;
         }
         //remove project by removing id
         public bool removePojectId(int id)
