@@ -34,6 +34,7 @@ namespace eleven.Controllers
         {
             // Get ID of logged in user
             var userId = User.Identity.GetUserId();
+
             ProjectViewModel viewModel = new ProjectViewModel();
             viewModel.projects = db.projects.Where(x => x.users.Any(y => y.Id == userId)).ToList();
 
@@ -58,6 +59,8 @@ namespace eleven.Controllers
         [HttpPost]
         public ActionResult NewProject(Project project)
         {
+            db.projects.Add(project);
+
             return View(project);
         }
     }
