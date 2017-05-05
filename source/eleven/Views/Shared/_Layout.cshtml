@@ -15,16 +15,17 @@
         <ul class="nav navbar-nav">
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
             <li>@Html.ActionLink("Highlights", "Highlights", "Home")</li>
-            <li>@Html.ActionLink("Picked Projects", "PickedProjects", "Home")</li>
-            <li>@Html.ActionLink("New Project", "NewProject", "Project")</li>
+            @if (User.IsInRole("Teacher") || User.IsInRole("Student") || User.IsInRole("Specialist") || User.IsInRole("Other"))
+            {
+                <li>@Html.ActionLink("New Project", "NewProject", "Project")</li>
+            }
+
             @if (User.IsInRole("Teacher") || User.IsInRole("Student") || User.IsInRole("Specialist") || User.IsInRole("Other"))
             {
                 <li>@Html.ActionLink("My Projects", "MyProjects", "Project")</li>
             }
-            <li style="bottom: 0; position: fixed;">
-                @Html.Partial("_LoginPartial")
-            </li>
         </ul>
+        @Html.Partial("_LoginPartial")
     </div>
 
     <div class="container body-content">
