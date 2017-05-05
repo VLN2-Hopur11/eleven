@@ -13,5 +13,10 @@ namespace eleven.Controllers
             // BREYTING
             return View(); 
         }
+
+        public ActionResult Highlights()
+        {
+            return View();
+        }
     }
 }
