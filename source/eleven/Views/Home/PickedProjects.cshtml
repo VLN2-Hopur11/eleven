@@ -1,7 +1,23 @@
-﻿
+﻿@model eleven.Models.ViewModels.MainPage
+
 @{
     ViewBag.Title = "PickedProjects";
 }
 
-<h2>PickedProjects</h2>
+<h2>Picked Projects</h2>
 
+@foreach (var item in Model.pickedprojects)
+{
+    <div class="col-md-10">
+        <h4>
+            @Html.DisplayFor(modelItem => item.title)
+        </h4>
+
+        <article>
+            <p>
+                @Html.DisplayFor(modelItem => item.content)
+            </p>
+        </article>
+        <a class="btn btn-blog pull-right marginBottom10" href="http://mbl.is">READ MORE</a>
+    </div>
+}
