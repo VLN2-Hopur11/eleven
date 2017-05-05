@@ -27,6 +27,7 @@ namespace eleven.Models
         public DbSet<Project> projects { get; set; }
         public DbSet<File> files { get; set; }
         public DbSet<Highlights> highlights { get; set; }
+        public DbSet<PickedProjects> pickedprojects { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

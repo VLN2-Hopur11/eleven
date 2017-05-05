@@ -29,8 +29,10 @@ namespace eleven.Controllers
 
         public ActionResult PickedProjects()
         {
+            MainPage pickedprojectsview = new MainPage();
+            pickedprojectsview.pickedprojects = db.pickedprojects.ToList();
 
-            return View();
+            return View(pickedprojectsview);
         }
     }
 }
