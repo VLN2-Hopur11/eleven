@@ -4,6 +4,7 @@ using eleven.Models.ViewModels;
 using Microsoft.AspNet.Identity;
 using System.Linq;
 using System.Web.Mvc;
+using eleven.Service;
 
 namespace eleven.Controllers
 {
@@ -64,7 +65,8 @@ namespace eleven.Controllers
         [HttpPost]
         public ActionResult NewProject(Project project)
         {
-            db.projects.Add(project);
+            ProjectService newproject = new ProjectService();
+            newproject.addProject(project);
 
             return RedirectToAction("Index", new { projectModel = project });
         }

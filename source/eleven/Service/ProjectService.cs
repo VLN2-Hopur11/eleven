@@ -83,7 +83,8 @@ namespace eleven.Service
             }
             return false;
         }
-        //only owner can invite a user to the project 
+        //only owner can invite a user to the project and choose if he 
+        //wants another owner or a simple user
         public bool inviteUser(string email)
         {
             return false;
