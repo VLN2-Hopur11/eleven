@@ -12,7 +12,7 @@ namespace eleven.Models.Entities
     {
         public string title { get; set; }
         public string content { get; set; }
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string author { get; set; }
     }
 }
