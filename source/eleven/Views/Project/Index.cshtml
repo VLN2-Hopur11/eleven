@@ -3,6 +3,34 @@
 @{
     ViewBag.Title = "Index";
 }
-
+@Styles.Render("~/Content/css/AceEdit.css ")
 <h2>Here will be a project</h2>
-
+<input type="button" id="runCode" value="Run The Code">
+<label for="mode" class="control-label">Language Mode:</label>
+<select id="mode" class="form-control">
+    <option>javascript</option>
+    <option>json</option>
+    <option>xml</option>
+    <option>php</option>
+</select>
+<pre id="editor">
+    
+</pre>
+<script src="src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    var editor = ace.edit("editor");
+    var content = @Model.files[0].content;
+    editor.setValue(content);
+    editor.setTheme("ace/theme/monokai");
+    editor.session.setMode("ace/mode/javascript");
+	editor.getSession().selection.on('select', function(e) {
+	alert("Ace Rocks " + items[i]);
+	});
+	aceEditor.setOptions({
+	   enableBasicAutocompletion: true, // the editor completes the statement when you hit Ctrl + Space
+	   enableLiveAutocompletion: true, // the editor completes the statement while you are typing
+	   showPrintMargin: false, // hides the vertical limiting strip
+	   maxLines: Infinity,
+	   fontSize: "100%" // ensures that the editor fits in the environment
+	});
+</script>
