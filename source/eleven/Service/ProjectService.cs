@@ -30,6 +30,7 @@ namespace eleven.Service
         public bool addProject(Project project)
         {
             Project id = db.projects.SingleOrDefault(x => x.Id == project.Id);
+
             if (id == null)
             {
                 Project newProject = new Project();
