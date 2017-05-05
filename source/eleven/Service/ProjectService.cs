@@ -35,7 +35,7 @@ namespace eleven.Service
                 Project newProject = new Project();
                 newProject.Id = project.Id;
                 newProject.name = project.name;
-                newProject.owner = project.owner;
+                newProject.owners = project.owners;
                 newProject.users = project.users;
                 newProject.files = project.files;
 
