@@ -214,6 +214,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Entities\File.cs" />
     <Compile Include="Models\Entities\Highlights.cs" />
+    <Compile Include="Models\Entities\PickedProjects.cs" />
     <Compile Include="Models\Entities\Project.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -285,6 +286,7 @@
     <Content Include="Views\Project\MyProjects.cshtml" />
     <Content Include="Views\Project\NewProject.cshtml" />
     <Content Include="Views\Home\Highlights.cshtml" />
+    <Content Include="Views\Home\PickedProjects.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
