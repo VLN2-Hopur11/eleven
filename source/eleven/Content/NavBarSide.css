@@ -20,3 +20,9 @@
   margin-left: 140px;
 }
 
+/*Hægt að breyta logo-inu hér*/
+.navbar-brand {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+    font-weight: bold;
+}
