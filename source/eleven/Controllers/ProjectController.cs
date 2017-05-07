@@ -3,6 +3,7 @@ using eleven.Models.Entities;
 using eleven.Models.ViewModels;
 using eleven.Service;
 using Microsoft.AspNet.Identity;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -33,11 +34,10 @@ namespace eleven.Controllers
         }
         public ActionResult MyProjects()
         {
-            // Get currently logged in user
-            ApplicationUser currentUser = db.Users.Where(x => x.Id == User.Identity.GetUserId()).FirstOrDefault();
-
+            // Get currently logged in user ID
+            var userId = User.Identity.GetUserId();
             MyProjectViewModel viewModel = new MyProjectViewModel();
-            viewModel.projects = db.projects.Where(x => x.users.Contains(currentUser)).ToList();
+            viewModel.projects = db.projects.Where(x => x.users.Any(y => y.Id == userId)).ToList();
 
             return View(viewModel);
         }
