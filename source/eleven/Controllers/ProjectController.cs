@@ -24,14 +24,21 @@ namespace eleven.Controllers
             ProjectViewModel model = new ProjectViewModel();
 
             model.project = db.projects.Where(x => x.Id == id).SingleOrDefault();
-
             if (model.project == null)
             {
                 return View("Error");
             }
+            //ViewBag.Code = model.project.files.content;
 
             return View(model); 
         }
+
+        [HttpPost]
+        public ActionResult SaveCode(ProjectViewModel model)
+        {
+            return View("Project");
+        }
+
         public ActionResult MyProjects()
         {
             // Get currently logged in user ID

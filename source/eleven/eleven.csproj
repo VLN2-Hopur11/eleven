@@ -291,6 +291,7 @@
     <Content Include="Views\Home\PickedProjects.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="3rdParty\src\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
