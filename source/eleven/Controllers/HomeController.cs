@@ -15,8 +15,11 @@ namespace eleven.Controllers
 
         public ActionResult Index()
         {
-            // BREYTING
-            return View(); 
+            MainPage mainview = new MainPage();
+            mainview.highlights = db.highlights.ToList();
+            mainview.pickedprojects = db.pickedprojects.ToList();
+
+            return View(mainview); 
         }
 
         public ActionResult Highlights()
