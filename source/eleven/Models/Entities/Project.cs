@@ -16,8 +16,7 @@ namespace eleven.Models.Entities
         [Required]
         public string name { get; set; }
         public virtual ICollection<File> files { get; set; }
-        public virtual ICollection<ApplicationUser> users { get; set; }
         [Required]
-        public virtual ICollection<ApplicationUser> owners { get; set; }
+        public virtual ICollection<ApplicationUser> users { get; set; }
     }
 }
