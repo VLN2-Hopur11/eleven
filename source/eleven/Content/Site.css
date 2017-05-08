@@ -20,9 +20,25 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    max-width: 250px;
 }
 
-.well{
+.well {
     height: 250px;
+    width: 300px;
+}
+
+.btn-blog {
+     position:absolute;
+     bottom:20px;
+     right:20px;
+}
+
+.col align-self-center {
+    clear:both;
+}
+
+.row{
+    margin-right: -15px;
+    margin-left: -15px;
 }
