@@ -94,9 +94,21 @@ namespace eleven.Service
         }
         //only owner can invite a user to the project and choose if he 
         //wants another owner or a simple user
-        public bool inviteUser(string email)
+        public bool inviteUser(string email, int projectId)
         {
-            return false;
+            ApplicationUser user = db.Users.Where(x => x.Email == email).SingleOrDefault();
+            Project project = db.projects.Where(x => x.Id == projectId).SingleOrDefault();
+
+            try
+            {
+                user.projects.Add(project);
+            }
+            catch (NotSupportedException)
+            {
+                return false;
+            }
+
+            return true;
         }
         //checks if a user exists 
         public bool userExists(string email)
@@ -107,6 +119,6 @@ namespace eleven.Service
                 return false;
             }
             else return true; 
-        }   
+        }
     }
 }
