@@ -16,6 +16,8 @@ namespace eleven.Service
         public ProjectService()
         {
             db = new ApplicationDbContext();
+            db.Configuration.LazyLoadingEnabled = true;
+            db.Configuration.ProxyCreationEnabled = true;
         }
         //changes project name if requested
         public bool changeProjectName(int projectID, string newName)
