@@ -20,9 +20,18 @@
   margin-left: 140px;
 }
 
-/*Hægt að breyta logo-inu hér*/
-.navbar-brand {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 20px;
-    font-weight: bold;
+.navbar-inverse {
+    background-color: #2D3034;
+    border-bottom-color:none;
+    border-top-color:none;
+    border-left-color:none;
+    border-right-color:none;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #FFFFFF;
+}
+
+.navbar-fixed-left + .container {
+    padding-left: 160px;
 }

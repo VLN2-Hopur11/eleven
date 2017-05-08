@@ -76,11 +76,6 @@ namespace eleven.Controllers
         [HttpPost]
         public ActionResult NewProject(Project project)
         {
-            //If user is not logged in he is rediected to the login page
-            if (!Request.IsAuthenticated)
-            {
-                Response.Redirect("~/Account/Login");
-            }
             var userId = User.Identity.GetUserId();
 
             if (userId == null)
