@@ -2,8 +2,11 @@
 @{
     ViewBag.Title = "Index";
 }
-@Styles.Render("~/Content/css/AceEdit.css ")
+@Styles.Render("~/Content/AceEdit.css ")
 <h2>Here will be a project</h2>
+
+<p>@Model.project.name</p>
+
 <input type="button" id="runCode" value="Run The Code">
 <label for="mode" class="control-label">Language Mode:</label>
 <select id="mode" class="form-control">
@@ -12,24 +15,48 @@
     <option>xml</option>
     <option>php</option>
 </select>
-<pre id="editor">
-    
-</pre>
-<script src="src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-<script>
-    var editor = ace.edit("editor");
-    var content = @Model.files[0].content;
-    editor.setValue(content);
-    editor.setTheme("ace/theme/monokai");
-    editor.session.setMode("ace/mode/javascript");
-	editor.getSession().selection.on('select', function(e) {
-	alert("Ace Rocks " + items[i]);
-	});
-	aceEditor.setOptions({
-	   enableBasicAutocompletion: true, // the editor completes the statement when you hit Ctrl + Space
-	   enableLiveAutocompletion: true, // the editor completes the statement while you are typing
-	   showPrintMargin: false, // hides the vertical limiting strip
-	   maxLines: Infinity,
-	   fontSize: "100%" // ensures that the editor fits in the environment
-	});
-</script>
+<div id="editor">
+    @ViewBag.Code
+</div>
+
+@* @using (Html.BeginForm("SaveCode","Project", FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.files[0].content, new { @id = "hidden_editor"})
+        <input type="submit" value="Save Code" />
+    } *@
+
+    @section scripts
+    {
+        <script src="~/3rdParty/src/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+        <script src="~/signalr/hubs"></script>
+        <script>
+            var documentID = @ViewBag.DocumentID;
+
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/monokai");
+            editor.getSession().setMode("ace/mode/javascript");
+            $("form").submit(function () {
+                $("#hidden_editor").val(editor.getSession().getValue());
+                editor.getSession().getDocument().applyDelta(changeData);
+            });
+            var codeHub = $.connection.codeHub;
+            var silent = false;
+            codeHub.client.onChange = function (changeData){
+                silent = true;
+                console.log(changeData);
+                silent = false;
+            };
+            $.connection.hub.start().done(function () {
+                codeHub.server.joinDocument(documentID);
+                editor.on("change", function (obj) {
+                    if(silent){
+                        return;
+                    }
+                    console.log(obj);
+                    codeHub.server.onChange(obj, documentID);
+                });
+            });
+
+        </script>
+    }

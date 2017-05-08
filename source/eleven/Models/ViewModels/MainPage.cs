@@ -9,6 +9,6 @@ namespace eleven.Models.ViewModels
     public class MainPage
     {
         public List<Highlights> highlights { get; set; }
-
+        public List<PickedProjects> pickedprojects { get; set; }
     }
 }

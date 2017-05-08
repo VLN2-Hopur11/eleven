@@ -1,5 +1,10 @@
 ﻿using eleven.Models;
 using eleven.Models.Entities;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace eleven.Service
@@ -7,10 +12,12 @@ namespace eleven.Service
     public class ProjectService
     {
         private ApplicationDbContext db;
-  
+
         public ProjectService()
         {
             db = new ApplicationDbContext();
+            db.Configuration.LazyLoadingEnabled = true;
+            db.Configuration.ProxyCreationEnabled = true;
         }
         //changes project name if requested
         public bool changeProjectName(int projectID, string newName)
@@ -24,31 +31,36 @@ namespace eleven.Service
             return false;  
         }
         // adds a new project if there dosent exist project with the same id
-        public bool addProject(Project project)
+        public int addProject(Project project, string userId)
         {
-            Project id = db.projects.SingleOrDefault(x => x.Id == project.Id);
-
-            if (id == null)
+            ApplicationUser owner = db.Users.Where(x => x.Id == userId).FirstOrDefault();
+            
+            if (userId != null)
             {
                 Project newProject = new Project();
-                newProject.Id = project.Id;
                 newProject.name = project.name;
-                //newProject.owners = 
-                newProject.users = project.users;
-                newProject.files = project.files;
-
+                newProject.owners = new List<ApplicationUser>();
+                newProject.owners.Add(owner);
                 db.projects.Add(newProject);
                 db.SaveChanges();
 
-                return true;
+                return newProject.Id;
             }
-            return false;
+            return 0;
         }
         //remove project by removing id
         public bool removePojectId(int id)
         {
-            return false;
+            Project project = db.projects.Remove(db.projects.Where(x => x.Id == id).FirstOrDefault());
+
+            if (db.projects.Contains(project))
+            {
+                return false;
+            }
+
+            return true;
         }
+
         // changes file name if requiested by user
         public bool changeFileName( int field, string newName)
         {
@@ -83,9 +95,21 @@ namespace eleven.Service
         }
         //only owner can invite a user to the project and choose if he 
         //wants another owner or a simple user
-        public bool inviteUser(string email)
+        public bool inviteUser(string email, int projectId)
         {
-            return false;
+            ApplicationUser user = db.Users.Where(x => x.Email == email).SingleOrDefault();
+            Project project = db.projects.Where(x => x.Id == projectId).SingleOrDefault();
+
+            try
+            {
+                user.projects.Add(project);
+            }
+            catch (NotSupportedException)
+            {
+                return false;
+            }
+
+            return true;
         }
         //checks if a user exists 
         public bool userExists(string email)
@@ -96,6 +120,6 @@ namespace eleven.Service
                 return false;
             }
             else return true; 
-        }   
+        }
     }
 }

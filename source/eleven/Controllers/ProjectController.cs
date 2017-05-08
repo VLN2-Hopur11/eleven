@@ -1,51 +1,58 @@
 ﻿using eleven.Models;
 using eleven.Models.Entities;
 using eleven.Models.ViewModels;
+using eleven.Service;
 using Microsoft.AspNet.Identity;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using eleven.Service;
 
 namespace eleven.Controllers
 {
     public class ProjectController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private ProjectService service = new ProjectService();
 
-        // GET: Project
-        public ActionResult Index()
+        [Authorize]
+        public ActionResult Index(int id)
         {
-            // Get ID of logged in user
-            var userId = User.Identity.GetUserId();
-            
-            ProjectViewModel viewModel = new ProjectViewModel();
-
-            
-            if (userId == null)
+            if (id == 0)
             {
-                return RedirectToAction("Error");
+                return View("Error");
             }
-            
 
-            viewModel.projects = db.projects.Where(x => x.users.Any(y => y.Id == userId)).ToList();
+            ProjectViewModel model = new ProjectViewModel();
+            model.project = db.projects.Where(x => x.Id == id).SingleOrDefault();
 
-            return View(viewModel);
+            if (model.project == null)
+            {
+                return View("Error");
+            }
+            //if (model.project.files)
+            //ViewBag.Code = model.project.files.content;
+            ViewBag.DocumentID = 22;
+            return View(model);
         }
 
-        public ActionResult Index(Project project)
+        [HttpPost]
+        public ActionResult SaveCode(ProjectViewModel model)
         {
-            return View(); 
+            return View("Project");
         }
+
+        [Authorize]
         public ActionResult MyProjects()
         {
-            // Get ID of logged in user
+            // Get currently logged in user ID
             var userId = User.Identity.GetUserId();
-
-            ProjectViewModel viewModel = new ProjectViewModel();
-            viewModel.projects = db.projects.Where(x => x.users.Any(y => y.Id == userId)).ToList();
+            ApplicationUser user = db.Users.Where(x => x.Id == userId).SingleOrDefault();
+            MyProjectViewModel viewModel = new MyProjectViewModel();
+            viewModel.projects = user.projects.ToList();
 
             return View(viewModel);
         }
+
         [HttpGet]
         public ActionResult NewFile()
         {
@@ -57,18 +64,54 @@ namespace eleven.Controllers
 
             return View(file);
         }
+
+        [Authorize]
         [HttpGet]
         public ActionResult NewProject()
         {
-            return View();
+            Project project = new Project();
+
+            return View(project);
         }
+
+        [Authorize]
         [HttpPost]
         public ActionResult NewProject(Project project)
         {
-            ProjectService newproject = new ProjectService();
-            newproject.addProject(project);
+            //If user is not logged in he is rediected to the login page
+            if (!Request.IsAuthenticated)
+            {
+                Response.Redirect("~/Account/Login");
+            }
+            var userId = User.Identity.GetUserId();
 
-            return RedirectToAction("Index", new { projectModel = project });
+            if (userId == null)
+            {
+                return View("Error");
+            }
+
+            int projectId = service.addProject(project, userId);
+
+            if (projectId == 0)
+            {
+                return View("Error");
+            }
+
+            return RedirectToAction("Index", new { id = projectId });
+        }
+
+        [HttpPost]
+        public ActionResult InviteUser(string email, int projectId)
+        {
+            if (service.userExists(email))
+            {
+                if (service.inviteUser(email, projectId))
+                {
+                    return RedirectToAction("Index", new { id = projectId });
+                }
+            }
+
+            return View("Error");
         }
     }
 }

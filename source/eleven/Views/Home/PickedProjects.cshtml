@@ -1,0 +1,21 @@
+﻿@model eleven.Models.ViewModels.MainPage
+
+@{
+    ViewBag.Title = "PickedProjects";
+}
+
+<h2>Picked Projects</h2>
+
+@foreach (var item in Model.pickedprojects)
+{
+    <div class="col align-self-center">
+        <h4>
+            @Html.DisplayFor(modelItem => item.title)
+        </h4>
+        <p>
+            @Html.DisplayFor(modelItem => item.content)
+        </p>
+        <p>Created by: <span>@Html.DisplayFor(modelItem => item.author)</span></p>
+
+    </div>
+}

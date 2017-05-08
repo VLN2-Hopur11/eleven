@@ -15,8 +15,11 @@ namespace eleven.Controllers
 
         public ActionResult Index()
         {
-            // BREYTING
-            return View(); 
+            MainPage mainview = new MainPage();
+            mainview.highlights = db.highlights.ToList().GetRange(0,3);
+            mainview.pickedprojects = db.pickedprojects.ToList().GetRange(0,3);
+
+            return View(mainview); 
         }
 
         public ActionResult Highlights()
@@ -25,6 +28,14 @@ namespace eleven.Controllers
             highlightview.highlights = db.highlights.ToList();
 
             return View(highlightview);
+        }
+
+        public ActionResult PickedProjects()
+        {
+            MainPage pickedprojectsview = new MainPage();
+            pickedprojectsview.pickedprojects = db.pickedprojects.ToList();
+
+            return View(pickedprojectsview);
         }
     }
 }
