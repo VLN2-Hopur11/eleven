@@ -21,15 +21,19 @@
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
             <li>@Html.ActionLink("Highlights", "Highlights", "Home")</li>
             <li>@Html.ActionLink("Picked Projects", "PickedProjects", "Home") </li>
-            @if (User.IsInRole("Teacher") || User.IsInRole("Student") || User.IsInRole("Specialist") || User.IsInRole("Other"))
+            
+            @if (User.Identity.IsAuthenticated)
             {
-                <li>@Html.ActionLink("New Project", "NewProject", "Project")</li>
+                if (User.IsInRole("Teacher") || User.IsInRole("Student") || User.IsInRole("Specialist") || User.IsInRole("Other"))
+                {
+                    <li>@Html.ActionLink("New Project", "NewProject", "Project")</li>
+                }
+                if (User.IsInRole("Teacher") || User.IsInRole("Student") || User.IsInRole("Specialist") || User.IsInRole("Other"))
+                {
+                    <li>@Html.ActionLink("My Projects", "MyProjects", "Project")</li>
+                }
             }
 
-            @if (User.IsInRole("Teacher") || User.IsInRole("Student") || User.IsInRole("Specialist") || User.IsInRole("Other"))
-            {
-                <li>@Html.ActionLink("My Projects", "MyProjects", "Project")</li>
-            }
             <li style="bottom: 0; position: fixed;">
                 @Html.Partial("_LoginPartial")
             </li>
