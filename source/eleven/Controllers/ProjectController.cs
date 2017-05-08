@@ -22,8 +22,8 @@ namespace eleven.Controllers
             }
 
             ProjectViewModel model = new ProjectViewModel();
-
             model.project = db.projects.Where(x => x.Id == id).SingleOrDefault();
+
             if (model.project == null)
             {
                 return View("Error");
@@ -31,7 +31,7 @@ namespace eleven.Controllers
             //if (model.project.files)
             //ViewBag.Code = model.project.files.content;
 
-            return View(model); 
+            return View(model);
         }
 
         [HttpPost]
@@ -79,7 +79,26 @@ namespace eleven.Controllers
 
             int projectId = service.addProject(project, userId);
 
+            if (projectId == 0)
+            {
+                return View("Error");
+            }
+
             return RedirectToAction("Index", new { id = projectId });
+        }
+
+        [HttpPost]
+        public ActionResult InviteUser(string email, int projectId)
+        {
+            if (service.userExists(email))
+            {
+                if (service.inviteUser(email, projectId))
+                {
+                    return RedirectToAction("Index", new { id = projectId });
+                }
+            }
+
+            return View("Error");
         }
     }
 }
