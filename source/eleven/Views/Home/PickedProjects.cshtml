@@ -8,16 +8,14 @@
 
 @foreach (var item in Model.pickedprojects)
 {
-    <div class="col-md-10">
+    <div class="col align-self-center">
         <h4>
             @Html.DisplayFor(modelItem => item.title)
         </h4>
+        <p>
+            @Html.DisplayFor(modelItem => item.content)
+        </p>
+        <p>Created by: <span>@Html.DisplayFor(modelItem => item.author)</span></p>
 
-        <article>
-            <p>
-                @Html.DisplayFor(modelItem => item.content)
-            </p>
-        </article>
-        <a class="btn btn-blog pull-right marginBottom10" href="http://mbl.is">READ MORE</a>
     </div>
 }
