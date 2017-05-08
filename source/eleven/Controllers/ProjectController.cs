@@ -31,7 +31,7 @@ namespace eleven.Controllers
             }
             //if (model.project.files)
             //ViewBag.Code = model.project.files.content;
-            ViewBag.DocumentID = 22;
+            ViewBag.DocumentID = id;
             return View(model);
         }
 
