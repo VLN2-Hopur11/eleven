@@ -9,7 +9,7 @@ namespace eleven.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(eleven.Models.ApplicationDbContext context)
