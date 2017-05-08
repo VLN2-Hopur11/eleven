@@ -12,11 +12,9 @@
         <h4>
             @Html.DisplayFor(modelItem => item.title)
         </h4>
-
-        <article>
-            <p>
-                @Html.DisplayFor(modelItem => item.content)
-            </p>
-        </article>
+        <p>
+            @Html.DisplayFor(modelItem => item.content)
+        </p>
+        <p>Written by: <span>@Html.DisplayFor(modelItem => item.author)</span></p>
     </div>
 }

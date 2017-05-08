@@ -16,8 +16,8 @@ namespace eleven.Controllers
         public ActionResult Index()
         {
             MainPage mainview = new MainPage();
-            mainview.highlights = db.highlights.ToList();
-            mainview.pickedprojects = db.pickedprojects.ToList();
+            mainview.highlights = db.highlights.ToList().GetRange(0,3);
+            mainview.pickedprojects = db.pickedprojects.ToList().GetRange(0,3);
 
             return View(mainview); 
         }
