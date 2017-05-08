@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
 using eleven.Models.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace eleven.Models
 {
