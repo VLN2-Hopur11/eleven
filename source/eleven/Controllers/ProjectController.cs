@@ -28,6 +28,7 @@ namespace eleven.Controllers
             {
                 return View("Error");
             }
+            //if (model.project.files)
             //ViewBag.Code = model.project.files.content;
 
             return View(model); 
