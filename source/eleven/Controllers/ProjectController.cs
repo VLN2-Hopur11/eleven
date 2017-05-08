@@ -61,7 +61,6 @@ namespace eleven.Controllers
         [HttpPost]
         public ActionResult NewFile(File file)
         {
-
             return View(file);
         }
 
@@ -73,7 +72,6 @@ namespace eleven.Controllers
 
             return View(project);
         }
-
         [Authorize]
         [HttpPost]
         public ActionResult NewProject(Project project)
