@@ -13,6 +13,7 @@ namespace eleven
         {
             ConfigureAuth(app);
             createRolesandUsers();
+            app.MapSignalR();
         }
 
         // Configure roles   
