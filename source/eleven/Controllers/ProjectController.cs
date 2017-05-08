@@ -14,6 +14,7 @@ namespace eleven.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         private ProjectService service = new ProjectService();
 
+        [Authorize]
         public ActionResult Index(int id)
         {
             if (id == 0)
@@ -30,7 +31,7 @@ namespace eleven.Controllers
             }
             //if (model.project.files)
             //ViewBag.Code = model.project.files.content;
-
+            ViewBag.DocumentID = 22;
             return View(model);
         }
 
@@ -40,6 +41,7 @@ namespace eleven.Controllers
             return View("Project");
         }
 
+        [Authorize]
         public ActionResult MyProjects()
         {
             // Get currently logged in user ID
@@ -50,6 +52,7 @@ namespace eleven.Controllers
 
             return View(viewModel);
         }
+
         [HttpGet]
         public ActionResult NewFile()
         {
@@ -61,6 +64,8 @@ namespace eleven.Controllers
 
             return View(file);
         }
+
+        [Authorize]
         [HttpGet]
         public ActionResult NewProject()
         {
@@ -68,9 +73,16 @@ namespace eleven.Controllers
 
             return View(project);
         }
+
+        [Authorize]
         [HttpPost]
         public ActionResult NewProject(Project project)
         {
+            //If user is not logged in he is rediected to the login page
+            if (!Request.IsAuthenticated)
+            {
+                Response.Redirect("~/Account/Login");
+            }
             var userId = User.Identity.GetUserId();
 
             if (userId == null)

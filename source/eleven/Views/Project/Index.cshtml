@@ -19,34 +19,44 @@
     @ViewBag.Code
 </div>
 
-@using (Html.BeginForm("SaveCode","Project", FormMethod.Post))
-{
-    @Html.HiddenFor(m => m.files[0].content, new { @id = "hidden_editor"}) 
-    <input type="submit" value="Save Code" />
-}
+@* @using (Html.BeginForm("SaveCode","Project", FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.files[0].content, new { @id = "hidden_editor"})
+        <input type="submit" value="Save Code" />
+    } *@
 
-@section scripts
-{
-    <script src="~/3rdParty/src/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
-    <script src="~/signalr/hubs"></script>
-    <script>
-        var editor = ace.edit("editor");
-        editor.setTheme("ace/theme/monokai");
-        editor.getSession().setMode("ace/mode/javascript");
-        $("form").submit(function () {
-            $("#hidden_editor").val(editor.getSession().getValue());
-        });
-        var codeHub = $.connection.codeHub;
-        codeHub.client.onChange = function (changeData){
-            console.log(changeData);
-        };
-        $.connection.hub.start().done(function () {
-            editor.on("change", function (obj) {
-                console.log(obj);
-                codeHub.server.onChange(obj);
+    @section scripts
+    {
+        <script src="~/3rdParty/src/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+        <script src="~/signalr/hubs"></script>
+        <script>
+            var documentID = @ViewBag.DocumentID;
+
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/monokai");
+            editor.getSession().setMode("ace/mode/javascript");
+            $("form").submit(function () {
+                $("#hidden_editor").val(editor.getSession().getValue());
+                editor.getSession().getDocument().applyDelta(changeData);
             });
-        });
+            var codeHub = $.connection.codeHub;
+            var silent = false;
+            codeHub.client.onChange = function (changeData){
+                silent = true;
+                console.log(changeData);
+                silent = false;
+            };
+            $.connection.hub.start().done(function () {
+                codeHub.server.joinDocument(documentID);
+                editor.on("change", function (obj) {
+                    if(silent){
+                        return;
+                    }
+                    console.log(obj);
+                    codeHub.server.onChange(obj, documentID);
+                });
+            });
 
-    </script>
-}
+        </script>
+    }
