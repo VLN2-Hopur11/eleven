@@ -29,7 +29,7 @@ namespace eleven.Controllers
             {
                 return View("Error");
             }
-
+            //if (model.project.files)
             //ViewBag.Code = model.project.files.content;
 
             return View(model);
@@ -46,8 +46,9 @@ namespace eleven.Controllers
         {
             // Get currently logged in user ID
             var userId = User.Identity.GetUserId();
+            ApplicationUser user = db.Users.Where(x => x.Id == userId).SingleOrDefault();
             MyProjectViewModel viewModel = new MyProjectViewModel();
-            viewModel.projects = db.projects.Where(x => x.users.Any(y => y.Id == userId)).ToList();
+            viewModel.projects = user.projects.ToList();
 
             return View(viewModel);
         }
