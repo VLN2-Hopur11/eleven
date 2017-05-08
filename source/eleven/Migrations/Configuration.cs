@@ -10,7 +10,6 @@ namespace eleven.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            ContextKey = "eleven.Models.ApplicationDbContext";
         }
 
         protected override void Seed(eleven.Models.ApplicationDbContext context)

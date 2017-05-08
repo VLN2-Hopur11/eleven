@@ -5,16 +5,21 @@
 }
 
 <h2>Highlights</h2>
-
-@foreach (var item in Model.highlights)
-{
-    <div class="col align-self-center">
-        <h4>
-            @Html.DisplayFor(modelItem => item.title)
-        </h4>
-        <p>
-            @Html.DisplayFor(modelItem => item.content)
-        </p>
-        <p>Written by: <span>@Html.DisplayFor(modelItem => item.author)</span></p>
-    </div>
-}
+<section class="row">
+    @foreach (var item in Model.highlights)
+    {
+        <div class="col align-self-center">
+            <section class="col-sm-4">
+                <section class="well">
+                    <h4>
+                        @Html.DisplayFor(modelItem => item.title)
+                    </h4>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.content)
+                    </p>
+                    <p>Written by: <span>@Html.DisplayFor(modelItem => item.author)</span></p>
+                </section>
+            </section>
+        </div>
+    }
+</section>
