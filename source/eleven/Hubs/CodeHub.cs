@@ -8,9 +8,14 @@ namespace eleven.Hubs
 {
     public class CodeHub : Hub
     {
-        public void OnChange(object changeData)
+        public void JoinDocument(int documentID)
         {
-            Clients.All.OnChange(changeData);
+            Groups.Add(Context.ConnectionId, Convert.ToString(documentID));
+        }
+        public void OnChange(object changeData, int documentID)
+        {
+            //Clients.All.OnChange(changeData);
+            Clients.Group(Convert.ToString(documentID), Context.ConnectionId).OnChange(changeData);
         }
     }
 }
