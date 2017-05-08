@@ -16,6 +16,8 @@ namespace eleven.Service
         public ProjectService()
         {
             db = new ApplicationDbContext();
+            db.Configuration.LazyLoadingEnabled = true;
+            db.Configuration.ProxyCreationEnabled = true;
         }
         //changes project name if requested
         public bool changeProjectName(int projectID, string newName)
@@ -32,8 +34,7 @@ namespace eleven.Service
         public int addProject(Project project, string userId)
         {
             ApplicationUser owner = db.Users.Where(x => x.Id == userId).FirstOrDefault();
-
-            //Project id = db.projects.SingleOrDefault(x => x.Id == project.Id);
+            
             if (userId != null)
             {
                 Project newProject = new Project();
