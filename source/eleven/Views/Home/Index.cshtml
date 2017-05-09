@@ -5,33 +5,43 @@
 }
 
 <h2>Highlights</h2>
-
-@foreach (var item in Model.highlights)
-{
-    <div class="col align-self-center">
-        <h4>
-            @Html.DisplayFor(modelItem => item.title)
-        </h4>
-        <p>
-            @Html.DisplayFor(modelItem => item.content)
-        </p>
-
-        <a class="btn btn-blog pull-right marginBottom10" href="http://mbl.is">READ MORE</a>
-    </div>
-}
+<hr class="headline-bottom" align="left" width="30%" />
+<section class="row">
+    @foreach (var item in Model.highlights)
+    {
+        <div class="col align-self-center">
+            <section class="col-sm-4">
+                <section class="well">
+                    <h4>
+                        @Html.DisplayFor(modelItem => item.title)
+                    </h4>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.content)
+                    </p>
+                    <a class="btn btn-blog pull-right marginBottom10" href="http://mbl.is">READ MORE</a>
+                </section>
+            </section>
+        </div>
+    }
+</section>
 
 <h2>Picked Projects</h2>
-
-@foreach (var item in Model.pickedprojects)
-{
-    <div class="col align-self-center">
-        <h4>
-            @Html.DisplayFor(modelItem => item.title)
-        </h4>
-        <p>
-            @Html.DisplayFor(modelItem => item.content)
-        </p>
-
-        <a class="btn btn-blog pull-right marginBottom10" href="http://mbl.is">READ MORE</a>
-    </div>
-}
+<hr class="headline-bottom" align="left" width="30%" />
+<section class="row">
+    @foreach (var item in Model.pickedprojects)
+    {
+        <div class="col align-self-center">
+            <section class="col-sm-4">
+                <section class="well">
+                    <h4>
+                        @Html.DisplayFor(modelItem => item.title)
+                    </h4>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.content)
+                    </p>
+                    <a class="btn-blog" href="http://mbl.is">READ MORE</a>
+                </section>
+            </section>
+        </div>
+    }
+</section>

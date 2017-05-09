@@ -221,13 +221,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\CodeHub.cs" />
-    <Compile Include="Migrations\201705031500094_InitialCreate.cs" />
-    <Compile Include="Migrations\201705031500094_InitialCreate.Designer.cs">
-      <DependentUpon>201705031500094_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705041245001_AddPostClass.cs" />
-    <Compile Include="Migrations\201705041245001_AddPostClass.Designer.cs">
-      <DependentUpon>201705041245001_AddPostClass.cs</DependentUpon>
+    <Compile Include="Migrations\201705081437441_InitialCreate.cs" />
+    <Compile Include="Migrations\201705081437441_InitialCreate.Designer.cs">
+      <DependentUpon>201705081437441_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -249,6 +245,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\CcBG.png" />
+    <Content Include="Content\Images\CcWG.png" />
     <Content Include="Content\NavBarSide.css" />
     <Content Include="Content\AceEdit.css" />
     <Content Include="favicon.ico" />
@@ -283,6 +281,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\plugin.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
@@ -340,11 +339,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705031500094_InitialCreate.resx">
-      <DependentUpon>201705031500094_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705041245001_AddPostClass.resx">
-      <DependentUpon>201705041245001_AddPostClass.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705081437441_InitialCreate.resx">
+      <DependentUpon>201705081437441_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
