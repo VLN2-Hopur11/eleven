@@ -6,15 +6,19 @@
 @Styles.Render("~/Content/ProjectView.css")
 
     <div class="navbar sidebar-inverse sidebar-fixed-right">
-        <a class="sidebar-brand" href="@Url.Action("Index", "Home")">
-            <img src="~/Content/Images/CcWG.png" class="img-responsive" />
-        </a>
-        <ul class="nav sidebar-nav">
-            <li>@Model.project.name</li>
-            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-            <li>@Html.ActionLink("Highlights", "Highlights", "Home")</li>
-            <li>@Html.ActionLink("Picked Projects", "PickedProjects", "Home") </li>
-        </ul>
+        <div id="menu">
+            <ul id="item1" class="nav sidebar-nav">
+                <li class="projectName"><img src="~/Content/Images/birthday_cake1600.png" class="img-responsive" id="miniicon"/>@Model.project.name</li>
+                @foreach (var item in Model.project.folders)
+                {
+                    <li class="folder"><img src="~/Content/Images/folder-2.png" class="img-responsive" id="miniicon" />item.name</li>
+                    foreach (var seconditem in item.files)
+                    {
+                        <li class="file"><img src="~/Content/Images/very-basic-file-icon.png" class="img-responsive" id="miniicon" /<a href="#">seconditem.name</a></li>
+                    }
+                }
+            </ul>
+        </div>  
     </div>
 
     <div class="projectViewContent">

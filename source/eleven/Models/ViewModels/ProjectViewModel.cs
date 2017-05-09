@@ -10,5 +10,6 @@ namespace eleven.Models.ViewModels
     {
         public Project project { get; set; }
         public File files { get; set; }
+        public Folder folders { get; set; }
     }
 }
