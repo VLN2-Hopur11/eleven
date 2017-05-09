@@ -32,7 +32,12 @@
     }
 
     @Html.HiddenFor(model => model.activeFile.content, new { @id = "hidden_editor" });
-    @Html.HiddenFor(model => model.project.Id, new { @id = Url.RequestContext.RouteData.Values["id"] });
+    @Html.HiddenFor(model => model.project.Id, new { @pid = Url.RequestContext.RouteData.Values["pid"] });
+
+    if (Model.activeFile.Id != 0)
+    {
+        @Html.HiddenFor(model => model.activeFile.Id, new { @fid = Url.RequestContext.RouteData.Values["fid"] });
+    }
 
     <input type="submit" value="Save Code" />
 }
