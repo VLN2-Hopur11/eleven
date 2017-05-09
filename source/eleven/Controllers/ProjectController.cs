@@ -29,7 +29,10 @@ namespace eleven.Controllers
             {
                 return View("Error");
             }
-            //if (model.project.files)
+            if (model.project.files == null)
+            {
+                
+            }
             //ViewBag.Code = model.project.files.content;
             ViewBag.DocumentID = id;
             return View(model);
