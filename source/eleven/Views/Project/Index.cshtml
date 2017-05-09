@@ -5,18 +5,7 @@
 @Styles.Render("~/Content/AceEdit.css")
 @Styles.Render("~/Content/ProjectView.css")
 
-    <div class="sidebar-inverse sidebar-fixed-right">
-        <a class="sidebar-brand" href="@Url.Action("Index", "Home")">
-            <img src="~/Content/Images/CcWG.png" class="img-responsive" />
-        </a>
-        <ul class="sidebar-nav">
-            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-            <li>@Html.ActionLink("Highlights", "Highlights", "Home")</li>
-            <li>@Html.ActionLink("Picked Projects", "PickedProjects", "Home") </li>
-        </ul>
-    </div>
-
-    <div class="projectViewContent">
+<div class="col projectViewContent">
     <h2>@Model.project.name</h2>
 
     <input type="button" id="runCode" value="Run The Code">
@@ -71,9 +60,16 @@
             });
 
         </script>
-       
     }
 </div>
 
-
-
+<div class="col projectViewSidebar">
+    <a class="sidebar-brand" href="@Url.Action("Index", "Home")">
+        <img src="~/Content/Images/CcWG.png" class="img-responsive" />
+    </a>
+    <ul class="sidebar-li">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li>@Html.ActionLink("Highlights", "Highlights", "Home")</li>
+        <li>@Html.ActionLink("Picked Projects", "PickedProjects", "Home") </li>
+    </ul>
+</div>
