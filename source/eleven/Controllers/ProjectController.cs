@@ -32,6 +32,12 @@ namespace eleven.Controllers
                 model.files = new List<File>();
             }
 
+            if(model.files.Count == 0)
+            {
+                File file = new File();
+                model.files.Add(file);
+            }
+            
             model.activeFile = model.files.First();
 
             if (model.project == null)

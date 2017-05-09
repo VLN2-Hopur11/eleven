@@ -3,51 +3,54 @@
     ViewBag.Title = "Index";
 }
 @Styles.Render("~/Content/AceEdit.css")
+@Styles.Render("~/Content/NavBarSide.css")
 @Styles.Render("~/Content/ProjectView.css")
 
-<div class="col projectViewContent">
-    <p>Project: @Model.project.name</p>
-    <br />
-    <p>File: @Model.activeFile.name</p>
+<div class="projectViewWrapper">
 
-    <input type="button" id="runCode" value="Run The Code">
-    <label for="mode" class="control-label">Language Mode:</label>
-    <label for="mode" class="control-label">Language Mode:</label>
-    <select id="mode" class="form-control">
-        <option value='1'>javascript</option>
-        <option value='2'>json</option>
-        <option value='3'>xml</option>
-        <option value='4'>php</option>
-        <option value='5'>html</option>
-    </select>
-    <div id="editor">
-        @ViewBag.Code
-    </div>
+    <div class="projectViewContent">
+        <p>Project: @Model.project.name</p>
+        <br />
+        <p>File: @Model.activeFile.name</p>
 
-@using (Html.BeginForm("Index", "Project", FormMethod.Post))
+        <input type="button" id="runCode" value="Run The Code">
+        <label for="mode" class="control-label">Language Mode:</label>
+        <label for="mode" class="control-label">Language Mode:</label>
+        <select id="mode" class="form-control">
+            <option value='1'>javascript</option>
+            <option value='2'>json</option>
+            <option value='3'>xml</option>
+            <option value='4'>php</option>
+            <option value='5'>html</option>
+        </select>
+        <div id="editor">
+            @ViewBag.Code
+        </div>
+
+        @using (Html.BeginForm("Index", "Project", FormMethod.Post))
 {
     if (Model.activeFile.name.IsEmpty())
     {
-        @Html.EditorFor(model => model.activeFile.name, new { required = "required" });
+                @Html.EditorFor(model => model.activeFile.name, new { required = "required" });
     }
 
-    @Html.HiddenFor(model => model.activeFile.content, new { @id = "hidden_editor" });
-    @Html.HiddenFor(model => model.project.Id, new { @pid = Url.RequestContext.RouteData.Values["pid"] });
+            @Html.HiddenFor(model => model.activeFile.content, new { @id = "hidden_editor" });
+            @Html.HiddenFor(model => model.project.Id, new { @pid = Url.RequestContext.RouteData.Values["pid"] });
 
     if (Model.activeFile.Id != 0)
     {
-        @Html.HiddenFor(model => model.activeFile.Id, new { @fid = Url.RequestContext.RouteData.Values["fid"] });
+                @Html.HiddenFor(model => model.activeFile.Id, new { @fid = Url.RequestContext.RouteData.Values["fid"] });
     }
 
-    <input type="submit" value="Save Code" />
+            <input type="submit" value="Save Code" />
 }
 
-    @section scripts
+        @section scripts
     {
-        <script src="~/3rdParty/src/ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
-        <script src="~/signalr/hubs"></script>
-        <script>
+            <script src="~/3rdParty/src/ace.js" type="text/javascript" charset="utf-8"></script>
+            <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+            <script src="~/signalr/hubs"></script>
+            <script>
             var documentID = @ViewBag.DocumentID;
 
             var editor = ace.edit("editor");
@@ -75,17 +78,19 @@
                 });
             });
 
-        </script>
-    }
-</div>
+            </script>
+        }
+    </div>
 
-<div class="col projectViewSidebar">
-    <a class="sidebar-brand" href="@Url.Action("Index", "Home")">
-        <img src="~/Content/Images/CcWG.png" class="img-responsive" />
-    </a>
-    <ul class="sidebar-li">
-        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-        <li>@Html.ActionLink("Highlights", "Highlights", "Home")</li>
-        <li>@Html.ActionLink("Picked Projects", "PickedProjects", "Home") </li>
-    </ul>
+    <div class="navbar navbar-inverse navbar-fixed-right" id="fullheight">
+        <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+            <img src="~/Content/Images/CcWG.png" class="img-responsive" />
+        </a>
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Highlights", "Highlights", "Home")</li>
+            <li>@Html.ActionLink("Picked Projects", "PickedProjects", "Home") </li>
+        </ul>
+    </div>
+
 </div>
