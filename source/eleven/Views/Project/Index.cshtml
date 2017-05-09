@@ -2,28 +2,29 @@
 @{
     ViewBag.Title = "Index";
 }
-@Styles.Render("~/Content/AceEdit.css ")
-<h2>Here will be a project</h2>
+@Styles.Render("~/Content/AceEdit.css")
+@Styles.Render("~/Content/ProjectView.css")
 
-<p>@Model.project.name</p>
+<div class="projectViewContent">
+    <h2>@Model.project.name</h2>
 
-<input type="button" id="runCode" value="Run The Code">
-<label for="mode" class="control-label">Language Mode:</label>
-<select id="mode" class="form-control">
-    <option>javascript</option>
-    <option>json</option>
-    <option>xml</option>
-    <option>php</option>
-</select>
-<div id="editor">
-    @ViewBag.Code
-</div>
+    <input type="button" id="runCode" value="Run The Code">
+    <label for="mode" class="control-label">Language Mode:</label>
+    <select id="mode" class="form-control">
+        <option>javascript</option>
+        <option>json</option>
+        <option>xml</option>
+        <option>php</option>
+    </select>
+    <div id="editor">
+        @ViewBag.Code
+    </div>
 
- @using (Html.BeginForm("SaveCode","Project", FormMethod.Post))
+    @using (Html.BeginForm("SaveCode", "Project", FormMethod.Post))
     {
-        @Html.HiddenFor(m => m.files.content, new { @id = "hidden_editor"})
+        @Html.HiddenFor(m => m.files.content, new { @id = "hidden_editor" })
         <input type="submit" value="Save Code" />
-    } 
+    }
 
     @section scripts
     {
@@ -46,8 +47,6 @@
                 console.log(changeData);
                 editor.getSession().getDocument().applyDelta(changeData);
                 silent = false;
-
-
             };
             $.connection.hub.start().done(function () {
                 codeHub.server.joinDocument(documentID);
@@ -62,3 +61,19 @@
 
         </script>
     }
+</div>
+
+<div class="sidebar-inverse sidebar-fixed-right">
+    <a class="sidebar-brand" href="@Url.Action("Index", "Home")">
+        <img src="~/Content/Images/CcWG.png" class="img-responsive" />
+    </a>
+
+    <ul class="sidebar-nav">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li>@Html.ActionLink("Highlights", "Highlights", "Home")</li>
+        <li>@Html.ActionLink("Picked Projects", "PickedProjects", "Home") </li>
+
+    </ul>
+</div>
+
+

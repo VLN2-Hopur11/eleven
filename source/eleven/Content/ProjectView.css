@@ -1,0 +1,42 @@
+﻿/*Overriding bootstrap to fit the sidebar into the project view*/
+.body-content{
+    padding-right: 0px;
+}
+.container{
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+/*The project content*/
+.projectViewConent{
+    padding-right: 160px;
+}
+
+/*The sidebar*/
+.sidebar-fixed-right {
+  width: 140px;
+  position: fixed;
+  border-radius: 0;
+  height: 100%;
+}
+
+.sidebar-fixed-right .sidebar-nav > li {
+  float: right;  /* Cancel default li float: left */
+  width: 139px;
+}
+
+.sidebar-fixed-right + .container {
+  padding-right: 160px;
+}
+
+.sidebar-inverse {
+    background-color: #2D3034;
+    border-bottom-color:none;
+    border-top-color:none;
+    border-left-color:none;
+    border-right-color:none;
+}
+
+.sidebar-inverse .sidebar-nav > li > a {
+    color: #FFFFFF;
+}
