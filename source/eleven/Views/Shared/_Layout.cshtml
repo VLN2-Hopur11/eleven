@@ -16,7 +16,10 @@
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-left">
-        <a class="navbar-brand" href="#">@Html.ActionLink("codecake", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</a>
+        <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+            <img src="~/Content/Images/CcWG.png" class="img-responsive"/>
+        </a>
+
         <ul class="nav navbar-nav">
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
             <li>@Html.ActionLink("Highlights", "Highlights", "Home")</li>

@@ -9,5 +9,6 @@ namespace eleven.Models.ViewModels
     public class ProjectViewModel
     {
         public Project project { get; set; }
+        public File files { get; set; }
     }
 }

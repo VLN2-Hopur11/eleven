@@ -31,7 +31,7 @@ namespace eleven.Controllers
             }
             //if (model.project.files)
             //ViewBag.Code = model.project.files.content;
-            ViewBag.DocumentID = 22;
+            ViewBag.DocumentID = id;
             return View(model);
         }
 
@@ -76,11 +76,6 @@ namespace eleven.Controllers
         [HttpPost]
         public ActionResult NewProject(Project project)
         {
-            //If user is not logged in he is rediected to the login page
-            if (!Request.IsAuthenticated)
-            {
-                Response.Redirect("~/Account/Login");
-            }
             var userId = User.Identity.GetUserId();
 
             if (userId == null)
