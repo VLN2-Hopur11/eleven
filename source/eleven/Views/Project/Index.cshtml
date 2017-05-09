@@ -5,8 +5,9 @@
 @Styles.Render("~/Content/AceEdit.css ")
 <h2>Here will be a project</h2>
 
-<p>@Model.project.name</p>
-
+<p>Project: @Model.project.name</p>
+<br />
+<p>File: @Model.activeFile.name</p>
 <input type="button" id="runCode" value="Run The Code">
 <label for="mode" class="control-label">Language Mode:</label>
 <select id="mode" class="form-control">
@@ -19,11 +20,18 @@
     @ViewBag.Code
 </div>
 
-@* @using (Html.BeginForm("SaveCode","Project", FormMethod.Post))
-    {
-        @Html.HiddenFor(m => m.files[0].content, new { @id = "hidden_editor"})
+@using (Html.BeginForm("Index", "Project", FormMethod.Post))
+{
+        if (Model.activeFile.name.IsEmpty())
+        {
+            @Html.EditorFor(model => model.activeFile.name, new { required = "required" });
+        }
+
+        @Html.HiddenFor(model => model.activeFile.content, new { @id = "hidden_editor"});
+        @Html.HiddenFor(model => model.project.Id, new { @id = Url.RequestContext.RouteData.Values["id"] });
+
         <input type="submit" value="Save Code" />
-    } *@
+    }
 
     @section scripts
     {
