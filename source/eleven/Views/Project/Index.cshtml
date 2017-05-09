@@ -2,91 +2,6 @@
 @{
     ViewBag.Title = "Index";
 }
-@Styles.Render("~/Content/AceEdit.css ")
-<h2>Here will be a project</h2>
-
-<p>@Model.project.name</p>
-
-<input type="button" id="runCode" value="Run The Code">
-<label for="mode" class="control-label">Language Mode:</label>
-<select id="mode" class="form-control">
-    <option value='1'>javascript</option>
-    <option value='2'>json</option>
-    <option value='3'>xml</option>
-    <option value='4'>php</option>
-    <option value='5'>html</option>
-</select>
-<div id="editor">
-    @ViewBag.Code
-</div>
-
- @using (Html.BeginForm("SaveCode","Project", FormMethod.Post))
-    {
-        @Html.HiddenFor(m => m.files.content, new { @id = "hidden_editor"})
-        <input type="submit" value="Save Code" />
-    } 
-    @Scripts.Render("~/bundles/jquery")
-    <script type="text/javascript">
-        $('#mode').change(function () {
-            var editor = ace.edit("editor");
-            if ($(this).val() === '1') {
-                editor.getSession().setMode("ace/mode/javascript");
-            }
-            if ($(this).val() === '3') {
-                editor.getSession().setMode("ace/mode/json");
-            }
-            if ($(this).val() === '2') {
-                editor.getSession().setMode("ace/mode/json");
-            }
-            if ($(this).val() === '4') {
-                editor.getSession().setMode("ace/mode/json");
-            }
-            if ($(this).val() === '5') {
-                editor.getSession().setMode("ace/mode/html");
-            }
-            });
-    </script>
-    @section scripts
-    {
-        <script src="~/3rdParty/src/ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
-        <script src="~/signalr/hubs"></script>
-        <script>
-            var documentID = @ViewBag.DocumentID;
-
-            var editor = ace.edit("editor");
-            editor.setTheme("ace/theme/monokai");
-            editor.getSession().setMode("ace/mode/javascript");
-            $("form").submit(function () {
-                $("#hidden_editor").val(editor.getSession().getValue());
-            });
-            var codeHub = $.connection.codeHub;
-            var silent = false;
-            codeHub.client.onChange = function (changeData){
-                silent = true;
-                console.log(changeData);
-                editor.getSession().getDocument().applyDelta(changeData);
-                silent = false;
-
-
-            };
-            $.connection.hub.start().done(function () {
-                codeHub.server.joinDocument(documentID);
-                editor.on("change", function (obj) {
-                    if(silent){
-                        return;
-                    }
-                    console.log(obj);
-                    codeHub.server.onChange(obj, documentID);
-                });
-            });
-
-        </script>
-    }
-@model eleven.Models.ViewModels.ProjectViewModel
-@{
-    ViewBag.Title = "Index";
-}
 @Styles.Render("~/Content/AceEdit.css")
 @Styles.Render("~/Content/ProjectView.css")
 
@@ -106,11 +21,13 @@
 
     <input type="button" id="runCode" value="Run The Code">
     <label for="mode" class="control-label">Language Mode:</label>
+    <label for="mode" class="control-label">Language Mode:</label>
     <select id="mode" class="form-control">
-        <option>javascript</option>
-        <option>json</option>
-        <option>xml</option>
-        <option>php</option>
+        <option value='1'>javascript</option>
+        <option value='2'>json</option>
+        <option value='3'>xml</option>
+        <option value='4'>php</option>
+        <option value='5'>html</option>
     </select>
     <div id="editor">
         @ViewBag.Code
@@ -121,7 +38,27 @@
         @Html.HiddenFor(m => m.files.content, new { @id = "hidden_editor" })
         <input type="submit" value="Save Code" />
     }
-
+        @Scripts.Render("~/bundles/jquery")
+        <script type="text/javascript">
+        $('#mode').change(function () {
+            var editor = ace.edit("editor");
+            if ($(this).val() === '1') {
+                editor.getSession().setMode("ace/mode/javascript");
+            }
+            if ($(this).val() === '3') {
+                editor.getSession().setMode("ace/mode/json");
+            }
+            if ($(this).val() === '2') {
+                editor.getSession().setMode("ace/mode/json");
+            }
+            if ($(this).val() === '4') {
+                editor.getSession().setMode("ace/mode/json");
+            }
+            if ($(this).val() === '5') {
+                editor.getSession().setMode("ace/mode/html");
+            }
+            });
+        </script>
     @section scripts
     {
         <script src="~/3rdParty/src/ace.js" type="text/javascript" charset="utf-8"></script>
