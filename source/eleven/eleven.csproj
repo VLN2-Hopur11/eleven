@@ -249,6 +249,7 @@
     <Content Include="Content\Images\CcWG.png" />
     <Content Include="Content\NavBarSide.css" />
     <Content Include="Content\AceEdit.css" />
+    <Content Include="Content\ProjectView.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

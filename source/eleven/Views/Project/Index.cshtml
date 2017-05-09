@@ -83,3 +83,82 @@
 
         </script>
     }
+@model eleven.Models.ViewModels.ProjectViewModel
+@{
+    ViewBag.Title = "Index";
+}
+@Styles.Render("~/Content/AceEdit.css")
+@Styles.Render("~/Content/ProjectView.css")
+
+    <div class="sidebar-inverse sidebar-fixed-right">
+        <a class="sidebar-brand" href="@Url.Action("Index", "Home")">
+            <img src="~/Content/Images/CcWG.png" class="img-responsive" />
+        </a>
+        <ul class="sidebar-nav">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Highlights", "Highlights", "Home")</li>
+            <li>@Html.ActionLink("Picked Projects", "PickedProjects", "Home") </li>
+        </ul>
+    </div>
+
+    <div class="projectViewContent">
+    <h2>@Model.project.name</h2>
+
+    <input type="button" id="runCode" value="Run The Code">
+    <label for="mode" class="control-label">Language Mode:</label>
+    <select id="mode" class="form-control">
+        <option>javascript</option>
+        <option>json</option>
+        <option>xml</option>
+        <option>php</option>
+    </select>
+    <div id="editor">
+        @ViewBag.Code
+    </div>
+
+    @using (Html.BeginForm("SaveCode", "Project", FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.files.content, new { @id = "hidden_editor" })
+        <input type="submit" value="Save Code" />
+    }
+
+    @section scripts
+    {
+        <script src="~/3rdParty/src/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+        <script src="~/signalr/hubs"></script>
+        <script>
+            var documentID = @ViewBag.DocumentID;
+
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/monokai");
+            editor.getSession().setMode("ace/mode/javascript");
+            $("form").submit(function () {
+                $("#hidden_editor").val(editor.getSession().getValue());
+            });
+            var codeHub = $.connection.codeHub;
+            var silent = false;
+            codeHub.client.onChange = function (changeData){
+                silent = true;
+                console.log(changeData);
+                editor.getSession().getDocument().applyDelta(changeData);
+                silent = false;
+            };
+            $.connection.hub.start().done(function () {
+                codeHub.server.joinDocument(documentID);
+                editor.on("change", function (obj) {
+                    if(silent){
+                        return;
+                    }
+                    console.log(obj);
+                    codeHub.server.onChange(obj, documentID);
+                });
+            });
+
+        </script>
+       
+    }
+</div>
+
+
+

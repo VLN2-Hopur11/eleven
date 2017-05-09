@@ -14,7 +14,6 @@
         <a class="navbar-brand" href="@Url.Action("Index", "Home")">
             <img src="~/Content/Images/CcWG.png" class="img-responsive"/>
         </a>
-
         <ul class="nav navbar-nav">
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
             <li>@Html.ActionLink("Highlights", "Highlights", "Home")</li>
@@ -31,12 +30,12 @@
                     <li>@Html.ActionLink("My Projects", "MyProjects", "Project")</li>
                 }
             }
-
             <li style="bottom: 0; position: fixed;">
                 @Html.Partial("_LoginPartial")
             </li>
         </ul>      
     </div>
+
     <div class="container body-content">
         @RenderBody()
         <hr />
