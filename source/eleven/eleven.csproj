@@ -237,6 +237,7 @@
     <Content Include="Content\Images\CcWG.png" />
     <Content Include="Content\NavBarSide.css" />
     <Content Include="Content\AceEdit.css" />
+    <Content Include="Content\NavBarSideRight.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -299,6 +300,7 @@
     <Content Include="Views\Project\NewProject.cshtml" />
     <Content Include="Views\Home\Highlights.cshtml" />
     <Content Include="Views\Home\PickedProjects.cshtml" />
+    <Content Include="Views\Shared\NavbarRightPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="3rdParty\src\" />
