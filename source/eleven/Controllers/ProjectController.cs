@@ -24,6 +24,14 @@ namespace eleven.Controllers
 
             ProjectViewModel model = new ProjectViewModel();
             model.project = db.projects.Where(x => x.Id == id).SingleOrDefault();
+            model.files = db.files.Where(x => x.project.Id == model.project.Id).ToList();
+
+            if (model.files == null)
+            {
+                model.files = new List<File>();
+            }
+
+            model.activeFile = model.files.First();
 
             if (model.project == null)
             {
@@ -39,9 +47,25 @@ namespace eleven.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveCode(ProjectViewModel model)
+        public ActionResult Index(ProjectViewModel changedModel)
         {
-            return View("Index");
+            if(changedModel.files == null)
+            {
+                changedModel.files = new List<File>();
+            }
+
+            if (changedModel.activeFile.Id == 0)
+            {
+                db.files.Add(changedModel.activeFile);
+            }
+            else
+            {
+                db.files.Where(x => x.Id == changedModel.activeFile.Id).SingleOrDefault().content = changedModel.activeFile.content;
+            }
+
+            db.SaveChanges();
+
+            return View(changedModel);
         }
 
         [Authorize]

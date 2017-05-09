@@ -20,9 +20,10 @@
             </ul>
         </div>  
     </div>
-
-    <div class="projectViewContent">
-    <h2>@Model.project.name</h2>
+<div class="col projectViewContent">
+    <p>Project: @Model.project.name</p>
+    <br />
+    <p>File: @Model.activeFile.name</p>
 
     <input type="button" id="runCode" value="Run The Code">
     <label for="mode" class="control-label">Language Mode:</label>
@@ -38,32 +39,19 @@
         @ViewBag.Code
     </div>
 
-    @using (Html.BeginForm("SaveCode", "Project", FormMethod.Post))
+@using (Html.BeginForm("Index", "Project", FormMethod.Post))
+{
+    if (Model.activeFile.name.IsEmpty())
     {
-        @Html.HiddenFor(m => m.files.content, new { @id = "hidden_editor" })
-        <input type="submit" value="Save Code" />
+        @Html.EditorFor(model => model.activeFile.name, new { required = "required" });
     }
-        @Scripts.Render("~/bundles/jquery")
-        <script type="text/javascript">
-        $('#mode').change(function () {
-            var editor = ace.edit("editor");
-            if ($(this).val() === '1') {
-                editor.getSession().setMode("ace/mode/javascript");
-            }
-            if ($(this).val() === '3') {
-                editor.getSession().setMode("ace/mode/json");
-            }
-            if ($(this).val() === '2') {
-                editor.getSession().setMode("ace/mode/json");
-            }
-            if ($(this).val() === '4') {
-                editor.getSession().setMode("ace/mode/json");
-            }
-            if ($(this).val() === '5') {
-                editor.getSession().setMode("ace/mode/html");
-            }
-            });
-        </script>
+
+    @Html.HiddenFor(model => model.activeFile.content, new { @id = "hidden_editor" });
+    @Html.HiddenFor(model => model.project.Id, new { @id = Url.RequestContext.RouteData.Values["id"] });
+
+    <input type="submit" value="Save Code" />
+}
+
     @section scripts
     {
         <script src="~/3rdParty/src/ace.js" type="text/javascript" charset="utf-8"></script>
@@ -98,9 +86,16 @@
             });
 
         </script>
-       
     }
 </div>
 
-
-
+<div class="col projectViewSidebar">
+    <a class="sidebar-brand" href="@Url.Action("Index", "Home")">
+        <img src="~/Content/Images/CcWG.png" class="img-responsive" />
+    </a>
+    <ul class="sidebar-li">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li>@Html.ActionLink("Highlights", "Highlights", "Home")</li>
+        <li>@Html.ActionLink("Picked Projects", "PickedProjects", "Home") </li>
+    </ul>
+</div>
