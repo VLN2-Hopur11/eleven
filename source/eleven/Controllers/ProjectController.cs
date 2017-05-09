@@ -38,7 +38,7 @@ namespace eleven.Controllers
         [HttpPost]
         public ActionResult SaveCode(ProjectViewModel model)
         {
-            return View("Project");
+            return View("Index");
         }
 
         [Authorize]
