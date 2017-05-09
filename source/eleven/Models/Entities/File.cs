@@ -6,10 +6,7 @@ using System.Web;
 
 namespace eleven.Models.Entities
 {
-    /// <summary>
-    /// many files can me created in 
-    /// one project. 
-    /// </summary>
+    /* many files can me created in one project. */
     public class File
     {
         public int Id { get; set; }

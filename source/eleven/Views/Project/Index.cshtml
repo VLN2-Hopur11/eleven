@@ -20,11 +20,11 @@
     @ViewBag.Code
 </div>
 
-@* @using (Html.BeginForm("SaveCode","Project", FormMethod.Post))
+ @using (Html.BeginForm("SaveCode","Project", FormMethod.Post))
     {
-        @Html.HiddenFor(m => m.files[0].content, new { @id = "hidden_editor"})
+        @Html.HiddenFor(m => m.files.content, new { @id = "hidden_editor"})
         <input type="submit" value="Save Code" />
-    } *@
+    } 
 
     @section scripts
     {
@@ -39,14 +39,16 @@
             editor.getSession().setMode("ace/mode/javascript");
             $("form").submit(function () {
                 $("#hidden_editor").val(editor.getSession().getValue());
-                editor.getSession().getDocument().applyDelta(changeData);
             });
             var codeHub = $.connection.codeHub;
             var silent = false;
             codeHub.client.onChange = function (changeData){
                 silent = true;
                 console.log(changeData);
+                editor.getSession().getDocument().applyDelta(changeData);
                 silent = false;
+
+
             };
             $.connection.hub.start().done(function () {
                 codeHub.server.joinDocument(documentID);

@@ -5,9 +5,7 @@ using System.Web;
 
 namespace eleven.Models.Entities
 {
-    /// <summary>
-    /// Highlights from news.
-    /// </summary>
+    /* Highlights from news.*/
     public class Highlights
     {
         public string title { get; set; }
