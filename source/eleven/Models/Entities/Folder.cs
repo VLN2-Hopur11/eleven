@@ -6,16 +6,14 @@ using System.Web;
 
 namespace eleven.Models.Entities
 {
-    /* many files can me created in one project. */
-    public class File
+    public class Folder
     {
+        //folder that includes grouped files
         public int Id { get; set; }
         [Required]
         public string name { get; set; }
-        public string type { get; set; }
-        public string content { get; set; }
+        public virtual ICollection<File> files { get; set; }
         [Required]
         public virtual Project project { get; set; }
-        public virtual Folder folder { get; set; }
     }
 }
