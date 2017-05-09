@@ -2,36 +2,40 @@
 @{
     ViewBag.Title = "Index";
 }
-@Styles.Render("~/Content/AceEdit.css ")
-<h2>Here will be a project</h2>
+@Styles.Render("~/Content/AceEdit.css")
+@Styles.Render("~/Content/ProjectView.css")
 
-<p>Project: @Model.project.name</p>
-<br />
-<p>File: @Model.activeFile.name</p>
-<input type="button" id="runCode" value="Run The Code">
-<label for="mode" class="control-label">Language Mode:</label>
-<select id="mode" class="form-control">
-    <option>javascript</option>
-    <option>json</option>
-    <option>xml</option>
-    <option>php</option>
-</select>
-<div id="editor">
-    @ViewBag.Code
-</div>
+<div class="col projectViewContent">
+    <p>Project: @Model.project.name</p>
+    <br />
+    <p>File: @Model.activeFile.name</p>
+
+    <input type="button" id="runCode" value="Run The Code">
+    <label for="mode" class="control-label">Language Mode:</label>
+    <label for="mode" class="control-label">Language Mode:</label>
+    <select id="mode" class="form-control">
+        <option value='1'>javascript</option>
+        <option value='2'>json</option>
+        <option value='3'>xml</option>
+        <option value='4'>php</option>
+        <option value='5'>html</option>
+    </select>
+    <div id="editor">
+        @ViewBag.Code
+    </div>
 
 @using (Html.BeginForm("Index", "Project", FormMethod.Post))
 {
-        if (Model.activeFile.name.IsEmpty())
-        {
-            @Html.EditorFor(model => model.activeFile.name, new { required = "required" });
-        }
-
-        @Html.HiddenFor(model => model.activeFile.content, new { @id = "hidden_editor"});
-        @Html.HiddenFor(model => model.project.Id, new { @id = Url.RequestContext.RouteData.Values["id"] });
-
-        <input type="submit" value="Save Code" />
+    if (Model.activeFile.name.IsEmpty())
+    {
+        @Html.EditorFor(model => model.activeFile.name, new { required = "required" });
     }
+
+    @Html.HiddenFor(model => model.activeFile.content, new { @id = "hidden_editor" });
+    @Html.HiddenFor(model => model.project.Id, new { @id = Url.RequestContext.RouteData.Values["id"] });
+
+    <input type="submit" value="Save Code" />
+}
 
     @section scripts
     {
@@ -46,13 +50,13 @@
             editor.getSession().setMode("ace/mode/javascript");
             $("form").submit(function () {
                 $("#hidden_editor").val(editor.getSession().getValue());
-                editor.getSession().getDocument().applyDelta(changeData);
             });
             var codeHub = $.connection.codeHub;
             var silent = false;
             codeHub.client.onChange = function (changeData){
                 silent = true;
                 console.log(changeData);
+                editor.getSession().getDocument().applyDelta(changeData);
                 silent = false;
             };
             $.connection.hub.start().done(function () {
@@ -68,3 +72,15 @@
 
         </script>
     }
+</div>
+
+<div class="col projectViewSidebar">
+    <a class="sidebar-brand" href="@Url.Action("Index", "Home")">
+        <img src="~/Content/Images/CcWG.png" class="img-responsive" />
+    </a>
+    <ul class="sidebar-li">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li>@Html.ActionLink("Highlights", "Highlights", "Home")</li>
+        <li>@Html.ActionLink("Picked Projects", "PickedProjects", "Home") </li>
+    </ul>
+</div>
