@@ -1,39 +1,54 @@
-﻿html, body, #fullheight {
-    min-height: 100% !important;
+﻿/*Overriding bootstrap*/
+html, body, #fullheight {
     height: 100%;
+    padding-bottom: 0px;
 }
-
 .body-content{
     height: 100%;
     padding-right: 0px;
 }
+.container{
+    margin-right:0px;
+    margin-left: 150px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+@media (min-width: 768px) {
+ .container {
+ width:auto;
+ }
+}
+@media (min-width: 992px) {
+ .container {
+ width:auto;
+ }
+}
+.navbar-fixed-left + .container{
+    padding-left: 10px;
+}
 
-
+/*The Project Wrapper*/
 .projectViewWrapper{
     width:100%;
     height:100%;
-    margin-right:10px;
     float:right;
+    overflow: hidden;
 }
 .projectViewContent{
     float:left;
-    margin-right:5px;
 }
 
-
+/*The Project sidebar*/
 .navbar-fixed-right {
   width: 140px;
   float: right;
   border-radius: 0;
   height: 100%;
 }
-
 .navbar-fixed-right .navbar-nav > li {
   float: left;  /* Cancel default li float: left */
   width: 139px;
 }
-
 .navbar-fixed-right + .container {
   padding-right: 160px;
 }
-

@@ -46,19 +46,3 @@ textarea {
     margin-right: -15px;
     margin-left: -15px;
 }
-
-/*GMD að testa*/
-.one-test{
-    width: 32%;
-    border: 5px solid #2D3034;
-    border-radius: 2px;
-    position: relative;
-    overflow: hidden;
-    margin: 0 2% 25px 0;
-    box-sizing: border-box;
-}
-
-.headline-bottom{
-    border-top: 10px solid #8EBC98;
-    margin-top: 10px;
-}
