@@ -40,3 +40,26 @@
 .sidebar-inverse .sidebar-nav > li > a {
     color: #FFFFFF;
 }
+
+@media screen and (max-width: 980px) {
+    .sidebar-fixed-right {
+        margin-right: 3%;
+        max-width: 14%;
+    }
+    .navbar-fixed-left {
+        max-width: 54% !important;
+    }
+}
+
+@media screen and (max-width: 760px) {
+    .sidebar-fixed-right {
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+        float: none;
+        clear: both;
+    }
+    .navbar-fixed-left {
+        max-width: 100%;
+    }
+}

@@ -5,11 +5,12 @@
 @Styles.Render("~/Content/AceEdit.css")
 @Styles.Render("~/Content/ProjectView.css")
 
-    <div class="sidebar-inverse sidebar-fixed-right">
+    <div class="navbar sidebar-inverse sidebar-fixed-right">
         <a class="sidebar-brand" href="@Url.Action("Index", "Home")">
             <img src="~/Content/Images/CcWG.png" class="img-responsive" />
         </a>
-        <ul class="sidebar-nav">
+        <ul class="nav sidebar-nav">
+            <li>@Model.project.name</li>
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
             <li>@Html.ActionLink("Highlights", "Highlights", "Home")</li>
             <li>@Html.ActionLink("Picked Projects", "PickedProjects", "Home") </li>
