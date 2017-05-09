@@ -4,6 +4,7 @@ using eleven.Models.ViewModels;
 using eleven.Service;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -24,6 +25,14 @@ namespace eleven.Controllers
 
             ProjectViewModel model = new ProjectViewModel();
             model.project = db.projects.Where(x => x.Id == id).SingleOrDefault();
+            model.files = db.files.Where(x => x.project.Id == model.project.Id).ToList();
+
+            if (model.files == null)
+            {
+                model.files = new List<File>();
+            }
+
+            model.activeFile = model.files.First();
 
             if (model.project == null)
             {
@@ -33,15 +42,29 @@ namespace eleven.Controllers
             {
                 
             }
-            //ViewBag.Code = model.project.files.content;
+            ViewBag.Code = model.activeFile.content;
             ViewBag.DocumentID = id;
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult SaveCode(ProjectViewModel model)
+        public ActionResult Index(ProjectViewModel changedModel)
         {
-            return View("Index");
+            if (changedModel.activeFile.Id == 0)
+            {
+                Project project = db.projects.Where(x => x.Id == changedModel.project.Id).SingleOrDefault();
+                changedModel.activeFile.project = project;
+
+                db.files.Add(changedModel.activeFile);
+            }
+            else
+            {
+                File file = db.files.Where(x => x.Id == changedModel.activeFile.Id).SingleOrDefault();
+                file.content = changedModel.activeFile.content;
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Index", new { id = changedModel.project.Id });
         }
 
         [Authorize]
