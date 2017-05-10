@@ -26,27 +26,34 @@ namespace eleven.Controllers
             ProjectViewModel model = new ProjectViewModel();
             model.project = db.projects.Where(x => x.Id == id).SingleOrDefault();
             model.files = db.files.Where(x => x.project.Id == model.project.Id).ToList();
-            model.activeFile = model.files.Where(x => x.Id == model.project.activeFileId).SingleOrDefault();
-
-            if (model.files == null)
+            if (model.project.activeFileId != 0)
             {
-                model.files = new List<File>();
+                model.activeFile = model.files.Where(x => x.Id == model.project.activeFileId).SingleOrDefault();
             }
-
-            if(model.files.Count == 0)
+            else
             {
-                File file = new File();
-                model.files.Add(file);
+                if (model.files == null)
+                {
+                    model.files = new List<File>();
+                }
+                else if (model.files.Count == 0)
+                {
+                    File file = new File();
+                    model.activeFile = file;
+                }
+                else
+                {
+                    model.project.activeFileId = model.files.Last().Id;
+                    model.activeFile = model.files.Last();
+                    db.SaveChanges();
+                }
             }
 
             if (model.project == null)
             {
                 return View("Error");
             }
-            if (model.project.files == null)
-            {
-                
-            }
+
             ViewBag.Code = model.activeFile.content;
             ViewBag.DocumentID = id;
             return View(model);
