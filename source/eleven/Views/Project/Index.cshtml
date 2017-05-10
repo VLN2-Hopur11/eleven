@@ -8,7 +8,6 @@
 
 <div class="navbar navbar-inverse navbar-fixed-right" id="fullheight">
     <button id="newfile" class="btn btn-primary">New File</button>
-    <button id="newfolder" class="btn btn-primary">New Folder</button>
     <section id="newfileform" class="hidden">
         @using (Html.BeginForm("NewFile", "Project", FormMethod.Post))
         {
@@ -23,16 +22,18 @@
                 <option value="json">JSON</option>
             </select>
             <input type="hidden" name="projectId" value=@Model.project.Id />
-            <button type="submit" class="btn btn-primary">Send Invitation</button>
+            <button type="submit" class="btn btn-primary">Create File</button>
         }
     </section>
+    <br />
+    <button id="newfolder" class="btn btn-primary">New Folder</button>
     <section id="newfolderform" class="hidden">
-        @using (Html.BeginForm("InviteUser", "Project", FormMethod.Post))
+        @using (Html.BeginForm("NewFolder", "Project", FormMethod.Post))
         {
-            <label for="emailinvite">User Email:</label>
-            <input id="emailinvite" type="text" name="email" />
-                    <input type="hidden" name="projectId" value=@Model.project.Id />
-                        <button type="submit" class="btn btn-primary">Send Invitation</button>
+            <label for="newfoldername">Folder Name:</label>
+            <input id="newfoldername" type="text" name="newFoldername" />
+            <input type="hidden" name="projectId" value=@Model.project.Id />
+            <button type="submit" class="btn btn-primary">Create Folder</button>
         }
     </section>
     <div id="menu">
@@ -40,7 +41,8 @@
             <li class="projectName"><img src="~/Content/Images/birthday_cake1600.png" class="img-responsive" id="miniicon" />@Model.project.name</li>
             @foreach (var item in Model.project.files)
             {
-                <li class="file"><img src="~/Content/Images/very-basic-file-icon.png" class="img-responsive" id="miniicon" /><a href="#"> @Html.ActionLink(item.name, "Index", "Project") </a></li>
+                <li class="file">
+                    <img src="~/Content/Images/very-basic-file-icon.png" class="img-responsive" id="miniicon" />@Html.ActionLink(item.name, "setActiveFile", "Project", new { fileId = item.Id, projectId = Model.project.Id }, null)</li>
             }
         </ul>
     </div>
@@ -190,6 +192,12 @@
             });
             $("#inviteuser").click(function () {
                 $("#invitationform").toggleClass("hidden");
+            })
+            $("#newfile").click(function () {
+                $("#newfileform").toggleClass("hidden");
+            })
+            $("#newfolder").click(function () {
+                $("#newfolderform").toggleClass("hidden");
             })
             $("#findandreplace").click(function () {
                 $("#replaceinputs").toggleClass("hidden");
