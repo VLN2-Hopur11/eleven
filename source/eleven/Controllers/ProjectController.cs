@@ -59,6 +59,7 @@ namespace eleven.Controllers
             return View(model);
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult Index(ProjectViewModel changedModel)
         {
@@ -81,6 +82,14 @@ namespace eleven.Controllers
         }
 
         [Authorize]
+        public ActionResult setActiveFile(int fileId, int projectId)
+        {
+            service.setActiveFile(fileId, projectId);
+
+            return RedirectToAction("Index", new { id = projectId });
+        }
+
+        [Authorize]
         public ActionResult MyProjects()
         {
             // Get currently logged in user ID
@@ -92,12 +101,7 @@ namespace eleven.Controllers
             return View(viewModel);
         }
 
-        [HttpGet]
-        public ActionResult NewFile()
-        {
-            File file = new File();
-            return View(file);
-        }
+        [Authorize]
         [HttpPost]
         public ActionResult NewFile(string newFilename, string type, int projectId)
         {
@@ -107,6 +111,20 @@ namespace eleven.Controllers
             }
 
             service.addFile(newFilename, type, projectId);
+
+            return RedirectToAction("Index", new { id = projectId });
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult NewFolder(string newFoldername, int projectId)
+        {
+            if (service.folderNameExists(newFoldername, projectId))
+            {
+                return View("Error");
+            }
+
+            service.addFolder(newFoldername, projectId);
 
             return RedirectToAction("Index", new { id = projectId });
         }
