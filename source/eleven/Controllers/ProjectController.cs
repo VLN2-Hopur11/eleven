@@ -82,7 +82,6 @@ namespace eleven.Controllers
             ApplicationUser user = db.Users.Where(x => x.Id == userId).SingleOrDefault();
             MyProjectViewModel viewModel = new MyProjectViewModel();
             viewModel.projects = user.projects.ToList();
-
             return View(viewModel);
         }
 
