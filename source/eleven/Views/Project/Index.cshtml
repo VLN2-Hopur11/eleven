@@ -42,7 +42,8 @@
             @foreach (var item in Model.project.files)
             {
                 <li class="file">
-                    <img src="~/Content/Images/very-basic-file-icon.png" class="img-responsive" id="miniicon" />@Html.ActionLink(item.name, "setActiveFile", "Project", new { fileId = item.Id, projectId = Model.project.Id }, null)</li>
+                    <img src="~/Content/Images/very-basic-file-icon.png" class="img-responsive" id="miniicon" />@Html.ActionLink(item.name, "setActiveFile", "Project", new { fileId = item.Id, projectId = Model.project.Id }, null)
+                </li>
             }
         </ul>
     </div>
@@ -96,17 +97,15 @@
         <input type="button" class="btn-default" id="replaceallbutton" value="Replace All" />         
     </section>
 
-
     <div id="editor">@ViewBag.Code</div>
     <br />
-    @using (Html.BeginForm("Index", "Project", FormMethod.Post))
+    @using (Html.BeginForm("Index", "Project", FormMethod.Post, new { @id = "editorform" }))
     {
         if (Model.activeFile.name.IsEmpty())
         {
             @Html.LabelFor(model => model.activeFile.name, "Filename: ");
             @Html.EditorFor(model => model.activeFile.name, new { required = "required" });
         }
-
         @Html.HiddenFor(model => model.activeFile.content, new { @id = "hidden_editor" });
         @Html.HiddenFor(model => model.project.Id, new { @pid = Url.RequestContext.RouteData.Values["pid"] });
         
@@ -169,7 +168,7 @@
             var editor = ace.edit("editor");
             editor.setTheme("ace/theme/monokai");
             editor.getSession().setMode("ace/mode/javascript");
-            $("form").submit(function () {
+            $("#editorform").submit(function () {
                 $("#hidden_editor").val(editor.getSession().getValue());
             });
             var codeHub = $.connection.codeHub;

@@ -61,6 +61,7 @@ namespace eleven.Controllers
 
         [Authorize]
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Index(ProjectViewModel changedModel)
         {
             if (changedModel.activeFile.Id == 0)
