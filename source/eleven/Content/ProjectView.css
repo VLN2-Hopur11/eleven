@@ -1,64 +1,73 @@
-﻿/*Overriding bootstrap to fit the sidebar into the project view*/
+﻿/*Overriding bootstrap*/
+html, body, #fullheight {
+    height: 100%;
+    padding-bottom: 0px;
+}
 .body-content{
-    padding-right: 160px;
+    height: 100%;
+    padding-right: 0px;
 }
 .container{
-    margin-right: 0;
-    margin-left: 0;
+    margin-right:0px;
+    margin-left: 150px;
+    margin-bottom: 0px;
+    margin-top: 0px;
 }
-.body{
-    margin: 0;
+@media (min-width: 768px) {
+ .container {
+ width:auto;
+ }
+}
+@media (min-width: 992px) {
+ .container {
+ width:auto;
+ }
+}
+.navbar-fixed-left + .container{
+    padding-left: 10px;
 }
 
-/*The project content*/
-.projectViewConent{
-    padding-right: 160px;
+
+/*The Project Wrapper*/
+.projectViewWrapper{
+    width:100%;
+    height:100%;
+    float:right;
+    overflow: hidden;
 }
 
-/*The sidebar*/
-.projectViewSidebar {
+/*The Project Content*/
+.projectViewContent{
+    float:left;
+}
+
+
+/*The Project sidebar*/
+.navbar-fixed-right {
   width: 140px;
+  float: right;
   border-radius: 0;
   height: 100%;
-  float: right;
 }
-
-.projectViewSidebar .sidebar-li > li {
-  float: right;  /* Cancel default li float: left */
+.navbar-fixed-right .navbar-nav > li {
+  float: left;  /* Cancel default li float: left */
   width: 139px;
 }
-
-.projectViewSidebar {
-    background-color: #2D3034;
-    border-bottom-color:none;
-    border-top-color:none;
-    border-left-color:none;
-    border-right-color:none;
+.navbar-fixed-right + .container {
+  padding-right: 160px;
 }
 
-.projectViewSidebar .sidebar-li > li > a {
+
+/*Styling CSS*/
+.navbar-fixed-right > p{
+    text-align: center;
+}
+/*Þyrfti aðeins að stússast meira í þessu CSS-i*/
+.button{
     color: #FFFFFF;
+    background-color: #2D3034;
 }
-
-@media screen and (max-width: 980px) {
-    .sidebar-fixed-right {
-        margin-right: 3%;
-        max-width: 14%;
-    }
-    .navbar-fixed-left {
-        max-width: 54% !important;
-    }
-}
-
-@media screen and (max-width: 760px) {
-    .sidebar-fixed-right {
-        margin: 0;
-        width: 100%;
-        max-width: 100%;
-        float: none;
-        clear: both;
-    }
-    .navbar-fixed-left {
-        max-width: 100%;
-    }
+.input{
+    color: #2D3034;
+    background-color: #FFFFFF;
 }
