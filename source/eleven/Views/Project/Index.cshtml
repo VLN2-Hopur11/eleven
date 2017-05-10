@@ -6,8 +6,8 @@
 @Styles.Render("~/Content/NavBarSide.css")
 @Styles.Render("~/Content/ProjectView.css")
 
-    <div   class="navbar navbar-inverse navbar-fixed-right" id="fullheight">   
-        <div id="menu">
+<div   class="navbar navbar-inverse navbar-fixed-right" id="fullheight">
+    <div id="menu">
             <ul id="item1" class="nav sidebar-nav">
                 <li class="projectName"><img src="~/Content/Images/birthday_cake1600.png" class="img-responsive" id="miniicon"/>@Model.project.name</li>
                 @foreach (var item in Model.project.folders)
@@ -19,56 +19,56 @@
                     }
                 }
             </ul>
-        </div> 
-        <ul class="nav navbar-nav">
+        </div>
+    <ul class="nav navbar-nav">
             <li style="bottom: 0; position: fixed;">
                 @Html.ActionLink("Project members", "Highlights", "Home")
                 @Html.ActionLink("New file", "PickedProjects", "Home")
             </li>
         </ul> 
-    </div>
+</div>
 
-    <div class="projectViewContent">
-        <h2>@Model.project.name</h2>
-        <hr class="headline-bottom" align="left" width="30%" />
-        <p>File: <span>@Model.activeFile.name</span></p>
-
-        <input type="button" id="runCode" value="Run The Code">
-        <div>
-            <label for="mode" class="control-label">Language Mode:</label>
-            <select id="mode" class="form-control">
-                <option value='1'>javascript</option>
-                <option value='2'>json</option>
-                <option value='3'>xml</option>
-                <option value='4'>php</option>
-                <option value='5'>html</option>
-            </select>
-        </div>
-        <label for="theme" class="control-label">Theme:</label>
-        <select id="theme" class="form-control">
-            <option value='one'>monokai</option>
-            <option value='two'>chrome</option>
-            <option value='three'>twilight</option>
-            <option value='four'>xcode</option>
-            <option value='five'>ambiance</option>
+<div class="projectViewContent">
+    <h2>@Model.project.name</h2>
+    <hr class="headline-bottom" align="left" width="30%" />
+    <p>File: <span>@Model.activeFile.name</span></p>
+    
+    <input type="button" id="runCode" value="Run The Code">
+    <div>
+        <label for="mode" class="control-label">Language Mode:</label>
+        <select id="mode" class="form-control">
+            <option value='1'>javascript</option>
+            <option value='2'>json</option>
+            <option value='3'>xml</option>
+            <option value='4'>php</option>
+            <option value='5'>html</option>
         </select>
-        <div id="editor">@ViewBag.Code</div>
-
-        @using (Html.BeginForm("Index", "Project", FormMethod.Post))
-{
-    if (Model.activeFile.name.IsEmpty())
+    </div>
+    <label for="theme" class="control-label">Theme:</label>
+    <select id="theme" class="form-control">
+        <option value='one'>monokai</option>
+        <option value='two'>chrome</option>
+        <option value='three'>twilight</option>
+        <option value='four'>xcode</option>
+        <option value='five'>ambiance</option>
+    </select>
+    <div id="editor">@ViewBag.Code</div>
+    
+    @using (Html.BeginForm("Index", "Project", FormMethod.Post))
     {
-                @Html.EditorFor(model => model.activeFile.name, new { required = "required" });
-    }
+        if (Model.activeFile.name.IsEmpty())
+        {
+            @Html.EditorFor(model => model.activeFile.name, new { required = "required" });
+        }
             @Html.HiddenFor(model => model.activeFile.content, new { @id = "hidden_editor" });
             @Html.HiddenFor(model => model.project.Id, new { @pid = Url.RequestContext.RouteData.Values["pid"] });
 
-    if (Model.activeFile.Id != 0)
-    {
-                @Html.HiddenFor(model => model.activeFile.Id, new { @fid = Url.RequestContext.RouteData.Values["fid"] });
+        if (Model.activeFile.Id != 0)
+        {
+            @Html.HiddenFor(model => model.activeFile.Id, new { @fid = Url.RequestContext.RouteData.Values["fid"] });
+        }
+        <input type="submit" value="Save Code" />
     }
-            <input type="submit" value="Save Code" />
-}
     @Scripts.Render("~/bundles/jquery")
     <script type="text/javascript">
         $('#mode').change(function () {
@@ -112,10 +112,10 @@
     </script>
     @section scripts
     {
-            <script src="~/3rdParty/src/ace.js" type="text/javascript" charset="utf-8"></script>
-            <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
-            <script src="~/signalr/hubs"></script>
-            <script>
+        <script src="~/3rdParty/src/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+        <script src="~/signalr/hubs"></script>
+        <script>
             var documentID = @ViewBag.DocumentID;
 
             var editor = ace.edit("editor");
@@ -142,7 +142,6 @@
                     codeHub.server.onChange(obj, documentID);
                 });
             });
-
-            </script>
+        </script>
         }
-    </div>
+</div>
