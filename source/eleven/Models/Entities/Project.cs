@@ -12,6 +12,7 @@ namespace eleven.Models.Entities
         public int Id { get; set; }
         [Required]
         public string name { get; set; }
+        public string authorID { get; set; }
         public virtual ICollection<File> files { get; set; }
         public virtual ICollection<Folder> folders { get; set; }
         public virtual ICollection<ApplicationUser> users { get; set; }
