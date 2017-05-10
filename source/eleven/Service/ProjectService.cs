@@ -40,6 +40,7 @@ namespace eleven.Service
                 Project newProject = new Project();
                 newProject.name = project.name;
                 newProject.users = new List<ApplicationUser>();
+                newProject.author = project.author;
                 newProject.users.Add(owner);
                 db.projects.Add(newProject);
                 db.SaveChanges();
