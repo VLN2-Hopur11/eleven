@@ -67,8 +67,9 @@ namespace eleven.Controllers
             {
                 File file = db.files.Where(x => x.Id == changedModel.activeFile.Id).SingleOrDefault();
                 file.content = changedModel.activeFile.content;
-                db.SaveChanges();
             }
+
+            db.SaveChanges();
 
             return RedirectToAction("Index", new { id = changedModel.project.Id });
         }
