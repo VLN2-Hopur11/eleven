@@ -59,6 +59,11 @@ namespace eleven.Controllers
             return View(model);
         }
 
+        public ActionResult SidebarPartial(ProjectViewModel viewModel)
+        {
+            return PartialView("SidebarPartial", viewModel);
+        }
+
         [Authorize]
         [HttpPost]
         [ValidateInput(false)]

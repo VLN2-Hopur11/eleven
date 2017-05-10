@@ -6,63 +6,7 @@
 @Styles.Render("~/Content/NavBarSide.css")
 @Styles.Render("~/Content/ProjectView.css")
 
-<div class="navbar navbar-inverse navbar-fixed-right" id="fullheight">
-    <button id="newfile" class="btn btn-primary">New File</button>
-    <section id="newfileform" class="hidden">
-        @using (Html.BeginForm("NewFile", "Project", FormMethod.Post))
-        {
-            <label for="newfilename">Filename:</label>
-            <input id="newfilename" type="text" name="newFilename" />
-            <select name="type">
-                <option value="js">Javascript</option>
-                <option value="css">CSS</option>
-                <option valute="html">HTML</option>
-                <option value="xml">XML</option>
-                <option value="php">PHP</option>
-                <option value="json">JSON</option>
-            </select>
-            <input type="hidden" name="projectId" value=@Model.project.Id />
-            <button type="submit" class="btn btn-primary">Create File</button>
-        }
-    </section>
-    <br />
-    <button id="newfolder" class="btn btn-primary">New Folder</button>
-    <section id="newfolderform" class="hidden">
-        @using (Html.BeginForm("NewFolder", "Project", FormMethod.Post))
-        {
-            <label for="newfoldername">Folder Name:</label>
-            <input id="newfoldername" type="text" name="newFoldername" />
-            <input type="hidden" name="projectId" value=@Model.project.Id />
-            <button type="submit" class="btn btn-primary">Create Folder</button>
-        }
-    </section>
-    <div id="menu">
-        <ul id="item1" class="nav sidebar-nav">
-            <li class="projectName"><img src="~/Content/Images/birthday_cake1600.png" class="img-responsive" id="miniicon" />@Model.project.name</li>
-            @foreach (var item in Model.project.files)
-            {
-                <li class="file">
-                    <img src="~/Content/Images/very-basic-file-icon.png" class="img-responsive" id="miniicon" />@Html.ActionLink(item.name, "setActiveFile", "Project", new { fileId = item.Id, projectId = Model.project.Id }, null)
-                </li>
-            }
-        </ul>
-    </div>
-    <ul class="nav navbar-nav">
-        <li style="bottom: 0; position: fixed;">
-            @Html.ActionLink("Project members", "Highlights", "Home")
-            <button id="inviteuser" class="btn btn-primary">Invite User</button>
-            <section id="invitationform" class="hidden">
-                @using (Html.BeginForm("InviteUser", "Project", FormMethod.Post))
-                {
-                    <label for="emailinvite">User Email:</label>
-                        <input id="emailinvite" type="text" name="email" />
-                        <input type="hidden" name="projectId" value=@Model.project.Id />
-                        <button type="submit" class="btn btn-primary">Send Invitation</button>
-                }
-            </section>
-        </li>
-    </ul>
-</div>
+@Html.Partial("SidebarPartial", Model)
 
 <div class="projectViewContent">
     <h2>@Model.project.name</h2>
@@ -96,7 +40,7 @@
         <input type="button" class="btn-default" id="replaceallbutton" value="Replace All" />         
     </section>
 
-    <div id="editor">@ViewBag.Code</div>
+    <div id="editor" class="hidden">@ViewBag.Code</div>
     <br />
     @using (Html.BeginForm("Index", "Project", FormMethod.Post, new { @id = "editorform" }))
     {
@@ -115,104 +59,22 @@
 
         <input type="submit" class="btn btn-primary" value="Save Code" />
     }
-    @Scripts.Render("~/bundles/jquery")
-    <script type="text/javascript">
-        $('#mode').change(function () {
-            var editor = ace.edit("editor");
-            if ($(this).val() === '1') {
-                editor.getSession().setMode("ace/mode/javascript");
-            }
-            if ($(this).val() === '2') {
-                editor.getSession().setMode("ace/mode/json");
-            }
-            if ($(this).val() === '3') {
-                editor.getSession().setMode("ace/mode/xml");
-            }
-            if ($(this).val() === '4') {
-                editor.getSession().setMode("ace/mode/php");
-            }
-            if ($(this).val() === '5') {
-                editor.getSession().setMode("ace/mode/html");
-            }
-            });
-    </script>
-    <script type="text/javascript">
-        $('#theme').change(function () {
-            var editor = ace.edit("editor");
-            if ($(this).val() === "one") {
-                editor.setTheme("ace/theme/monokai");
-            }
-            if ($(this).val() === 'two') {
-                editor.setTheme("ace/theme/chrome");
-            }
-            if ($(this).val() === 'three') {
-                editor.setTheme("ace/theme/twilight");
-            }
-            if ($(this).val() === 'four') {
-                editor.setTheme("ace/theme/chaos");
-            }
-            if ($(this).val() === 'five') {
-                editor.setTheme("ace/theme/ambiance");
-            }
-            });
-    </script>
+
     @section scripts
     {
-        <script src="~/3rdParty/src/ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
-        <script src="~/signalr/hubs"></script>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/3rdParty/src/ace.js")
+        @Scripts.Render("~/Scripts/jquery.signalR-2.2.2.js")
+        @Scripts.Render("~/signalr/hubs")
         <script>
             var documentID = @ViewBag.DocumentID;
-
             var editor = ace.edit("editor");
             editor.setTheme("ace/theme/monokai");
             editor.getSession().setMode("ace/mode/javascript");
-            $("#editorform").submit(function () {
-                $("#hidden_editor").val(editor.getSession().getValue());
-            });
-            var codeHub = $.connection.codeHub;
-            var silent = false;
-            codeHub.client.onChange = function (changeData){
-                silent = true;
-                console.log(changeData);
-                editor.getSession().getDocument().applyDelta(changeData);
-                silent = false;
-            };
-            $.connection.hub.start().done(function () {
-                codeHub.server.joinDocument(documentID);
-                editor.on("change", function (obj) {
-                    if(silent){
-                        return;
-                    }
-                    console.log(obj);
-                    codeHub.server.onChange(obj, documentID);
-                });
-            });
-            $("#inviteuser").click(function () {
-                $("#invitationform").toggleClass("hidden");
-            })
-            $("#newfile").click(function () {
-                $("#newfileform").toggleClass("hidden");
-            })
-            $("#newfolder").click(function () {
-                $("#newfolderform").toggleClass("hidden");
-            })
-            $("#findandreplace").click(function () {
-                $("#replaceinputs").toggleClass("hidden");
-            })
-            $("#replacebutton").click(function () {
-                var theFind = $('#find').val();
-                var theReplace = $('#replace').val();
-                editor.find(theFind);
-                editor.replace(theReplace);
-            })
-            $("#replaceallbutton").click(function () {
-                var editor = ace.edit("editor");
-                var theFind = $('#find').val();
-                var theReplace = $('#replace').val();
-                editor.find(theFind);
-                editor.replaceAll(theReplace);
-            })
+        </script>
+        @Scripts.Render("~/Scripts/projectscript.js")
+        <script>
+            $("#editor").removeClass("hidden")
         </script>
     }
 </div>
