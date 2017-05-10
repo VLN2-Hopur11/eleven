@@ -10,7 +10,7 @@ namespace eleven.Tests.Services
         public void TestUserExists()
         {
             // Arrange: const string user = "dabs";
-            // var service = new UberService();
+            // var service = new UberService(); 
 
             // Act: var result = service.GetFriendsForUser(user);
 
