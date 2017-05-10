@@ -9,15 +9,15 @@
 <div   class="navbar navbar-inverse navbar-fixed-right" id="fullheight">
     <div id="menu">
             <ul id="item1" class="nav sidebar-nav">
-                <li class="projectName"><img src="~/Content/Images/birthday_cake1600.png" class="img-responsive" id="miniicon"/>@Model.project.name</li>
+                <li class="projectName"><img src="~/Content/Images/birthday_cake1600.png" class="img-responsive" id="miniicon"/><a id="hideText" href="">@Model.project.name</a></li>
                 @foreach (var item in Model.project.files)
                 {
-                    <li class="file"><img src="~/Content/Images/very-basic-file-icon.png" class="img-responsive" id="miniicon"/><a href="#"> @Html.ActionLink(item.name, "Index","Project") </a></li>
+                    <li class="file" id="file"><img src="~/Content/Images/very-basic-file-icon.png" class="img-responsive" id="miniicon" /> @Html.ActionLink(item.name, "Index","Project") </li>
                 }
             </ul>
         </div>
     <ul class="nav navbar-nav">
-            <li style="bottom: 0; position: fixed;">
+            <li style="bottom:0; position:fixed;">
                 @Html.ActionLink("Project members", "Highlights", "Home")
                 @Html.ActionLink("New file", "PickedProjects", "Home")
             </li>
@@ -111,7 +111,7 @@
         <script src="~/3rdParty/src/ace.js" type="text/javascript" charset="utf-8"></script>
         <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
         <script src="~/signalr/hubs"></script>
-        <script>
+    <script>
             var documentID = @ViewBag.DocumentID;
 
             var editor = ace.edit("editor");
@@ -138,6 +138,27 @@
                     codeHub.server.onChange(obj, documentID);
                 });
             });
-        </script>
-        }
+            //sidebar hide and show file function
+            $(document).ready(function() {
+
+                var hideLink = document.getElementById("hideText");              
+                var file = document.getElementById("file"); 
+
+                hideLink.onclick = function() {
+                    file.style.display ="none";
+                    
+
+                    if(file.style.display == "none") {
+                        var showLink = document.getElementById("hideText");
+                        showLink.onclick = function() {
+                            file.style.display="initial";
+                            return false;
+                        }  
+                    } 
+                    
+                    return false;
+                }
+            });
+            </script>
+      }
 </div>
