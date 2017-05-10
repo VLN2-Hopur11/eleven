@@ -51,3 +51,12 @@ textarea {
     border-top: 10px solid #8EBC98;
     margin-top: 10px;
 }
+
+.actionLinkButton
+{
+     display: block;
+     width: 100px;
+     height: 50px;
+     background-color: #2D3034;
+     /*text-indent: -9999px; /* hides the link text */
+}
