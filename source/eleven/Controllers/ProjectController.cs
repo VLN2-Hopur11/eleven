@@ -26,6 +26,7 @@ namespace eleven.Controllers
             ProjectViewModel model = new ProjectViewModel();
             model.project = db.projects.Where(x => x.Id == id).SingleOrDefault();
             model.files = db.files.Where(x => x.project.Id == model.project.Id).ToList();
+            model.activeFile = model.files.Where(x => x.Id == model.project.activeFileId).SingleOrDefault();
 
             if (model.files == null)
             {
@@ -37,8 +38,6 @@ namespace eleven.Controllers
                 File file = new File();
                 model.files.Add(file);
             }
-            
-            model.activeFile = model.files.First();
 
             if (model.project == null)
             {
@@ -92,10 +91,16 @@ namespace eleven.Controllers
             return View(file);
         }
         [HttpPost]
-        public ActionResult NewFile(File file)
+        public ActionResult NewFile(string newFilename, string type, int projectId)
         {
+            if (service.fileNameExists(newFilename, projectId))
+            {
+                return View("Error");
+            }
 
-            return View(file);
+            service.addFile(newFilename, type, projectId);
+
+            return RedirectToAction("Index", new { id = projectId });
         }
 
         [Authorize]
