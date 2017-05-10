@@ -52,6 +52,12 @@
             <option value='four'>chaos</option>
             <option value='five'>ambiance</option>
         </select>
+        @*<div>
+        Find: <input type="text" value="find" />
+        Replace: <input type="text" value="replace" />
+        Replace All: <input type="text" class="form-control" value="replaceAll" />
+        <input type="button" class="btn-default" value="findAndReplace" />
+        </div>*@
         <div id="editor">@ViewBag.Code</div>
 
         @using (Html.BeginForm("Index", "Project", FormMethod.Post))
