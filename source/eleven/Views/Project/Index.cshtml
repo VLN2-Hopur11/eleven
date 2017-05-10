@@ -86,6 +86,15 @@
         <option value='four'>chaos</option>
         <option value='five'>ambiance</option>
     </select>
+    <button id="findandreplace" class="btn btn-primary">Find and Replace</button>
+    <section id="replaceinputs" class="hidden">
+        <input type="text" class ="form-control" id="find" placeholder="Find"/>
+        <input type="text" class ="form-control" id="replace" placeholder="Replace" />
+        <input type="button" class="btn-default" id="replacebutton" value="Replace" />
+        <input type="button" class="btn-default" id="replaceallbutton" value="Replace All" />         
+    </section>
+
+
     <div id="editor">@ViewBag.Code</div>
     <br />
     @using (Html.BeginForm("Index", "Project", FormMethod.Post))
@@ -181,6 +190,22 @@
             });
             $("#inviteuser").click(function () {
                 $("#invitationform").toggleClass("hidden");
+            })
+            $("#findandreplace").click(function () {
+                $("#replaceinputs").toggleClass("hidden");
+            })
+            $("#replacebutton").click(function () {
+                var theFind = $('#find').val();
+                var theReplace = $('#replace').val();
+                editor.find(theFind);
+                editor.replace(theReplace);
+            })
+            $("#replaceallbutton").click(function () {
+                var editor = ace.edit("editor");
+                var theFind = $('#find').val();
+                var theReplace = $('#replace').val();
+                editor.find(theFind);
+                editor.replaceAll(theReplace);
             })
         </script>
     }
