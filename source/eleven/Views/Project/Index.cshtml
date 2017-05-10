@@ -6,7 +6,27 @@
 @Styles.Render("~/Content/NavBarSide.css")
 @Styles.Render("~/Content/ProjectView.css")
 
-<div class="projectViewWrapper">
+    <div   class="navbar navbar-inverse navbar-fixed-right" id="fullheight">   
+        <div id="menu">
+            <ul id="item1" class="nav sidebar-nav">
+                <li class="projectName"><img src="~/Content/Images/birthday_cake1600.png" class="img-responsive" id="miniicon"/>@Model.project.name</li>
+                @foreach (var item in Model.project.folders)
+                {
+                    <li class="folder"><img src="~/Content/Images/folder-2.png" class="img-responsive" id="miniicon" />item.name</li>
+                    foreach (var seconditem in item.files)
+                    {
+                        <li class="file"><img src="~/Content/Images/very-basic-file-icon.png" class="img-responsive" id="miniicon" /<a href="#">seconditem.name</a></li>
+                    }
+                }
+            </ul>
+        </div> 
+        <ul class="nav navbar-nav">
+            <li style="bottom: 0; position: fixed;">
+                @Html.ActionLink("Project members", "Highlights", "Home")
+                @Html.ActionLink("New file", "PickedProjects", "Home")
+            </li>
+        </ul> 
+    </div>
 
     <div class="projectViewContent">
         <h2>@Model.project.name</h2>
@@ -126,31 +146,3 @@
             </script>
         }
     </div>
-
-    @*Hér á eftir að útfæra virknina á project sidebar*@
-    @*Hér að neðan er svona létt uppsetning til að gefa hugmynd um hvernig þessi sidebar gæti orðið, gætum verið með foreach loop sem þylur upp alla hópmeðlimi*@
-    <div class="navbar navbar-inverse navbar-fixed-right" id="fullheight">
-        <p><b>@Model.project.name</b></p>
-        <br />
-
-        @*Eitthvað í þessa áttina gæti hlupið með file-ana inn í sidebarinn*@
-        @*
-        <ul class="nav navbar-nav">
-            @foreach (var itemj in Model.files)
-            {
-                <li>
-                    @Html.ActionLink(itemj.name, "Index", "Project", new { Id = itemj.Id }, null)
-                </li>
-            }
-        </ul>
-        *@
-
-        <ul class="nav navbar-nav">
-            <li style="bottom: 0; position: fixed;">
-                @Html.ActionLink("Project members", "Highlights", "Home")
-                @Html.ActionLink("New file", "PickedProjects", "Home") 
-            </li>
-        </ul>
-    </div>
-
-</div>
