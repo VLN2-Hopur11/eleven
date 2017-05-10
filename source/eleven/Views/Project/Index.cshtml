@@ -10,13 +10,9 @@
     <div id="menu">
             <ul id="item1" class="nav sidebar-nav">
                 <li class="projectName"><img src="~/Content/Images/birthday_cake1600.png" class="img-responsive" id="miniicon"/>@Model.project.name</li>
-                @foreach (var item in Model.project.folders)
+                @foreach (var item in Model.project.files)
                 {
-                    <li class="folder"><img src="~/Content/Images/folder-2.png" class="img-responsive" id="miniicon" />item.name</li>
-                    foreach (var seconditem in item.files)
-                    {
-                        <li class="file"><img src="~/Content/Images/very-basic-file-icon.png" class="img-responsive" id="miniicon" /<a href="#">seconditem.name</a></li>
-                    }
+                    <li class="file"><img src="~/Content/Images/very-basic-file-icon.png" class="img-responsive" id="miniicon"/><a href="#"> @Html.ActionLink(item.name, "Index","Project") </a></li>
                 }
             </ul>
         </div>
