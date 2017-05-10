@@ -20,23 +20,23 @@
             </ul>
         </div>  
     </div>
-<div class="col projectViewContent">
-    <p>Project: @Model.project.name</p>
-    <br />
-    <p>File: @Model.activeFile.name</p>
+    <div class="col projectViewContent">
+        <p>Project: @Model.project.name</p>
+        <br />
+        <p>File: @Model.activeFile.name</p>
 
-    <input type="button" id="runCode" value="Run The Code">
-    <label for="mode" class="control-label">Language Mode:</label>
-    <label for="mode" class="control-label">Language Mode:</label>
-    <select id="mode" class="form-control">
-        <option value='1'>javascript</option>
-        <option value='2'>json</option>
-        <option value='3'>xml</option>
-        <option value='4'>php</option>
-        <option value='5'>html</option>
-    </select>
-    <div id="editor">
-        @ViewBag.Code
+        <input type="button" id="runCode" value="Run The Code">
+        <label for="mode" class="control-label">Language Mode:</label>
+        <label for="mode" class="control-label">Language Mode:</label>
+        <select id="mode" class="form-control">
+            <option value='1'>javascript</option>
+            <option value='2'>json</option>
+            <option value='3'>xml</option>
+            <option value='4'>php</option>
+            <option value='5'>html</option>
+        </select>
+        <div id="editor">
+            @ViewBag.Code
     </div>
 
 @using (Html.BeginForm("Index", "Project", FormMethod.Post))
