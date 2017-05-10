@@ -7,6 +7,34 @@
 @Styles.Render("~/Content/ProjectView.css")
 
 <div class="navbar navbar-inverse navbar-fixed-right" id="fullheight">
+    <button id="newfile" class="btn btn-primary">New File</button>
+    <button id="newfolder" class="btn btn-primary">New Folder</button>
+    <section id="newfileform" class="hidden">
+        @using (Html.BeginForm("NewFile", "Project", FormMethod.Post))
+        {
+            <label for="newfilename">Filename:</label>
+            <input id="newfilename" type="text" name="newFilename" />
+            <select name="type">
+                <option value="js">Javascript</option>
+                <option value="css">CSS</option>
+                <option valute="html">HTML</option>
+                <option value="xml">XML</option>
+                <option value="php">PHP</option>
+                <option value="json">JSON</option>
+            </select>
+            <input type="hidden" name="projectId" value=@Model.project.Id />
+            <button type="submit" class="btn btn-primary">Send Invitation</button>
+        }
+    </section>
+    <section id="newfolderform" class="hidden">
+        @using (Html.BeginForm("InviteUser", "Project", FormMethod.Post))
+        {
+            <label for="emailinvite">User Email:</label>
+            <input id="emailinvite" type="text" name="email" />
+                    <input type="hidden" name="projectId" value=@Model.project.Id />
+                        <button type="submit" class="btn btn-primary">Send Invitation</button>
+        }
+    </section>
     <div id="menu">
         <ul id="item1" class="nav sidebar-nav">
             <li class="projectName"><img src="~/Content/Images/birthday_cake1600.png" class="img-responsive" id="miniicon" />@Model.project.name</li>
@@ -58,22 +86,34 @@
         <option value='four'>chaos</option>
         <option value='five'>ambiance</option>
     </select>
-    <div id="editor">@ViewBag.Code</div>
+    <button id="findandreplace" class="btn btn-primary">Find and Replace</button>
+    <section id="replaceinputs" class="hidden">
+        <input type="text" class ="form-control" id="find" placeholder="Find"/>
+        <input type="text" class ="form-control" id="replace" placeholder="Replace" />
+        <input type="button" class="btn-default" id="replacebutton" value="Replace" />
+        <input type="button" class="btn-default" id="replaceallbutton" value="Replace All" />         
+    </section>
 
+
+    <div id="editor">@ViewBag.Code</div>
+    <br />
     @using (Html.BeginForm("Index", "Project", FormMethod.Post))
     {
         if (Model.activeFile.name.IsEmpty())
         {
+            @Html.LabelFor(model => model.activeFile.name, "Filename: ");
             @Html.EditorFor(model => model.activeFile.name, new { required = "required" });
         }
+
         @Html.HiddenFor(model => model.activeFile.content, new { @id = "hidden_editor" });
         @Html.HiddenFor(model => model.project.Id, new { @pid = Url.RequestContext.RouteData.Values["pid"] });
-
+        
         if (Model.activeFile.Id != 0)
         {
             @Html.HiddenFor(model => model.activeFile.Id, new { @fid = Url.RequestContext.RouteData.Values["fid"] });
         }
-        <input type="submit" value="Save Code" />
+
+        <input type="submit" class="btn btn-primary" value="Save Code" />
     }
     @Scripts.Render("~/bundles/jquery")
     <script type="text/javascript">
@@ -149,7 +189,23 @@
                 });
             });
             $("#inviteuser").click(function () {
-                $("#invitationform").removeClass("hidden");
+                $("#invitationform").toggleClass("hidden");
+            })
+            $("#findandreplace").click(function () {
+                $("#replaceinputs").toggleClass("hidden");
+            })
+            $("#replacebutton").click(function () {
+                var theFind = $('#find').val();
+                var theReplace = $('#replace').val();
+                editor.find(theFind);
+                editor.replace(theReplace);
+            })
+            $("#replaceallbutton").click(function () {
+                var editor = ace.edit("editor");
+                var theFind = $('#find').val();
+                var theReplace = $('#replace').val();
+                editor.find(theFind);
+                editor.replaceAll(theReplace);
             })
         </script>
     }

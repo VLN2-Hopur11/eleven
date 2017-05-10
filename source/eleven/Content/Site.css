@@ -23,6 +23,7 @@ input,
 select,
 textarea {
     max-width: 250px;
+    color: black;
 }
 
 .well {
