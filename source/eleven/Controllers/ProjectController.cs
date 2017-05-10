@@ -88,11 +88,13 @@ namespace eleven.Controllers
         [HttpGet]
         public ActionResult NewFile()
         {
-            return View();
+            File file = new File();
+            return View(file);
         }
         [HttpPost]
         public ActionResult NewFile(File file)
         {
+
             return View(file);
         }
 
@@ -101,7 +103,6 @@ namespace eleven.Controllers
         public ActionResult NewProject()
         {
             Project project = new Project();
-
             return View(project);
         }
         [Authorize]

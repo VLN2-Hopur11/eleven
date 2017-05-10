@@ -6,7 +6,7 @@
 @Styles.Render("~/Content/NavBarSide.css")
 @Styles.Render("~/Content/ProjectView.css")
 
-<div   class="navbar navbar-inverse navbar-fixed-right" id="fullheight">
+<div class="navbar navbar-inverse navbar-fixed-right" id="fullheight">
     <div id="menu">
             <ul id="item1" class="nav sidebar-nav">
                 <li class="projectName"><img src="~/Content/Images/birthday_cake1600.png" class="img-responsive" id="miniicon"/><a id="hideText" href="">@Model.project.name</a></li>
@@ -17,18 +17,28 @@
             </ul>
         </div>
     <ul class="nav navbar-nav">
-            <li style="bottom:0; position:fixed;">
-                @Html.ActionLink("Project members", "Highlights", "Home")
-                @Html.ActionLink("New file", "PickedProjects", "Home")
-            </li>
-        </ul> 
+        <li style="bottom: 0; position: fixed;">
+            @Html.ActionLink("Project members", "Highlights", "Home")
+            <button id="inviteuser" class="btn btn-primary">Invite User</button>
+            <section id="invitationform" class="hidden">
+                @using (Html.BeginForm("InviteUser", "Project", FormMethod.Post))
+                {
+                    <label for="emailinvite">User Email:</label>
+                        <input id="emailinvite" type="text" name="email" />
+                        <input type="hidden" name="projectId" value=@Model.project.Id />
+                        <button type="submit" class="btn btn-primary">Send Invitation</button>
+                }
+            </section>
+            @Html.ActionLink("New file", "PickedProjects", "Home")
+        </li>
+    </ul>
 </div>
 
 <div class="projectViewContent">
     <h2>@Model.project.name</h2>
     <hr class="headline-bottom" align="left" width="30%" />
     <p>File: <span>@Model.activeFile.name</span></p>
-    
+
     <input type="button" id="runCode" value="Run The Code">
     <div>
         <label for="mode" class="control-label">Language Mode:</label>
@@ -45,25 +55,37 @@
         <option value='one'>monokai</option>
         <option value='two'>chrome</option>
         <option value='three'>twilight</option>
-        <option value='four'>xcode</option>
+        <option value='four'>chaos</option>
         <option value='five'>ambiance</option>
     </select>
+    <button id="findandreplace" class="btn btn-primary">Find and Replace</button>
+    <section id="replaceinputs" class="hidden">
+        <input type="text" class ="form-control" id="find" placeholder="Find"/>
+        <input type="text" class ="form-control" id="replace" placeholder="Replace" />
+        <input type="button" class="btn-default" id="replacebutton" value="Replace" />
+        <input type="button" class="btn-default" id="replaceallbutton" value="Replace All" />         
+    </section>
+
+
     <div id="editor">@ViewBag.Code</div>
-    
+    <br />
     @using (Html.BeginForm("Index", "Project", FormMethod.Post))
     {
         if (Model.activeFile.name.IsEmpty())
         {
+            @Html.LabelFor(model => model.activeFile.name, "Filename: ");
             @Html.EditorFor(model => model.activeFile.name, new { required = "required" });
         }
-            @Html.HiddenFor(model => model.activeFile.content, new { @id = "hidden_editor" });
-            @Html.HiddenFor(model => model.project.Id, new { @pid = Url.RequestContext.RouteData.Values["pid"] });
 
+        @Html.HiddenFor(model => model.activeFile.content, new { @id = "hidden_editor" });
+        @Html.HiddenFor(model => model.project.Id, new { @pid = Url.RequestContext.RouteData.Values["pid"] });
+        
         if (Model.activeFile.Id != 0)
         {
             @Html.HiddenFor(model => model.activeFile.Id, new { @fid = Url.RequestContext.RouteData.Values["fid"] });
         }
-        <input type="submit" value="Save Code" />
+
+        <input type="submit" class="btn btn-primary" value="Save Code" />
     }
     @Scripts.Render("~/bundles/jquery")
     <script type="text/javascript">
@@ -138,6 +160,27 @@
                     codeHub.server.onChange(obj, documentID);
                 });
             });
+            $("#inviteuser").click(function () {
+                $("#invitationform").toggleClass("hidden");
+            })
+            $("#findandreplace").click(function () {
+                $("#replaceinputs").toggleClass("hidden");
+            })
+            $("#replacebutton").click(function () {
+                var theFind = $('#find').val();
+                var theReplace = $('#replace').val();
+                editor.find(theFind);
+                editor.replace(theReplace);
+            })
+            $("#replaceallbutton").click(function () {
+                var editor = ace.edit("editor");
+                var theFind = $('#find').val();
+                var theReplace = $('#replace').val();
+                editor.find(theFind);
+                editor.replaceAll(theReplace);
+            })
+        </script>
+    }
             //sidebar hide and show file function
             $(document).ready(function() {
 
