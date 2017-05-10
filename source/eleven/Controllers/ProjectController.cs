@@ -84,6 +84,7 @@ namespace eleven.Controllers
         public ActionResult MyProjects()
         {
             // Get currently logged in user ID
+            ViewBag.UserName = User.Identity.Name;
             var userId = User.Identity.GetUserId();
             ApplicationUser user = db.Users.Where(x => x.Id == userId).SingleOrDefault();
             MyProjectViewModel viewModel = new MyProjectViewModel();
