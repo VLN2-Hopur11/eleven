@@ -46,3 +46,8 @@ textarea {
     margin-right: -15px;
     margin-left: -15px;
 }
+
+.headline-bottom{
+    border-top: 10px solid #8EBC98;
+    margin-top: 10px;
+}

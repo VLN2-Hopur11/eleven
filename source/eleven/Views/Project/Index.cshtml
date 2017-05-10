@@ -9,12 +9,11 @@
 <div class="projectViewWrapper">
 
     <div class="projectViewContent">
-        <p>Project: @Model.project.name</p>
-        <br />
-        <p>File: @Model.activeFile.name</p>
+        <h2>@Model.project.name</h2>
+        <hr class="headline-bottom" align="left" width="30%" />
+        <p>File: <span>@Model.activeFile.name</span></p>
 
         <input type="button" id="runCode" value="Run The Code">
-        <label for="mode" class="control-label">Language Mode:</label>
         <label for="mode" class="control-label">Language Mode:</label>
         <select id="mode" class="form-control">
             <option value='1'>javascript</option>
@@ -33,7 +32,6 @@
     {
                 @Html.EditorFor(model => model.activeFile.name, new { required = "required" });
     }
-
             @Html.HiddenFor(model => model.activeFile.content, new { @id = "hidden_editor" });
             @Html.HiddenFor(model => model.project.Id, new { @pid = Url.RequestContext.RouteData.Values["pid"] });
 
@@ -41,10 +39,8 @@
     {
                 @Html.HiddenFor(model => model.activeFile.Id, new { @fid = Url.RequestContext.RouteData.Values["fid"] });
     }
-
             <input type="submit" value="Save Code" />
 }
-
         @section scripts
     {
             <script src="~/3rdParty/src/ace.js" type="text/javascript" charset="utf-8"></script>
@@ -82,14 +78,29 @@
         }
     </div>
 
+    @*Hér á eftir að útfæra virknina á project sidebar*@
+    @*Hér að neðan er svona létt uppsetning til að gefa hugmynd um hvernig þessi sidebar gæti orðið, gætum verið með foreach loop sem þylur upp alla hópmeðlimi*@
     <div class="navbar navbar-inverse navbar-fixed-right" id="fullheight">
-        <a class="navbar-brand" href="@Url.Action("Index", "Home")">
-            <img src="~/Content/Images/CcWG.png" class="img-responsive" />
-        </a>
+        <p><b>@Model.project.name</b></p>
+        <br />
+
+        @*Eitthvað í þessa áttina gæti hlupið með file-ana inn í sidebarinn*@
+        @*
         <ul class="nav navbar-nav">
-            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-            <li>@Html.ActionLink("Highlights", "Highlights", "Home")</li>
-            <li>@Html.ActionLink("Picked Projects", "PickedProjects", "Home") </li>
+            @foreach (var itemj in Model.files)
+            {
+                <li>
+                    @Html.ActionLink(itemj.name, "Index", "Project", new { Id = itemj.Id }, null)
+                </li>
+            }
+        </ul>
+        *@
+
+        <ul class="nav navbar-nav">
+            <li style="bottom: 0; position: fixed;">
+                @Html.ActionLink("Project members", "Highlights", "Home")
+                @Html.ActionLink("New file", "PickedProjects", "Home") 
+            </li>
         </ul>
     </div>
 

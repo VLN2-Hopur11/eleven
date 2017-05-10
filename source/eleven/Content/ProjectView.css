@@ -27,6 +27,7 @@ html, body, #fullheight {
     padding-left: 10px;
 }
 
+
 /*The Project Wrapper*/
 .projectViewWrapper{
     width:100%;
@@ -34,9 +35,12 @@ html, body, #fullheight {
     float:right;
     overflow: hidden;
 }
+
+/*The Project Content*/
 .projectViewContent{
     float:left;
 }
+
 
 /*The Project sidebar*/
 .navbar-fixed-right {
@@ -51,4 +55,19 @@ html, body, #fullheight {
 }
 .navbar-fixed-right + .container {
   padding-right: 160px;
+}
+
+
+/*Styling CSS*/
+.navbar-fixed-right > p{
+    text-align: center;
+}
+/*Þyrfti aðeins að stússast meira í þessu CSS-i*/
+.button{
+    color: #FFFFFF;
+    background-color: #2D3034;
+}
+.input{
+    color: #2D3034;
+    background-color: #FFFFFF;
 }
