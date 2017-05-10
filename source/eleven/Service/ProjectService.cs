@@ -104,6 +104,7 @@ namespace eleven.Service
             try
             {
                 user.projects.Add(project);
+                db.SaveChanges();
             }
             catch (NotSupportedException)
             {
