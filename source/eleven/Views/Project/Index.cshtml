@@ -59,21 +59,24 @@
         <option value='five'>ambiance</option>
     </select>
     <div id="editor">@ViewBag.Code</div>
-
+    <br />
     @using (Html.BeginForm("Index", "Project", FormMethod.Post))
     {
         if (Model.activeFile.name.IsEmpty())
         {
+            @Html.LabelFor(model => model.activeFile.name, "Filename: ");
             @Html.EditorFor(model => model.activeFile.name, new { required = "required" });
         }
+
         @Html.HiddenFor(model => model.activeFile.content, new { @id = "hidden_editor" });
         @Html.HiddenFor(model => model.project.Id, new { @pid = Url.RequestContext.RouteData.Values["pid"] });
-
+        
         if (Model.activeFile.Id != 0)
         {
             @Html.HiddenFor(model => model.activeFile.Id, new { @fid = Url.RequestContext.RouteData.Values["fid"] });
         }
-        <input type="submit" value="Save Code" />
+
+        <input type="submit" class="btn btn-primary" value="Save Code" />
     }
     @Scripts.Render("~/bundles/jquery")
     <script type="text/javascript">
@@ -149,7 +152,7 @@
                 });
             });
             $("#inviteuser").click(function () {
-                $("#invitationform").removeClass("hidden");
+                $("#invitationform").toggleClass("hidden");
             })
         </script>
     }
