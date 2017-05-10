@@ -71,3 +71,9 @@ html, body, #fullheight {
     color: #2D3034;
     background-color: #FFFFFF;
 }
+
+#miniicon {
+    width: 15px;
+    height: 10%;
+    float: left;
+}
