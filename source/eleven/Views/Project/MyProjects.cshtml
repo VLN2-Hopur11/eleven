@@ -6,14 +6,13 @@
 
 <h2>My Projects</h2>
 <hr class="headline-bottom" align="left" width="30%" />
-
-@*
+<div>
+    @Html.ActionLink("All Projects", "MyProjects", new { id = 0 }, new { @class = "btn-primary btn-lg" })
+    @Html.ActionLink("Projects created by me", "MyProjects", new { id = 1 }, new { @class = "btn-primary btn-lg" })
+    @Html.ActionLink("Projects shared with me", "MyProjects", new { id = 2 }, new { @class = "btn-primary btn-lg" })
+</div>
 <!--// Code for tab option in my projects-->
-<ul class="nav nav-pills">
-    <li role="presentation" class="@(ViewBag. == null ? "active" : "")">@Html.ActionLink("All projects","Index")</li>
-
-</ul>
-    *@
+<br />
 
 <section class="row">
     @foreach (var itemj in Model.projects)
