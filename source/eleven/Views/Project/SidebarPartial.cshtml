@@ -30,6 +30,7 @@
             <button type="submit" class="btn btn-primary">Create Folder</button>
         }
     </section>
+
     <section id="explorer">
         @foreach (var item in Model.project.files)
         {
@@ -46,6 +47,7 @@
             <section id="invitationform" class="hidden">
                 @using (Html.BeginForm("InviteUser", "Project", FormMethod.Post))
                 {
+                    
                     <label for="emailinvite">User Email:</label>
                     <input id="emailinvite" type="text" name="email" />
                         <input type="hidden" name="projectId" value=@Model.project.Id />
@@ -54,4 +56,28 @@
             </section>
         </li>
     </ul>
-</div>
+    </div>
+    @section scripts
+    {
+        <script>
+            //sidebar hide and show file function
+            $(document).ready(function() {
+
+                var hideLink = document.getElementById("hideText");
+                var file = document.getElementById("file");
+
+                hideLink.onclick = function() {
+                    file.style.display ="none";
+
+                    if(file.style.display == "none") {
+                        var showLink = document.getElementById("hideText");
+                        showLink.onclick = function() {
+                            file.style.display="initial";
+                            return false;
+                        }
+                    }
+                    return false;
+                }
+            })
+        </script>   
+    }
