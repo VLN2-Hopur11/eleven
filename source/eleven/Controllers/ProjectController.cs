@@ -99,37 +99,6 @@ namespace eleven.Controllers
         [Authorize]
         public ActionResult MyProjects()
         {
-            /*
-            var userId = User.Identity.GetUserId();
-            if (columnId == null || columnId > 2)
-            {
-                columnId = 0;
-            }
-            if (columnId == 1)
-            {
-                // ApplicationUser user = db.Users.Where(x => x.UserName == projectAuthor);
-                ApplicationUser user = db.Users.Where(x => x.Id == userId).SingleOrDefault();
-                MyProjectViewModel viewModel = new MyProjectViewModel();
-                viewModel.projects = user.projects.ToList();
-                return View(viewModel);
-
-            }
-            else if (columnId == 2)
-            {
-                ApplicationUser user = db.Users.Where(x => x.Id == userId).SingleOrDefault();
-                MyProjectViewModel viewModel = new MyProjectViewModel();
-                viewModel.projects = user.projects.ToList();
-                return View(viewModel);
-            }
-            else
-            {
-                ApplicationUser user = db.Users.Where(x => x.Id == userId).SingleOrDefault();
-                MyProjectViewModel viewModel = new MyProjectViewModel();
-                viewModel.projects = user.projects.ToList();
-                return View(viewModel);
-            }
-            */
-
             var userId = User.Identity.GetUserId();
             ApplicationUser user = db.Users.Where(x => x.Id == userId).SingleOrDefault();
             MyProjectViewModel viewModel = new MyProjectViewModel();
@@ -173,6 +142,7 @@ namespace eleven.Controllers
             Project project = new Project();
             return View(project);
         }
+
         [Authorize]
         [HttpPost]
         public ActionResult NewProject(Project project)
@@ -206,17 +176,6 @@ namespace eleven.Controllers
             }
 
             return View("Error");
-        }
-
-        // Code for tab option in my projects 
-        private List<SelectListItem> PopulateAvailableCategories()
-        {
-            List<SelectListItem> result = new List<SelectListItem>();
-
-            result.Add(new SelectListItem() { Value = "1", Text = "Projects created by me" });
-            result.Add(new SelectListItem() { Value = "2", Text = "Projects shared with me" });
-
-            return result;
         }
     }
 }
