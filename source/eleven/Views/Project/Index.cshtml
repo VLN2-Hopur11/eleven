@@ -13,7 +13,6 @@
     <hr class="headline-bottom" align="left" width="30%" />
     <p>File: <span>@Model.activeFile.name</span></p>
 
-    <input type="button" id="Download file" value="downloadFile">
     <div>
         <label for="mode" class="control-label">Language Mode:</label>
         <select id="mode" class="form-control">
@@ -74,6 +73,37 @@
         @Scripts.Render("~/Scripts/projectscript.js")
         <script>
             $("#editor").removeClass("hidden")
+            $(function() {
+                if ($(window).width() > 1500) {
+                    $("#editor").css({"width":"900px"});
+                }
+                else if($(window).width() > 1200)
+                {
+                    $("#editor").css({"width":"700px"});
+                }
+                else if($(window).width() > 1000)
+                {
+                    $("#editor").css({"width":"500px"});
+                }
+                else {
+                        $("#editor").css({"width":"300px"});
+                }
+            });
+            
+            $(window).resize(function () {
+                if ($(window).width() > 1500) {
+                    $("#editor").css({ "width": "900px" });
+                }
+                else if ($(window).width() > 1200) {
+                    $("#editor").css({ "width": "700px" });
+                }
+                else if ($(window).width() > 1000) {
+                    $("#editor").css({ "width": "500px" });
+                }
+                else {
+                    $("#editor").css({ "width": "300px" });
+                }
+            });
         </script>
     }
 </div>
