@@ -44,12 +44,18 @@
 <div class="popup">
     <h3>Cake or death?</h3>
     
-    @using (Html.BeginForm("RemoveProject", "Project", FormMethod.Post))
-    {
-        <input type="hidden" id="death" value="" name="id"/>
-        <button id="cake" class="btn btn-primary">Cake</button>
-        <button type="submit" class="btn btn-danger">Death</button>    
-    }
+    <section class="form-group col-lg-offset-4">
+        <section class="col-lg-3">
+            <button id="cake" class="btn btn-primary">Cake</button>
+        </section>
+        <section class="col-lg-3">
+            @using (Html.BeginForm("RemoveProject", "Project", FormMethod.Post))
+            {
+                <input type="hidden" id="death" value="" name="id" />
+                <button type="submit" class="btn btn-danger">Death</button>
+            }
+        </section>
+    </section>
     <span class="popup-btn-close">close</span>
 </div>
 

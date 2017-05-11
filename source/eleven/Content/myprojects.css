@@ -34,7 +34,6 @@
     line-height: 30px; 
     border: 10px solid #150E2D; 
     z-index: 9999;
-
 }
 
 .popup-mobile {
@@ -54,4 +53,8 @@
     font-weight: bold; 
     text-transform: uppercase; 
     cursor: pointer;
+}
+
+.form-group {
+    align-content: center;
 }
