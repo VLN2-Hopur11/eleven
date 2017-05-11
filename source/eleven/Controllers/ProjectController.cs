@@ -81,13 +81,37 @@ namespace eleven.Controllers
         }
 
         [Authorize]
-        public ActionResult MyProjects()
+        public ActionResult MyProjects(int? columnId)
         {
-            // Get currently logged in user ID
-            var userId = User.Identity.GetUserId();
-            ApplicationUser user = db.Users.Where(x => x.Id == userId).SingleOrDefault();
+            // Get currently logged in user ID 
+            // UPPHAFLEGA 
+            // var userId = User.Identity.GetUserId();
+            // ApplicationUser user = db.Users.Where(x => x.Id == userId).SingleOrDefault();
+            // MyProjectViewModel viewModel = new MyProjectViewModel();
+            // viewModel.projects = user.projects.ToList();
+            // return View(viewModel);
+            // STOPPAR HER 
+
+            //NYJA SHITTID
             MyProjectViewModel viewModel = new MyProjectViewModel();
-            viewModel.projects = user.projects.ToList();
+            var userId = User.Identity.GetUserId();
+            var projectAuthor = "rebekka13";
+
+            if (columnId == 1)
+            {
+               // ApplicationUser user = db.Users.Where(x => x.UserName == projectAuthor);
+
+            }
+            else if (columnId == 2)
+            {
+                ;
+            }
+            else
+            {
+                ApplicationUser user = db.Users.Where(x => x.Id == userId).SingleOrDefault();
+                //MyProjectViewModel viewModel = new MyProjectViewModel();
+                viewModel.projects = user.projects.ToList();
+            }
             return View(viewModel);
         }
 
@@ -150,6 +174,17 @@ namespace eleven.Controllers
             }
 
             return View("Error");
+        }
+
+        // Code for tab option in my projects 
+        private List<SelectListItem> PopulateAvailableCategories()
+        {
+            List<SelectListItem> result = new List<SelectListItem>();
+
+            result.Add(new SelectListItem() { Value = "1", Text = "Projects created by me" });
+            result.Add(new SelectListItem() { Value = "2", Text = "Projects shared with me" });
+
+            return result;
         }
     }
 }
