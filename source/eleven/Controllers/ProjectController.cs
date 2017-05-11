@@ -55,7 +55,6 @@ namespace eleven.Controllers
             }
 
             ViewBag.Code = model.activeFile.content;
-            ViewBag.DocumentID = id;
             return View(model);
         }
 

@@ -90,3 +90,4 @@ $('#mode').change(function () {
         editor.getSession().setMode("ace/mode/html");
     }
 });
+
