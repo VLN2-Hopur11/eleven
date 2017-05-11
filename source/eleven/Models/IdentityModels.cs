@@ -29,6 +29,7 @@ namespace eleven.Models
     {
         public DbSet<Project> projects { get; set; }
         public DbSet<File> files { get; set; }
+        public DbSet<Folder> folders { get; set; }
         public DbSet<Highlights> highlights { get; set; }
         public DbSet<PickedProjects> pickedprojects { get; set; }
 

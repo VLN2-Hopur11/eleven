@@ -59,7 +59,14 @@ namespace eleven.Controllers
             return View(model);
         }
 
+        public ActionResult SidebarPartial(ProjectViewModel viewModel)
+        {
+            return PartialView("SidebarPartial", viewModel);
+        }
+
+        [Authorize]
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Index(ProjectViewModel changedModel)
         {
             if (changedModel.activeFile.Id == 0)
@@ -81,46 +88,25 @@ namespace eleven.Controllers
         }
 
         [Authorize]
-        public ActionResult MyProjects(int? columnId)
+        public ActionResult setActiveFile(int fileId, int projectId)
         {
-            // Get currently logged in user ID 
-            // UPPHAFLEGA 
-            // var userId = User.Identity.GetUserId();
-            // ApplicationUser user = db.Users.Where(x => x.Id == userId).SingleOrDefault();
-            // MyProjectViewModel viewModel = new MyProjectViewModel();
-            // viewModel.projects = user.projects.ToList();
-            // return View(viewModel);
-            // STOPPAR HER 
+            service.setActiveFile(fileId, projectId);
 
-            //NYJA SHITTID
-            MyProjectViewModel viewModel = new MyProjectViewModel();
+            return RedirectToAction("Index", new { id = projectId });
+        }
+
+        [Authorize]
+        public ActionResult MyProjects()
+        {
+            // Get currently logged in user ID
             var userId = User.Identity.GetUserId();
-            var projectAuthor = "rebekka13";
-
-            if (columnId == 1)
-            {
-               // ApplicationUser user = db.Users.Where(x => x.UserName == projectAuthor);
-
-            }
-            else if (columnId == 2)
-            {
-                ;
-            }
-            else
-            {
-                ApplicationUser user = db.Users.Where(x => x.Id == userId).SingleOrDefault();
-                //MyProjectViewModel viewModel = new MyProjectViewModel();
-                viewModel.projects = user.projects.ToList();
-            }
+            ApplicationUser user = db.Users.Where(x => x.Id == userId).SingleOrDefault();
+            MyProjectViewModel viewModel = new MyProjectViewModel();
+            viewModel.projects = user.projects.ToList();
             return View(viewModel);
         }
 
-        [HttpGet]
-        public ActionResult NewFile()
-        {
-            File file = new File();
-            return View(file);
-        }
+        [Authorize]
         [HttpPost]
         public ActionResult NewFile(string newFilename, string type, int projectId)
         {
@@ -130,6 +116,20 @@ namespace eleven.Controllers
             }
 
             service.addFile(newFilename, type, projectId);
+
+            return RedirectToAction("Index", new { id = projectId });
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult NewFolder(string newFoldername, int projectId)
+        {
+            if (service.folderNameExists(newFoldername, projectId))
+            {
+                return View("Error");
+            }
+
+            service.addFolder(newFoldername, projectId);
 
             return RedirectToAction("Index", new { id = projectId });
         }
