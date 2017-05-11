@@ -7,6 +7,12 @@
 <h2>My Projects</h2>
 <hr class="headline-bottom" align="left" width="30%" />
 
+<!--// Code for tab option in my projects-->
+<ul class="nav nav-pills">
+    <li role="presentation" class="@(ViewBag. == null ? "active" : "")">@Html.ActionLink("All projects","Index")</li>
+
+</ul>
+
 <section class="row">
     @foreach (var itemj in Model.projects)
     {
