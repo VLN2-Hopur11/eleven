@@ -1,8 +1,22 @@
 ﻿/*Overriding bootstrap*/
-html, body, #fullheight {
-    height: 100%;
-    padding-bottom: 0px;
+
+#rightsidebar {
+    overflow: hidden;
+    margin-bottom: -5000px;
+    padding-bottom: 5000px;
+    padding-left: 20px;
+    width: auto;
+    background-color: lightgreen;
 }
+
+#explorer {
+    display: flex;
+}
+
+.file {
+    width: 100px;
+}
+
 .body-content{
     height: 100%;
     padding-right: 0px;
@@ -18,6 +32,7 @@ html, body, #fullheight {
  width:auto;
  }
 }
+
 @media (min-width: 992px) {
  .container {
  width:auto;
@@ -26,7 +41,6 @@ html, body, #fullheight {
 .navbar-fixed-left + .container{
     padding-left: 10px;
 }
-
 
 /*The Project Wrapper*/
 .projectViewWrapper{
