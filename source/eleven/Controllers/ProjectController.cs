@@ -96,14 +96,38 @@ namespace eleven.Controllers
         }
 
         [Authorize]
-        public ActionResult MyProjects()
+        [Authorize]
+        public ActionResult MyProjects(int? columnId)
         {
-            // Get currently logged in user ID
             var userId = User.Identity.GetUserId();
-            ApplicationUser user = db.Users.Where(x => x.Id == userId).SingleOrDefault();
-            MyProjectViewModel viewModel = new MyProjectViewModel();
-            viewModel.projects = user.projects.ToList();
-            return View(viewModel);
+            if (columnId == null || columnId > 2)
+            {
+                columnId = 0;
+            }
+            if (columnId == 1)
+            {
+                // ApplicationUser user = db.Users.Where(x => x.UserName == projectAuthor);
+                ApplicationUser user = db.Users.Where(x => x.Id == userId).SingleOrDefault();
+                MyProjectViewModel viewModel = new MyProjectViewModel();
+                viewModel.projects = user.projects.ToList();
+                return View(viewModel);
+
+            }
+            else if (columnId == 2)
+            {
+                ApplicationUser user = db.Users.Where(x => x.Id == userId).SingleOrDefault();
+                MyProjectViewModel viewModel = new MyProjectViewModel();
+                viewModel.projects = user.projects.ToList();
+                return View(viewModel);
+            }
+            else
+            {
+                ApplicationUser user = db.Users.Where(x => x.Id == userId).SingleOrDefault();
+                MyProjectViewModel viewModel = new MyProjectViewModel();
+                viewModel.projects = user.projects.ToList();
+                return View(viewModel);
+            }
+            
         }
 
         [Authorize]
