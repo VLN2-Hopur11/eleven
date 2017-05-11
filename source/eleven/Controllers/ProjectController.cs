@@ -97,8 +97,9 @@ namespace eleven.Controllers
 
         [Authorize]
         [Authorize]
-        public ActionResult MyProjects(int? columnId)
+        public ActionResult MyProjects()
         {
+            /*
             var userId = User.Identity.GetUserId();
             if (columnId == null || columnId > 2)
             {
@@ -127,7 +128,14 @@ namespace eleven.Controllers
                 viewModel.projects = user.projects.ToList();
                 return View(viewModel);
             }
-            
+            */
+
+            var userId = User.Identity.GetUserId();
+            ApplicationUser user = db.Users.Where(x => x.Id == userId).SingleOrDefault();
+            MyProjectViewModel viewModel = new MyProjectViewModel();
+            viewModel.projects = user.projects.ToList();
+            viewModel.currentUser = user;
+            return View(viewModel);
         }
 
         [Authorize]

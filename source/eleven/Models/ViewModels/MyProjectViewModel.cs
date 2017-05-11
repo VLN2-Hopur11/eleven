@@ -9,5 +9,6 @@ namespace eleven.Models.ViewModels
     public class MyProjectViewModel
     {
         public List<Project> projects { get; set; }
+        public ApplicationUser currentUser { get; set; }
     }
 }
