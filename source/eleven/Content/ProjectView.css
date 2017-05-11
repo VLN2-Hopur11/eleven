@@ -4,17 +4,8 @@
     overflow: hidden;
     margin-bottom: -5000px;
     padding-bottom: 5000px;
-    padding-left: 20px;
-    width: auto;
-    background-color: lightgreen;
-}
-
-#explorer {
-    display: flex;
-}
-
-.file {
-    width: 100px;
+    padding-left: 10px;
+    background-color: #2D3034;
 }
 
 .body-content{
@@ -73,14 +64,6 @@
 
 
 /*Styling CSS*/
-.navbar-fixed-right > p{
-    text-align: center;
-}
-/*Þyrfti aðeins að stússast meira í þessu CSS-i*/
-.button{
-    color: #FFFFFF;
-    background-color: #2D3034;
-}
 .input{
     color: #2D3034;
     background-color: #FFFFFF;
@@ -101,6 +84,13 @@ ul , li {
   margin: 0;
   padding:0;
 }
-.file{
-     padding-left:20px;
+
+.sideMenu{
+    margin-left: -320px;
+    margin-top: -34px;
+    position: absolute;
+    background-color: #2D3034;
+    width: 310px;
+    padding-left: 10px;
 }
+

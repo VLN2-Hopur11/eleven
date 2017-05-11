@@ -1,50 +1,45 @@
 ﻿@model eleven.Models.ViewModels.ProjectViewModel
 
 <div class="navbar navbar-inverse navbar-fixed-right" id="rightsidebar">
-    <button id="newfile" class="btn btn-primary">New File</button>
-    <section id="newfileform" class="hidden">
-        @using (Html.BeginForm("NewFile", "Project", FormMethod.Post))
-        {
-            <label for="newfilename">Filename:</label>
-            <input id="newfilename" type="text" name="newFilename" />
-            <input type="hidden" name="projectId" value=@Model.project.Id />
-            <button type="submit" class="btn btn-primary">Create File</button>
-        }
-    </section>
-    <br />
-    <button id="newfolder" class="btn btn-primary">New Folder</button>
-    <section id="newfolderform" class="hidden">
-        @using (Html.BeginForm("NewFolder", "Project", FormMethod.Post))
-        {
-            <label for="newfoldername">Folder Name:</label>
-            <input id="newfoldername" type="text" name="newFoldername" />
-            <input type="hidden" name="projectId" value=@Model.project.Id />
-            <button type="submit" class="btn btn-primary">Create Folder</button>
-        }
-    </section>
-
-    <section id="explorer">
-        @foreach (var item in Model.project.files)
-        {
-            <section class="file">
-                <img src="~/Content/Images/very-basic-file-icon.png" class="img-responsive" />@Html.ActionLink(item.name, "setActiveFile", "Project", new { fileId = item.Id, projectId = Model.project.Id }, null)
-            </section>
-            <br />
-        }
-        
-    </section>
+    
+    <div style="position: fixed;">
+        <button id="newfile" class="btn btn-primary">New File</button>
+        <section id="newfileform" class="hidden sideMenu">
+            @using (Html.BeginForm("NewFile", "Project", FormMethod.Post))
+            {
+                <input placeholder="Filename" id="newfilename" type="text" name="newFilename" />
+                <input type="hidden" name="projectId" value=@Model.project.Id />
+                <button type="submit" class="btn btn-primary">Create File</button>
+            }
+        </section>
+        <br />
+        <button id="newfolder" class="btn btn-primary">New Folder</button>
+        <section id="newfolderform" class="hidden sideMenu">
+            @using (Html.BeginForm("NewFolder", "Project", FormMethod.Post))
+            {
+                <input placeholder="Folder Name" id="newfoldername" type="text" name="newFoldername" />
+                <input type="hidden" name="projectId" value=@Model.project.Id />
+                <button type="submit" class="btn btn-primary">Create Folder</button>
+            }
+        </section>
+        <ul id="explorer">
+            @foreach (var item in Model.project.files)
+            {
+                <li>
+                    @Html.ActionLink(item.name, "setActiveFile", "Project", new { fileId = item.Id, projectId = Model.project.Id }, null)
+                </li>
+            }
+        </ul>
+    </div>
     <ul class="nav navbar-nav">
         <li style="bottom: 0; position: fixed;">
-            @Html.ActionLink("Project members", "Highlights", "Home")
             <button id="inviteuser" class="btn btn-primary">Invite User</button>
-            <section id="invitationform" class="hidden">
+            <section id="invitationform" class="hidden sideMenu">
                 @using (Html.BeginForm("InviteUser", "Project", FormMethod.Post))
                 {
-                    
-                    <label for="emailinvite">User Email:</label>
-                    <input id="emailinvite" type="text" name="email" />
-                        <input type="hidden" name="projectId" value=@Model.project.Id />
-                        <button type="submit" class="btn btn-primary">Send Invitation</button>
+                    <input placeholder="User Email" id="emailinvite" type="text" name="email" />
+                    <input type="hidden" name="projectId" value=@Model.project.Id />
+                    <button type="submit" class="btn btn-primary">Send Invitation</button>
                 }
             </section>
         </li>
