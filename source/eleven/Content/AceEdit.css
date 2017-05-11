@@ -9,8 +9,6 @@ width: 30%;
     */
 
 #editor { 
-    height: 100%;
-    width: 100%;
-    resize: horizontal;
-    overflow: hidden;
+    height: 400px;
+    width: 600px;
 }
