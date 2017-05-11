@@ -1,6 +1,6 @@
 ﻿@model eleven.Models.ViewModels.ProjectViewModel
 
-<div class="navbar navbar-inverse navbar-fixed-right" id="fullheight">
+<div class="navbar navbar-inverse navbar-fixed-right" id="rightsidebar">
     <button id="newfile" class="btn btn-primary">New File</button>
     <section id="newfileform" class="hidden">
         @using (Html.BeginForm("NewFile", "Project", FormMethod.Post))
@@ -30,17 +30,16 @@
             <button type="submit" class="btn btn-primary">Create Folder</button>
         }
     </section>
-    <div id="menu">
-        <ul id="item1" class="nav sidebar-nav">
-            <li class="projectName"><img src="~/Content/Images/birthday_cake1600.png" class="img-responsive" id="miniicon" /><a id="hideText">@Model.project.name</a></li>
-            @foreach (var item in Model.project.files)
-            {
-                <li class="file">
-                    <img src="~/Content/Images/very-basic-file-icon.png" class="img-responsive" id="miniicon" />@Html.ActionLink(item.name, "setActiveFile", "Project", new { fileId = item.Id, projectId = Model.project.Id }, null)
-                </li>
-            }
-        </ul>
-    </div>
+
+    <section id="explorer">
+        @foreach (var item in Model.project.files)
+        {
+            <section class="file">
+                <img src="~/Content/Images/very-basic-file-icon.png" class="img-responsive" />@Html.ActionLink(item.name, "setActiveFile", "Project", new { fileId = item.Id, projectId = Model.project.Id }, null)
+            </section>
+        }
+        
+    </section>
     <ul class="nav navbar-nav">
         <li style="bottom: 0; position: fixed;">
             @Html.ActionLink("Project members", "Highlights", "Home")
