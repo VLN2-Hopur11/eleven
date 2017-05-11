@@ -13,7 +13,6 @@
     <hr class="headline-bottom" align="left" width="30%" />
     <p>File: <span>@Model.activeFile.name</span></p>
 
-    <input type="button" id="runCode" value="Run The Code">
     <div>
         <label for="mode" class="control-label">Language Mode:</label>
         <select id="mode" class="form-control">
@@ -39,7 +38,6 @@
         <input type="button" class="btn-default" id="replacebutton" value="Replace" />
         <input type="button" class="btn-default" id="replaceallbutton" value="Replace All" />         
     </section>
-
     <div id="editor" class="hidden">@ViewBag.Code</div>
     <br />
     @using (Html.BeginForm("Index", "Project", FormMethod.Post, new { @id = "editorform" }))
@@ -67,7 +65,7 @@
         @Scripts.Render("~/Scripts/jquery.signalR-2.2.2.js")
         @Scripts.Render("~/signalr/hubs")
         <script>
-            var documentID = @ViewBag.DocumentID;
+            var documentID = @Model.activeFile.Id;
             var editor = ace.edit("editor");
             editor.setTheme("ace/theme/monokai");
             editor.getSession().setMode("ace/mode/javascript");
@@ -75,6 +73,37 @@
         @Scripts.Render("~/Scripts/projectscript.js")
         <script>
             $("#editor").removeClass("hidden")
+            $(function() {
+                if ($(window).width() > 1500) {
+                    $("#editor").css({"width":"900px"});
+                }
+                else if($(window).width() > 1200)
+                {
+                    $("#editor").css({"width":"700px"});
+                }
+                else if($(window).width() > 1000)
+                {
+                    $("#editor").css({"width":"500px"});
+                }
+                else {
+                        $("#editor").css({"width":"300px"});
+                }
+            });
+            
+            $(window).resize(function () {
+                if ($(window).width() > 1500) {
+                    $("#editor").css({ "width": "900px" });
+                }
+                else if ($(window).width() > 1200) {
+                    $("#editor").css({ "width": "700px" });
+                }
+                else if ($(window).width() > 1000) {
+                    $("#editor").css({ "width": "500px" });
+                }
+                else {
+                    $("#editor").css({ "width": "300px" });
+                }
+            });
         </script>
     }
 </div>

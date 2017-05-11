@@ -55,7 +55,6 @@ namespace eleven.Controllers
             }
 
             ViewBag.Code = model.activeFile.content;
-            ViewBag.DocumentID = id;
             return View(model);
         }
 
@@ -95,7 +94,6 @@ namespace eleven.Controllers
             return RedirectToAction("Index", new { id = projectId });
         }
 
-        [Authorize]
         [Authorize]
         public ActionResult MyProjects()
         {
