@@ -19,7 +19,18 @@
     {
         <section class="col-sm-4">
             <section class="well">
-                <h3>@Html.ActionLink(itemj.name, "Index", "Project", new { Id = itemj.Id }, null)</h3>
+                @{ 
+                    string str;
+                    if(itemj.name.Length > 12)
+                    {
+                        str = itemj.name.Substring(0, 18) + "...";
+                    }
+                    else
+                    {
+                        str = itemj.name;
+                    }
+                 }
+                <div class="crop"><h3>@Html.ActionLink(str, "Index", "Project", new { Id = itemj.Id }, null)</h3></div>
                 <p>Author: @itemj.author</p>
             </section>
         </section>
