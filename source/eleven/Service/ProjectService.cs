@@ -13,6 +13,12 @@ namespace eleven.Service
     {
         private ApplicationDbContext db;
 
+        private readonly IAppMyDataContext _db; //For testing use
+        public ProjectService(IAppMyDataContext context) //For testing use
+        {
+            _db = context ?? new ApplicationDbContext();
+        }
+
         public ProjectService()
         {
             db = new ApplicationDbContext();

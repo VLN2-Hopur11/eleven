@@ -25,13 +25,24 @@ namespace eleven.Models
         }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    // New interface, fake one for testing, should look like the one beeneath
+    public interface IAppMyDataContext
     {
-        public DbSet<Project> projects { get; set; }
-        public DbSet<File> files { get; set; }
-        public DbSet<Folder> folders { get; set; }
-        public DbSet<Highlights> highlights { get; set; }
-        public DbSet<PickedProjects> pickedprojects { get; set; }
+        IDbSet<Project> projects { get; set; }
+        IDbSet<File> files { get; set; }
+        IDbSet<Folder> folders { get; set; }
+        IDbSet<Highlights> highlights { get; set; }
+        IDbSet<PickedProjects> pickedprojects { get; set; }
+        int SaveChanges();
+    }
+
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IAppMyDataContext
+    {
+        public IDbSet<Project> projects { get; set; }
+        public IDbSet<File> files { get; set; }
+        public IDbSet<Folder> folders { get; set; }
+        public IDbSet<Highlights> highlights { get; set; }
+        public IDbSet<PickedProjects> pickedprojects { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
