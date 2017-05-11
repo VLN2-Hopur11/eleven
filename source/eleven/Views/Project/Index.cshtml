@@ -74,6 +74,37 @@
         @Scripts.Render("~/Scripts/projectscript.js")
         <script>
             $("#editor").removeClass("hidden")
+            $(function() {
+                if ($(window).width() > 1500) {
+                    $("#editor").css({"width":"900px"});
+                }
+                else if($(window).width() > 1200)
+                {
+                    $("#editor").css({"width":"700px"});
+                }
+                else if($(window).width() > 1000)
+                {
+                    $("#editor").css({"width":"500px"});
+                }
+                else {
+                        $("#editor").css({"width":"300px"});
+                }
+            });
+            
+            $(window).resize(function () {
+                if ($(window).width() > 1500) {
+                    $("#editor").css({ "width": "900px" });
+                }
+                else if ($(window).width() > 1200) {
+                    $("#editor").css({ "width": "700px" });
+                }
+                else if ($(window).width() > 1000) {
+                    $("#editor").css({ "width": "500px" });
+                }
+                else {
+                    $("#editor").css({ "width": "300px" });
+                }
+            });
         </script>
     }
 </div>
