@@ -86,6 +86,24 @@ namespace eleven.Service
             db.SaveChanges();
             project.activeFileId = newFile.Id;
         }
+
+        public void setActiveFile(int fileId, int projectId)
+        {
+            Project project = db.projects.Where(x => x.Id == projectId).SingleOrDefault();
+            project.activeFileId = fileId;
+            db.SaveChanges();
+        }
+
+        public void addFolder(string newFoldername, int projectId)
+        {
+            Project project = db.projects.Where(x => x.Id == projectId).SingleOrDefault();
+            Folder newFolder = new Folder();
+            newFolder.name = newFoldername;
+            newFolder.project = project;
+            db.folders.Add(newFolder);
+            db.SaveChanges();
+        }
+
         public bool fileNameExists(string filename, int projectId)
         {
             Project project = db.projects.Where(x => x.Id == projectId).SingleOrDefault();
@@ -97,6 +115,19 @@ namespace eleven.Service
 
             return false;
         }
+
+        public bool folderNameExists(string filename, int projectId)
+        {
+            Project project = db.projects.Where(x => x.Id == projectId).SingleOrDefault();
+
+            if (project.folders.Any(x => x.name.Contains(filename)))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         //only owner can invite a user to the project and choose if he 
         //wants another owner or a simple user
         public bool inviteUser(string email, int projectId)
@@ -127,4 +158,4 @@ namespace eleven.Service
             else return true; 
         }
     }
-}
+} 

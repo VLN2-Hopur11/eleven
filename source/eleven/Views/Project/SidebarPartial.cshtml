@@ -1,0 +1,59 @@
+﻿@model eleven.Models.ViewModels.ProjectViewModel
+
+<div class="navbar navbar-inverse navbar-fixed-right" id="fullheight">
+    <button id="newfile" class="btn btn-primary">New File</button>
+    <section id="newfileform" class="hidden">
+        @using (Html.BeginForm("NewFile", "Project", FormMethod.Post))
+        {
+            <label for="newfilename">Filename:</label>
+            <input id="newfilename" type="text" name="newFilename" />
+            <select name="type">
+                <option value="js">Javascript</option>
+                <option value="css">CSS</option>
+                <option valute="html">HTML</option>
+                <option value="xml">XML</option>
+                <option value="php">PHP</option>
+                <option value="json">JSON</option>
+            </select>
+            <input type="hidden" name="projectId" value=@Model.project.Id />
+            <button type="submit" class="btn btn-primary">Create File</button>
+        }
+    </section>
+    <br />
+    <button id="newfolder" class="btn btn-primary">New Folder</button>
+    <section id="newfolderform" class="hidden">
+        @using (Html.BeginForm("NewFolder", "Project", FormMethod.Post))
+        {
+            <label for="newfoldername">Folder Name:</label>
+            <input id="newfoldername" type="text" name="newFoldername" />
+            <input type="hidden" name="projectId" value=@Model.project.Id />
+            <button type="submit" class="btn btn-primary">Create Folder</button>
+        }
+    </section>
+    <div id="menu">
+        <ul id="item1" class="nav sidebar-nav">
+            <li class="projectName"><img src="~/Content/Images/birthday_cake1600.png" class="img-responsive" id="miniicon" />@Model.project.name</li>
+            @foreach (var item in Model.project.files)
+            {
+                <li class="file">
+                    <img src="~/Content/Images/very-basic-file-icon.png" class="img-responsive" id="miniicon" />@Html.ActionLink(item.name, "setActiveFile", "Project", new { fileId = item.Id, projectId = Model.project.Id }, null)
+                </li>
+            }
+        </ul>
+    </div>
+    <ul class="nav navbar-nav">
+        <li style="bottom: 0; position: fixed;">
+            @Html.ActionLink("Project members", "Highlights", "Home")
+            <button id="inviteuser" class="btn btn-primary">Invite User</button>
+            <section id="invitationform" class="hidden">
+                @using (Html.BeginForm("InviteUser", "Project", FormMethod.Post))
+                {
+                    <label for="emailinvite">User Email:</label>
+                    <input id="emailinvite" type="text" name="email" />
+                        <input type="hidden" name="projectId" value=@Model.project.Id />
+                        <button type="submit" class="btn btn-primary">Send Invitation</button>
+                }
+            </section>
+        </li>
+    </ul>
+</div>
