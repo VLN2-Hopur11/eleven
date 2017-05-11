@@ -7,9 +7,9 @@
 <h2>My Projects</h2>
 <hr class="headline-bottom" align="left" width="30%" />
 <div>
-    @Html.ActionLink("All Projects", "MyProjects", new { id = 0 }, new { @class = "btn-primary btn-lg" })
-    @Html.ActionLink("Projects created by me", "MyProjects", new { id = 1 }, new { @class = "btn-primary btn-lg" })
-    @Html.ActionLink("Projects shared with me", "MyProjects", new { id = 2 }, new { @class = "btn-primary btn-lg" })
+    <button class="btn-primary btn-lg" id="allprojects">All Projects</button>
+    <button class="btn-primary btn-lg" id="myprojects">Projects created by me</button>
+    <button class="btn-primary btn-lg" id="sharedprojects">Projects shared with me</button>
 </div>
 <!--// Code for tab option in my projects-->
 <br />
@@ -17,11 +17,17 @@
 <section class="row">
     @foreach (var itemj in Model.projects)
     {
-        <section class="col-sm-4">
-            <section class="well">
-                <h3>@Html.ActionLink(itemj.name, "Index", "Project", new { Id = itemj.Id }, null)</h3>
-                <p>Author: @itemj.author</p>
-            </section>
+        <section class="col-sm-4 @(@itemj.author == @Model.currentUser.Email ? "owner" : "shared")">
+                <section class="well">
+                    <h3>@Html.ActionLink(itemj.name, "Index", "Project", new { Id = itemj.Id }, null)</h3>
+                    <p>Author: @itemj.author</p>
+                </section>
         </section>
     }
 </section>
+
+@section scripts
+    {
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/Scripts/myprojects.js")
+    }
