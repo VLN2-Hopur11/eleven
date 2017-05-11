@@ -6,29 +6,13 @@
 @Styles.Render("~/Content/NavBarSide.css")
 @Styles.Render("~/Content/ProjectView.css")
 
-<div class="navbar navbar-inverse navbar-fixed-right" id="fullheight">
-    <div id="menu">
-            <ul id="item1" class="nav sidebar-nav">
-                <li class="projectName"><img src="~/Content/Images/birthday_cake1600.png" class="img-responsive" id="miniicon"/>@Model.project.name</li>
-                @foreach (var item in Model.project.files)
-                {
-                    <li class="file"><img src="~/Content/Images/very-basic-file-icon.png" class="img-responsive" id="miniicon"/><a href="#"> @Html.ActionLink(item.name, "Index","Project") </a></li>
-                }
-            </ul>
-        </div>
-    <ul class="nav navbar-nav">
-            <li style="bottom: 0; position: fixed;">
-                @Html.ActionLink("Project members", "Highlights", "Home")
-                @Html.ActionLink("New file", "PickedProjects", "Home")
-            </li>
-        </ul> 
-</div>
+@Html.Partial("SidebarPartial", Model)
 
 <div class="projectViewContent">
     <h2>@Model.project.name</h2>
     <hr class="headline-bottom" align="left" width="30%" />
     <p>File: <span>@Model.activeFile.name</span></p>
-    
+
     <input type="button" id="runCode" value="Run The Code">
     <div>
         <label for="mode" class="control-label">Language Mode:</label>
@@ -45,99 +29,52 @@
         <option value='one'>monokai</option>
         <option value='two'>chrome</option>
         <option value='three'>twilight</option>
-        <option value='four'>xcode</option>
+        <option value='four'>chaos</option>
         <option value='five'>ambiance</option>
     </select>
-    <div id="editor">@ViewBag.Code</div>
-    
-    @using (Html.BeginForm("Index", "Project", FormMethod.Post))
+    <button id="findandreplace" class="btn btn-primary">Find and Replace</button>
+    <section id="replaceinputs" class="hidden">
+        <input type="text" class ="form-control" id="find" placeholder="Find"/>
+        <input type="text" class ="form-control" id="replace" placeholder="Replace" />
+        <input type="button" class="btn-default" id="replacebutton" value="Replace" />
+        <input type="button" class="btn-default" id="replaceallbutton" value="Replace All" />         
+    </section>
+
+    <div id="editor" class="hidden">@ViewBag.Code</div>
+    <br />
+    @using (Html.BeginForm("Index", "Project", FormMethod.Post, new { @id = "editorform" }))
     {
         if (Model.activeFile.name.IsEmpty())
         {
+            @Html.LabelFor(model => model.activeFile.name, "Filename: ");
             @Html.EditorFor(model => model.activeFile.name, new { required = "required" });
         }
-            @Html.HiddenFor(model => model.activeFile.content, new { @id = "hidden_editor" });
-            @Html.HiddenFor(model => model.project.Id, new { @pid = Url.RequestContext.RouteData.Values["pid"] });
-
+        @Html.HiddenFor(model => model.activeFile.content, new { @id = "hidden_editor" });
+        @Html.HiddenFor(model => model.project.Id, new { @pid = Url.RequestContext.RouteData.Values["pid"] });
+        
         if (Model.activeFile.Id != 0)
         {
             @Html.HiddenFor(model => model.activeFile.Id, new { @fid = Url.RequestContext.RouteData.Values["fid"] });
         }
-        <input type="submit" value="Save Code" />
+
+        <input type="submit" class="btn btn-primary" value="Save Code" />
     }
-    @Scripts.Render("~/bundles/jquery")
-    <script type="text/javascript">
-        $('#mode').change(function () {
-            var editor = ace.edit("editor");
-            if ($(this).val() === '1') {
-                editor.getSession().setMode("ace/mode/javascript");
-            }
-            if ($(this).val() === '2') {
-                editor.getSession().setMode("ace/mode/json");
-            }
-            if ($(this).val() === '3') {
-                editor.getSession().setMode("ace/mode/xml");
-            }
-            if ($(this).val() === '4') {
-                editor.getSession().setMode("ace/mode/php");
-            }
-            if ($(this).val() === '5') {
-                editor.getSession().setMode("ace/mode/html");
-            }
-            });
-    </script>
-    <script type="text/javascript">
-        $('#theme').change(function () {
-            var editor = ace.edit("editor");
-            if ($(this).val() === "one") {
-                editor.setTheme("ace/theme/monokai");
-            }
-            if ($(this).val() === 'two') {
-                editor.setTheme("ace/theme/chrome");
-            }
-            if ($(this).val() === 'three') {
-                editor.setTheme("ace/theme/twilight");
-            }
-            if ($(this).val() === 'four') {
-                editor.setTheme("ace/theme/chaos");
-            }
-            if ($(this).val() === 'five') {
-                editor.setTheme("ace/theme/ambiance");
-            }
-            });
-    </script>
+
     @section scripts
     {
-        <script src="~/3rdParty/src/ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
-        <script src="~/signalr/hubs"></script>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/3rdParty/src/ace.js")
+        @Scripts.Render("~/Scripts/jquery.signalR-2.2.2.js")
+        @Scripts.Render("~/signalr/hubs")
         <script>
             var documentID = @ViewBag.DocumentID;
-
             var editor = ace.edit("editor");
             editor.setTheme("ace/theme/monokai");
             editor.getSession().setMode("ace/mode/javascript");
-            $("form").submit(function () {
-                $("#hidden_editor").val(editor.getSession().getValue());
-            });
-            var codeHub = $.connection.codeHub;
-            var silent = false;
-            codeHub.client.onChange = function (changeData){
-                silent = true;
-                console.log(changeData);
-                editor.getSession().getDocument().applyDelta(changeData);
-                silent = false;
-            };
-            $.connection.hub.start().done(function () {
-                codeHub.server.joinDocument(documentID);
-                editor.on("change", function (obj) {
-                    if(silent){
-                        return;
-                    }
-                    console.log(obj);
-                    codeHub.server.onChange(obj, documentID);
-                });
-            });
         </script>
-        }
+        @Scripts.Render("~/Scripts/projectscript.js")
+        <script>
+            $("#editor").removeClass("hidden")
+        </script>
+    }
 </div>

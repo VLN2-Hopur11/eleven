@@ -75,25 +75,59 @@ namespace eleven.Service
         }
         // adds a new file to existing project, file cannot have the same name as
         // another file 
-        public bool addFile(File file)
+        public void addFile(string newFilename, string type, int projectId)
         {
-            File name  = db.files.SingleOrDefault(x => x.name == file.name);
-            if (name == null)
+            Project project = db.projects.Where(x => x.Id == projectId).SingleOrDefault();
+            File newFile = new File();
+            newFile.name = newFilename;
+            newFile.project = project;
+            newFile.type = type;
+            db.files.Add(newFile);
+            db.SaveChanges();
+            project.activeFileId = newFile.Id;
+        }
+
+        public void setActiveFile(int fileId, int projectId)
+        {
+            Project project = db.projects.Where(x => x.Id == projectId).SingleOrDefault();
+            project.activeFileId = fileId;
+            db.SaveChanges();
+        }
+
+        public void addFolder(string newFoldername, int projectId)
+        {
+            Project project = db.projects.Where(x => x.Id == projectId).SingleOrDefault();
+            Folder newFolder = new Folder();
+            newFolder.name = newFoldername;
+            newFolder.project = project;
+            db.folders.Add(newFolder);
+            db.SaveChanges();
+        }
+
+        public bool fileNameExists(string filename, int projectId)
+        {
+            Project project = db.projects.Where(x => x.Id == projectId).SingleOrDefault();
+
+            if (project.files.Any(x => x.name.Contains(filename)))
             {
-                File newFile = new File();
-                newFile.Id = file.Id;
-                newFile.name = file.name;
-                newFile.project = file.project;
-                newFile.type = file.type;
-                newFile.content = file.content;
-
-                db.files.Add(newFile);
-                db.SaveChanges();
-
                 return true;
             }
+
             return false;
         }
+
+        public bool folderNameExists(string filename, int projectId)
+        {
+            Project project = db.projects.Where(x => x.Id == projectId).SingleOrDefault();
+
+            if (project.folders.Any(x => x.name.Contains(filename)))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         //only owner can invite a user to the project and choose if he 
         //wants another owner or a simple user
         public bool inviteUser(string email, int projectId)
@@ -104,6 +138,7 @@ namespace eleven.Service
             try
             {
                 user.projects.Add(project);
+                db.SaveChanges();
             }
             catch (NotSupportedException)
             {
@@ -123,4 +158,4 @@ namespace eleven.Service
             else return true; 
         }
     }
-}
+} 

@@ -26,34 +26,47 @@ namespace eleven.Controllers
             ProjectViewModel model = new ProjectViewModel();
             model.project = db.projects.Where(x => x.Id == id).SingleOrDefault();
             model.files = db.files.Where(x => x.project.Id == model.project.Id).ToList();
-
-            if (model.files == null)
+            if (model.project.activeFileId != 0)
             {
-                model.files = new List<File>();
+                model.activeFile = model.files.Where(x => x.Id == model.project.activeFileId).SingleOrDefault();
             }
-
-            if(model.files.Count == 0)
+            else
             {
-                File file = new File();
-                model.files.Add(file);
+                if (model.files == null)
+                {
+                    model.files = new List<File>();
+                }
+                else if (model.files.Count == 0)
+                {
+                    File file = new File();
+                    model.activeFile = file;
+                }
+                else
+                {
+                    model.project.activeFileId = model.files.Last().Id;
+                    model.activeFile = model.files.Last();
+                    db.SaveChanges();
+                }
             }
-            
-            model.activeFile = model.files.First();
 
             if (model.project == null)
             {
                 return View("Error");
             }
-            if (model.project.files == null)
-            {
-                
-            }
+
             ViewBag.Code = model.activeFile.content;
             ViewBag.DocumentID = id;
             return View(model);
         }
 
+        public ActionResult SidebarPartial(ProjectViewModel viewModel)
+        {
+            return PartialView("SidebarPartial", viewModel);
+        }
+
+        [Authorize]
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Index(ProjectViewModel changedModel)
         {
             if (changedModel.activeFile.Id == 0)
@@ -75,9 +88,18 @@ namespace eleven.Controllers
         }
 
         [Authorize]
+        public ActionResult setActiveFile(int fileId, int projectId)
+        {
+            service.setActiveFile(fileId, projectId);
+
+            return RedirectToAction("Index", new { id = projectId });
+        }
+
+        [Authorize]
         public ActionResult MyProjects()
         {
             // Get currently logged in user ID
+            ViewBag.UserName = User.Identity.Name;
             var userId = User.Identity.GetUserId();
             ApplicationUser user = db.Users.Where(x => x.Id == userId).SingleOrDefault();
             MyProjectViewModel viewModel = new MyProjectViewModel();
@@ -85,15 +107,32 @@ namespace eleven.Controllers
             return View(viewModel);
         }
 
-        [HttpGet]
-        public ActionResult NewFile()
-        {
-            return View();
-        }
+        [Authorize]
         [HttpPost]
-        public ActionResult NewFile(File file)
+        public ActionResult NewFile(string newFilename, string type, int projectId)
         {
-            return View(file);
+            if (service.fileNameExists(newFilename, projectId))
+            {
+                return View("Error");
+            }
+
+            service.addFile(newFilename, type, projectId);
+
+            return RedirectToAction("Index", new { id = projectId });
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult NewFolder(string newFoldername, int projectId)
+        {
+            if (service.folderNameExists(newFoldername, projectId))
+            {
+                return View("Error");
+            }
+
+            service.addFolder(newFoldername, projectId);
+
+            return RedirectToAction("Index", new { id = projectId });
         }
 
         [Authorize]
@@ -101,7 +140,6 @@ namespace eleven.Controllers
         public ActionResult NewProject()
         {
             Project project = new Project();
-
             return View(project);
         }
         [Authorize]
