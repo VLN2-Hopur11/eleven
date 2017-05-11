@@ -177,5 +177,16 @@ namespace eleven.Controllers
 
             return View("Error");
         }
+
+        [HttpPost]
+        public ActionResult RemoveProject(int id)
+        {
+            if (id > 0)
+            {
+                service.removePoject(id);
+            }
+
+            return RedirectToAction("MyProjects");
+        }
     }
 }

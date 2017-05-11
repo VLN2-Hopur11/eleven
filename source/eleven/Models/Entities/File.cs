@@ -14,6 +14,7 @@ namespace eleven.Models.Entities
         public string name { get; set; }
         public string type { get; set; }
         public string content { get; set; }
+        [Required]
         public virtual Project project { get; set; }
         public virtual Folder folder { get; set; }
     }

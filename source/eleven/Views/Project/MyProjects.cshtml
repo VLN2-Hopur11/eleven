@@ -4,6 +4,8 @@
     ViewBag.Title = "MyProjects";
 }
 
+@Styles.Render("~/Content/myprojects.css")
+
 <h2>My Projects</h2>
 <hr class="headline-bottom" align="left" width="30%" />
 <div>
@@ -32,10 +34,24 @@
                     }
                     <h3>@Html.ActionLink(str, "Index", "Project", new { Id = itemj.Id }, null)</h3>
                     <p>Author: @itemj.author</p>
+                    
                 </section>
+            <button type="submit" class="btn btn-danger removeproject" value="@itemj.Id">Remove</button>
         </section>
     }
 </section>
+
+<div class="popup">
+    <h3>Cake or death?</h3>
+    
+    @using (Html.BeginForm("RemoveProject", "Project", FormMethod.Post))
+    {
+        <input type="hidden" id="death" value="" name="id"/>
+        <button id="cake" class="btn btn-primary">Cake</button>
+        <button type="submit" class="btn btn-danger">Death</button>    
+    }
+    <span class="popup-btn-close">close</span>
+</div>
 
 @section scripts
     {

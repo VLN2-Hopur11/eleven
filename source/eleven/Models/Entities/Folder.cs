@@ -13,6 +13,7 @@ namespace eleven.Models.Entities
         [Required]
         public string name { get; set; }
         public virtual ICollection<File> files { get; set; }
+        [Required]
         public virtual Project project { get; set; }
     }
 }

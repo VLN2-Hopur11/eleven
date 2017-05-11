@@ -251,6 +251,7 @@
     <Content Include="Content\Images\CcWG.png" />
     <Content Include="Content\Images\folder-2.png" />
     <Content Include="Content\Images\very-basic-file-icon.png" />
+    <Content Include="Content\myprojects.css" />
     <Content Include="Content\NavBarSide.css" />
     <Content Include="Content\AceEdit.css" />
     <Content Include="Content\ProjectView.css" />
