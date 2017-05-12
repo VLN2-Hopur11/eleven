@@ -40,18 +40,18 @@ namespace eleven.Tests.Services
         public void TestchangeProjectName()
         {
             // Arrange: const string user = "dabs";
-            // string newName = "NewProjectName";
+            string newName = "NewProjectName";
             // Undirbua sjalfa profunina, bua til test gogn
             // var service = new UberService(); 
             //var service = new ProjectService();
 
             // Act: var result = service.GetFriendsForUser(user);
             // adeins ein lina, keyra skipunina
-            // var result = _service.changeProjectName(1, newName);
+            var result = _service.changeProjectName(1, newName);
 
             // Assert:  Assert.AreEqual(2, result.Count);
             // Er svarid thad sem vid vildum fa, urdu einhver ahrif
-            // Assert.Equals(newName, )
+            Assert.IsTrue(result);
         }
     }
 }
