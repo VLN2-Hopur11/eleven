@@ -74,20 +74,20 @@ $('#theme').change(function () {
 
 $('#mode').change(function () {
     var editor = ace.edit("editor");
-    if ($(this).val() === 'js') {
-        editor.getSession().setMode("ace/mode/javascript");
+    if ($(this).val() === '1') {
+        editor.getSession().setMode("ace/mode/html");
     }
-    if ($(this).val() === 'json') {
+    if ($(this).val() === '2') {
         editor.getSession().setMode("ace/mode/json");
     }
-    if ($(this).val() === 'xml') {
+    if ($(this).val() === '3') {
         editor.getSession().setMode("ace/mode/xml");
     }
-    if ($(this).val() === 'php') {
+    if ($(this).val() === '4') {
         editor.getSession().setMode("ace/mode/php");
     }
-    if ($(this).val() === 'html') {
-        editor.getSession().setMode("ace/mode/html");
+    if ($(this).val() === '5') {
+        editor.getSession().setMode("ace/mode/javascript");
     }
 });
 
