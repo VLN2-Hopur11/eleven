@@ -1,11 +1,10 @@
 
 # eleven
- 
- This project is a programming enviroment with optional cooperation on the web. It was made in the course Semester Project 2 at Reykjavik University by five students. 
+
+This project is a programming enviroment with optional cooperation on the web. It was made in the course Semester Project 2 at Reykjavik University by five students. 
  
 # Operating Manual 
 necessary equipment:
-markup:
 * Microsoft Visual Studio 
 * Account at https://github.com/
 * https://github.com/VLN2-Hopur11/eleven
