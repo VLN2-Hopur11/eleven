@@ -22,6 +22,9 @@
                 <button type="submit" class="btn btn-primary">Create Folder</button>
             }
         </section>
+
+        @*Ég er að testa filetree hérna*@
+                
         <ul id="explorer">
             @foreach (var item in Model.project.files)
             {
@@ -30,7 +33,32 @@
                 </li>
             }
         </ul>
+
+        @*
+            //////////////////// Hvar er folder_Id geymt eiginlega, afhverju er það í dbo.Files en hvergi annarsstaðar??
+        <div>
+            @foreach (var item in Model.project.folders)
+            {
+                <input id="n-0" type="checkbox">
+                <label for="n-0">@Model.folders.name</label>
+                <div class="sub">
+                    @foreach (var subitem in Model.project.files.Where(n => n))
+                    {
+
+                    }
+                    <a href="#link">Plague Rats</a>
+                    <a href="#link">Sengir Vampire</a>
+                </div>
+            }
+            foreach(var person in people.Where(n => n.sex == "male"))
+            {
+            }
+
+        </div>
+        *@
+        @*filetree testing endar hérna*@
     </div>
+
     <ul class="nav navbar-nav">
         <li style="bottom: 0; position: fixed;">
             <button id="inviteuser" class="btn btn-primary">Invite User</button>
