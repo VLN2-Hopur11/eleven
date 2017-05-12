@@ -18,11 +18,11 @@
             <div>
                 <label for="mode" class="control-label">Language Mode:</label>
                 <select id="mode" class="form-control">
-                    <option value='1'>javascript</option>
+                    <option value='1'>html</option>
                     <option value='2'>json</option>
                     <option value='3'>xml</option>
                     <option value='4'>php</option>
-                    <option value='5'>html</option>
+                    <option value='5'>javascript</option>
                 </select>
             </div>
             <label for="theme" class="control-label">Theme:</label>
@@ -36,7 +36,7 @@
         </section>
         <section class="col-lg-4 toolbar">
             <button id="findandreplace" class="btn btn-primary">Find and Replace</button>
-            <section id="replaceinputs" class="hidden">
+            <section id="replaceinputs">
                 <input type="text" class="form-control" id="find" placeholder="Find" />
                 <input type="text" class="form-control" id="replace" placeholder="Replace" />
                 <input type="button" class="btn-default" id="replacebutton" value="Replace" />
@@ -50,6 +50,11 @@
                 {
                     @Html.LabelFor(model => model.activeFile.name, "Filename: ");
                     @Html.EditorFor(model => model.activeFile.name, new { htmlAttributes = new { @class = "form-control", required = "required" } });
+                }
+                if (Model.activeFile.type.IsEmpty())
+                {
+                    @Html.LabelFor(model => model.activeFile.type, "Filetype: ");
+                    @Html.DropDownListFor(model => model.activeFile.type, new SelectList((SelectList)ViewBag.DropDownValues, "Value", "Text"));
                 }
                 @Html.HiddenFor(model => model.activeFile.content, new { @id = "hidden_editor" });
                 @Html.HiddenFor(model => model.project.Id, new { @pid = Url.RequestContext.RouteData.Values["pid"] });
@@ -82,33 +87,33 @@
             $("#editor").removeClass("hidden")
             $(function() {
                 if ($(window).width() > 1500) {
-                    $("#editor").css({"width":"900px"});
+                    $("#editor").css({"width":"900px", "height": "750px"});
                 }
                 else if($(window).width() > 1200)
                 {
-                    $("#editor").css({"width":"700px"});
+                    $("#editor").css({"width":"700px", "height": "750px"});
                 }
                 else if($(window).width() > 1000)
                 {
-                    $("#editor").css({"width":"500px"});
+                    $("#editor").css({"width":"500px", "height": "750px"});
                 }
                 else {
-                        $("#editor").css({"width":"300px"});
+                    $("#editor").css({"width":"300px", "height": "750px"});
                 }
             });
             
             $(window).resize(function () {
                 if ($(window).width() > 1500) {
-                    $("#editor").css({ "width": "900px" });
+                    $("#editor").css({ "width": "900px" , "height": "750px"});
                 }
                 else if ($(window).width() > 1190) {
-                    $("#editor").css({ "width": "700px" });
+                    $("#editor").css({ "width": "700px" , "height": "750px"});
                 }
                 else if ($(window).width() > 1000) {
-                    $("#editor").css({ "width": "500px" });
+                    $("#editor").css({ "width": "500px" , "height": "750px"});
                 }
                 else {
-                    $("#editor").css({ "width": "300px" });
+                    $("#editor").css({ "width": "300px" , "height": "750px"});
                 }
             });
         </script>

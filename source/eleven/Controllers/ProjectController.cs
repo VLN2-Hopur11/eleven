@@ -18,6 +18,15 @@ namespace eleven.Controllers
         [Authorize]
         public ActionResult Index(int id)
         {
+            List<SelectListItem> listItem = new List<SelectListItem>();
+            listItem.Add(new SelectListItem() { Value = "html", Text = "html" });
+            listItem.Add(new SelectListItem() { Value = "js", Text = "js" });
+            listItem.Add(new SelectListItem() { Value = "json", Text = "json" });
+            listItem.Add(new SelectListItem() { Value = "php", Text = "php" });
+            listItem.Add(new SelectListItem() { Value = "xml", Text = "xml" });
+            ViewBag.DropDownValues = new SelectList(listItem, "Text", "Value");
+
+
             if (id == 0)
             {
                 return View("Error");
@@ -26,6 +35,8 @@ namespace eleven.Controllers
             ProjectViewModel model = new ProjectViewModel();
             model.project = db.projects.Where(x => x.Id == id).SingleOrDefault();
             model.files = db.files.Where(x => x.project.Id == model.project.Id).ToList();
+            model.folders = db.folders.Where(x => x.project.Id == model.project.Id).ToList();
+
             if (model.project.activeFileId != 0)
             {
                 model.activeFile = model.files.Where(x => x.Id == model.project.activeFileId).SingleOrDefault();
