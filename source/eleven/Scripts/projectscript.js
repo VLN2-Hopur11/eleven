@@ -89,5 +89,19 @@ $('#mode').change(function () {
     if ($(this).val() === '5') {
         editor.getSession().setMode("ace/mode/javascript");
     }
+    if ($(this).val() === '6') {
+        editor.getSession().setMode("ace/mode/csharp");
+    }
+    if ($(this).val() === '7') {
+        editor.getSession().setMode("ace/mode/c_cpp");
+    }
+    if ($(this).val() === '8') {
+        editor.getSession().setMode("ace/mode/python");
+    }
+    if ($(this).val() === '9') {
+        editor.getSession().setMode("ace/mode/ruby");
+    }
+    if ($(this).val() === '10') {
+        editor.getSession().setMode("ace/mode/mysql");
+    }
 });
-

@@ -37,7 +37,7 @@ namespace eleven.Tests.Services
             {
                 Id = 1,
                 name = "FileForTest",
-                type = "html",
+                fileType = "html",
             };
             mockDb.files.Add(f1);
 
@@ -45,7 +45,7 @@ namespace eleven.Tests.Services
             {
                 Id = 2,
                 name = "FileToTest",
-                type = "html",
+                fileType = "html",
             };
             mockDb.files.Add(f1);
 

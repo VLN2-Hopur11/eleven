@@ -11,7 +11,7 @@
 <div class="projectViewContent">
     <h2>@Model.project.name</h2>
     <hr class="headline-bottom" align="left" width="30%" />
-    <h3>File: <span>@Model.activeFile.name.@Model.activeFile.type</span></h3>
+    <h3>File: <span>@Model.activeFile.name.@Model.activeFile.fileType</span></h3>
 
     <section class="form-group">
         <section class="col-lg-4 toolbar">
@@ -23,6 +23,11 @@
                     <option value='3'>xml</option>
                     <option value='4'>php</option>
                     <option value='5'>javascript</option>
+                    <option value="6">C#</option>
+                    <option value="7">C++</option>
+                    <option value="8">Python</option>
+                    <option value="9">Ruby</option>
+                    <option value="10">MySql</option>
                 </select>
             </div>
             <label for="theme" class="control-label">Theme:</label>
@@ -51,10 +56,10 @@
                     @Html.LabelFor(model => model.activeFile.name, "Filename: ");
                     @Html.EditorFor(model => model.activeFile.name, new { htmlAttributes = new { @class = "form-control", required = "required" } });
                 }
-                if (Model.activeFile.type.IsEmpty())
+                if (Model.activeFile.fileType.IsEmpty())
                 {
-                    @Html.LabelFor(model => model.activeFile.type, "Filetype: ");
-                    @Html.DropDownListFor(model => model.activeFile.type, new SelectList((SelectList)ViewBag.DropDownValues, "Value", "Text"));
+                    @Html.LabelFor(model => model.activeFile.fileType, "Filetype: ");
+                    @Html.DropDownListFor(model => model.activeFile.fileType, new SelectList((SelectList)ViewBag.DropDownValues, "Value", "Text"));
                 }
                 @Html.HiddenFor(model => model.activeFile.content, new { @id = "hidden_editor" });
                 @Html.HiddenFor(model => model.project.Id, new { @pid = Url.RequestContext.RouteData.Values["pid"] });
