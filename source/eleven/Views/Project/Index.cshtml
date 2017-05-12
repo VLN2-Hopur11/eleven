@@ -13,52 +13,57 @@
     <hr class="headline-bottom" align="left" width="30%" />
     <p>File: <span>@Model.activeFile.name</span></p>
 
-    <input type="button" id="runCode" value="Run The Code">
-    <div>
-        <label for="mode" class="control-label">Language Mode:</label>
-        <select id="mode" class="form-control">
-            <option value='1'>javascript</option>
-            <option value='2'>json</option>
-            <option value='3'>xml</option>
-            <option value='4'>php</option>
-            <option value='5'>html</option>
-        </select>
-    </div>
-    <label for="theme" class="control-label">Theme:</label>
-    <select id="theme" class="form-control">
-        <option value='one'>monokai</option>
-        <option value='two'>chrome</option>
-        <option value='three'>twilight</option>
-        <option value='four'>chaos</option>
-        <option value='five'>ambiance</option>
-    </select>
-    <button id="findandreplace" class="btn btn-primary">Find and Replace</button>
-    <section id="replaceinputs" class="hidden">
-        <input type="text" class ="form-control" id="find" placeholder="Find"/>
-        <input type="text" class ="form-control" id="replace" placeholder="Replace" />
-        <input type="button" class="btn-default" id="replacebutton" value="Replace" />
-        <input type="button" class="btn-default" id="replaceallbutton" value="Replace All" />         
+    <section class="form-group">
+        <section class="col-lg-4 toolbar">
+            <div>
+                <label for="mode" class="control-label">Language Mode:</label>
+                <select id="mode" class="form-control">
+                    <option value='1'>javascript</option>
+                    <option value='2'>json</option>
+                    <option value='3'>xml</option>
+                    <option value='4'>php</option>
+                    <option value='5'>html</option>
+                </select>
+            </div>
+            <label for="theme" class="control-label">Theme:</label>
+            <select id="theme" class="form-control">
+                <option value='one'>monokai</option>
+                <option value='two'>chrome</option>
+                <option value='three'>twilight</option>
+                <option value='four'>chaos</option>
+                <option value='five'>ambiance</option>
+            </select>
+        </section>
+        <section class="col-lg-4 toolbar">
+            <button id="findandreplace" class="btn btn-primary">Find and Replace</button>
+            <section id="replaceinputs" class="hidden">
+                <input type="text" class="form-control" id="find" placeholder="Find" />
+                <input type="text" class="form-control" id="replace" placeholder="Replace" />
+                <input type="button" class="btn-default" id="replacebutton" value="Replace" />
+                <input type="button" class="btn-default" id="replaceallbutton" value="Replace All" />
+            </section>
+        </section>
+        <section class="col-lg-4 toolbar">
+            @using (Html.BeginForm("Index", "Project", FormMethod.Post, new { @id = "editorform" }))
+            {
+                if (Model.activeFile.name.IsEmpty())
+                {
+                    @Html.LabelFor(model => model.activeFile.name, "Filename: ");
+                    @Html.EditorFor(model => model.activeFile.name, new { htmlAttributes = new { @class = "form-control", required = "required" } });
+                }
+                @Html.HiddenFor(model => model.activeFile.content, new { @id = "hidden_editor" });
+                @Html.HiddenFor(model => model.project.Id, new { @pid = Url.RequestContext.RouteData.Values["pid"] });
+
+                if (Model.activeFile.Id != 0)
+                {
+                    @Html.HiddenFor(model => model.activeFile.Id, new { @fid = Url.RequestContext.RouteData.Values["fid"] });
+                }
+                <br />
+                <input type="submit" class="btn btn-primary" value="Save Code" />
+            }
+        </section>
     </section>
-
     <div id="editor" class="hidden">@ViewBag.Code</div>
-    <br />
-    @using (Html.BeginForm("Index", "Project", FormMethod.Post, new { @id = "editorform" }))
-    {
-        if (Model.activeFile.name.IsEmpty())
-        {
-            @Html.LabelFor(model => model.activeFile.name, "Filename: ");
-            @Html.EditorFor(model => model.activeFile.name, new { required = "required" });
-        }
-        @Html.HiddenFor(model => model.activeFile.content, new { @id = "hidden_editor" });
-        @Html.HiddenFor(model => model.project.Id, new { @pid = Url.RequestContext.RouteData.Values["pid"] });
-        
-        if (Model.activeFile.Id != 0)
-        {
-            @Html.HiddenFor(model => model.activeFile.Id, new { @fid = Url.RequestContext.RouteData.Values["fid"] });
-        }
-
-        <input type="submit" class="btn btn-primary" value="Save Code" />
-    }
 
     @section scripts
     {
@@ -67,7 +72,7 @@
         @Scripts.Render("~/Scripts/jquery.signalR-2.2.2.js")
         @Scripts.Render("~/signalr/hubs")
         <script>
-            var documentID = @ViewBag.DocumentID;
+            var documentID = @Model.activeFile.Id;
             var editor = ace.edit("editor");
             editor.setTheme("ace/theme/monokai");
             editor.getSession().setMode("ace/mode/javascript");
@@ -75,6 +80,37 @@
         @Scripts.Render("~/Scripts/projectscript.js")
         <script>
             $("#editor").removeClass("hidden")
+            $(function() {
+                if ($(window).width() > 1500) {
+                    $("#editor").css({"width":"900px"});
+                }
+                else if($(window).width() > 1200)
+                {
+                    $("#editor").css({"width":"700px"});
+                }
+                else if($(window).width() > 1000)
+                {
+                    $("#editor").css({"width":"500px"});
+                }
+                else {
+                        $("#editor").css({"width":"300px"});
+                }
+            });
+            
+            $(window).resize(function () {
+                if ($(window).width() > 1500) {
+                    $("#editor").css({ "width": "900px" });
+                }
+                else if ($(window).width() > 1190) {
+                    $("#editor").css({ "width": "700px" });
+                }
+                else if ($(window).width() > 1000) {
+                    $("#editor").css({ "width": "500px" });
+                }
+                else {
+                    $("#editor").css({ "width": "300px" });
+                }
+            });
         </script>
     }
 </div>

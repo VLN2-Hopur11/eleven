@@ -55,7 +55,6 @@ namespace eleven.Controllers
             }
 
             ViewBag.Code = model.activeFile.content;
-            ViewBag.DocumentID = id;
             return View(model);
         }
 
@@ -98,11 +97,11 @@ namespace eleven.Controllers
         [Authorize]
         public ActionResult MyProjects()
         {
-            // Get currently logged in user ID
             var userId = User.Identity.GetUserId();
             ApplicationUser user = db.Users.Where(x => x.Id == userId).SingleOrDefault();
             MyProjectViewModel viewModel = new MyProjectViewModel();
             viewModel.projects = user.projects.ToList();
+            viewModel.currentUser = user;
             return View(viewModel);
         }
 
@@ -141,6 +140,7 @@ namespace eleven.Controllers
             Project project = new Project();
             return View(project);
         }
+
         [Authorize]
         [HttpPost]
         public ActionResult NewProject(Project project)
@@ -176,15 +176,15 @@ namespace eleven.Controllers
             return View("Error");
         }
 
-        // Code for tab option in my projects 
-        private List<SelectListItem> PopulateAvailableCategories()
+        [HttpPost]
+        public ActionResult RemoveProject(int id)
         {
-            List<SelectListItem> result = new List<SelectListItem>();
+            if (id > 0)
+            {
+                service.removePoject(id);
+            }
 
-            result.Add(new SelectListItem() { Value = "1", Text = "Projects created by me" });
-            result.Add(new SelectListItem() { Value = "2", Text = "Projects shared with me" });
-
-            return result;
+            return RedirectToAction("MyProjects");
         }
     }
 }

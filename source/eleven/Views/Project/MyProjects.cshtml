@@ -4,23 +4,61 @@
     ViewBag.Title = "MyProjects";
 }
 
+@Styles.Render("~/Content/myprojects.css")
+
 <h2>My Projects</h2>
 <hr class="headline-bottom" align="left" width="30%" />
-
-<!--// Code for tab option in my projects-->
-<ul class="nav nav-pills">
-    <li role="presentation" class="@(ViewBag. == null ? "active" : "")">@Html.ActionLink("All projects","Index")</li>
-
-</ul>
+<div>
+    <button class="btn-primary btn-lg" id="allprojects">All Projects</button>
+    <button class="btn-primary btn-lg" id="myprojects">Projects created by me</button>
+    <button class="btn-primary btn-lg" id="sharedprojects">Projects shared with me</button>
+</div>
 
 <section class="row">
     @foreach (var itemj in Model.projects)
     {
-        <section class="col-sm-4">
-            <section class="well">
-                <h3>@Html.ActionLink(itemj.name, "Index", "Project", new { Id = itemj.Id }, null)</h3>
-                <p>Author: @itemj.author</p>
-            </section>
+        <section class="col-sm-4 @(@itemj.author == @Model.currentUser.Email ? "owner" : "shared")">
+                <section class="well">
+                    @{
+                        string str;
+                        if (itemj.name.Length > 21)
+                        {
+                            str = itemj.name.Substring(0, 18) + "...";
+                        }
+                        else
+                        {
+                            str = itemj.name;
+                        }
+                    }
+                    <h3>@Html.ActionLink(str, "Index", "Project", new { Id = itemj.Id }, null)</h3>
+                    <p>Author: @itemj.author</p>
+                    
+                </section>
+            <button type="submit" class="btn btn-danger removeproject" value="@itemj.Id">Remove</button>
         </section>
     }
 </section>
+
+<div class="popup">
+    <h3>Cake or death?</h3>
+    
+    <section class="form-group col-lg-offset-4">
+        <section class="col-lg-3">
+            <button id="cake" class="btn btn-primary">Cake</button>
+        </section>
+        <section class="col-lg-3">
+            @using (Html.BeginForm("RemoveProject", "Project", FormMethod.Post))
+            {
+                <input type="hidden" id="death" value="" name="id" />
+                <button type="submit" class="btn btn-danger">Death</button>
+            }
+        </section>
+    </section>
+    <span class="popup-btn-close">close</span>
+</div>
+
+@section scripts
+    {
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/Scripts/myprojects.js")
+    }

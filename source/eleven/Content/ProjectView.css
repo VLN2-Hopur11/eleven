@@ -1,8 +1,12 @@
 ﻿/*Overriding bootstrap*/
-html, body, #fullheight {
-    height: 100%;
-    padding-bottom: 0px;
+#rightsidebar {
+    overflow: hidden;
+    margin-bottom: -5000px;
+    padding-bottom: 5000px;
+    padding-left: 10px;
+    background-color: #2D3034;
 }
+
 .body-content{
     height: 100%;
     padding-right: 0px;
@@ -18,6 +22,7 @@ html, body, #fullheight {
  width:auto;
  }
 }
+
 @media (min-width: 992px) {
  .container {
  width:auto;
@@ -26,7 +31,6 @@ html, body, #fullheight {
 .navbar-fixed-left + .container{
     padding-left: 10px;
 }
-
 
 /*The Project Wrapper*/
 .projectViewWrapper{
@@ -59,14 +63,6 @@ html, body, #fullheight {
 
 
 /*Styling CSS*/
-.navbar-fixed-right > p{
-    text-align: center;
-}
-/*Þyrfti aðeins að stússast meira í þessu CSS-i*/
-.button{
-    color: #FFFFFF;
-    background-color: #2D3034;
-}
 .input{
     color: #2D3034;
     background-color: #FFFFFF;
@@ -87,6 +83,16 @@ ul , li {
   margin: 0;
   padding:0;
 }
-.file{
-     padding-left:20px;
+
+.sideMenu{
+    margin-left: -320px;
+    margin-top: -34px;
+    position: absolute;
+    background-color: #2D3034;
+    width: 310px;
+    padding-left: 10px;
+}
+
+.toolbar {
+    margin-bottom: 20px;
 }
