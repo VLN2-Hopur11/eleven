@@ -18,6 +18,15 @@ namespace eleven.Controllers
         [Authorize]
         public ActionResult Index(int id)
         {
+            List<SelectListItem> listItem = new List<SelectListItem>();
+            listItem.Add(new SelectListItem() { Value = "html", Text = "html" });
+            listItem.Add(new SelectListItem() { Value = "js", Text = "js" });
+            listItem.Add(new SelectListItem() { Value = "json", Text = "json" });
+            listItem.Add(new SelectListItem() { Value = "php", Text = "php" });
+            listItem.Add(new SelectListItem() { Value = "xml", Text = "xml" });
+            ViewBag.DropDownValues = new SelectList(listItem, "Text", "Value");
+
+
             if (id == 0)
             {
                 return View("Error");
