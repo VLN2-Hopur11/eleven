@@ -42,12 +42,58 @@ namespace eleven.Tests.Services
             // Arrange: const string user = "dabs";
             string newName = "NewProjectName";
             // Undirbua sjalfa profunina, bua til test gogn
-            // var service = new UberService(); 
-            //var service = new ProjectService();
+          
+            // Act: var result = service.GetFriendsForUser(user);
+            // adeins ein lina, keyra skipunina
+            var result = _service.changeProjectName(1, newName);
+
+            // Assert:  Assert.AreEqual(2, result.Count);
+            // Er svarid thad sem vid vildum fa, urdu einhver ahrif
+            Assert.IsTrue(result);
+        }
+        /*
+        [TestMethod]
+        public void TestchangeProjectName()
+        {
+            // Arrange: making the test data
+            string newName = "MeetStreet";
+            // Undirbua sjalfa profunina, bua til test gogn
+
+            // Act: var result = service.GetFriendsForUser(user);
+            // adeins ein lina, keyra skipunina
+            var result = _service.changeProjectName(2, newName);
+
+            // Assert:  Assert.AreEqual(2, result.Count);
+            // Er svarid thad sem vid vildum fa, urdu einhver ahrif
+            Assert.Equals(, newName);
+        }*/
+
+        [TestMethod]
+        public void TestchangeProjectNameToEmpty()
+        {
+            // Arrange: const string user = "dabs";
+            string newName = "";
+            // Undirbua sjalfa profunina, bua til test gogn
 
             // Act: var result = service.GetFriendsForUser(user);
             // adeins ein lina, keyra skipunina
             var result = _service.changeProjectName(1, newName);
+
+            // Assert:  Assert.AreEqual(2, result.Count);
+            // Er svarid thad sem vid vildum fa, urdu einhver ahrif
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void TestRemoveProject()
+        {
+            // Arrange: const string user = "dabs";
+            //string newName = "";
+            // Undirbua sjalfa profunina, bua til test gogn
+
+            // Act: var result = service.GetFriendsForUser(user);
+            // adeins ein lina, keyra skipunina
+            var result = _service.removePoject(2);
 
             // Assert:  Assert.AreEqual(2, result.Count);
             // Er svarid thad sem vid vildum fa, urdu einhver ahrif
