@@ -5,7 +5,7 @@ This project is a programming enviroment with optional cooperation on the web. I
  
 # Operating Manual for new team members
 Necessary equipment:
-* Microsoft Visual Studio 
+* Microsoft Visual Studio 2015 (maybe it works on older versions)
 
 * Account at https://github.com/
 * Project location: https://github.com/VLN2-Hopur11/eleven
