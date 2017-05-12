@@ -39,7 +39,7 @@ namespace eleven.Tests.Controllers
             {
                 Id = 1,
                 name = "FileForTest",
-                type = "html",
+                fileType = "html",
             };
             mockDb.files.Add(f1);
 
@@ -47,7 +47,7 @@ namespace eleven.Tests.Controllers
             {
                 Id = 2,
                 name = "FileToTest",
-                type = "html",
+                fileType = "html",
                 content = "Here is some fun text.", 
             };
             mockDb.files.Add(f1);

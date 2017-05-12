@@ -103,7 +103,7 @@ namespace eleven.Service
             File newFile = new File();
             newFile.name = newFilename;
             newFile.project = project;
-            newFile.type = type;
+            newFile.fileType = type;
             db.files.Add(newFile);
             try
             {

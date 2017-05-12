@@ -91,9 +91,9 @@ namespace eleven.Controllers
             {
                 File file = db.files.Where(x => x.Id == changedModel.activeFile.Id).SingleOrDefault();
                 file.content = changedModel.activeFile.content;
-                if (changedModel.activeFile.type != null)
+                if (changedModel.activeFile.fileType != null)
                 {
-                    file.type = changedModel.activeFile.type;
+                    file.fileType = changedModel.activeFile.fileType;
                 }
             }
 

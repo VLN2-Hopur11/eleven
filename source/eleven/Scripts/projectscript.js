@@ -105,7 +105,3 @@ $('#mode').change(function () {
         editor.getSession().setMode("ace/mode/mysql");
     }
 });
-
-$("#editorform").submit(function () {
-    
-})
