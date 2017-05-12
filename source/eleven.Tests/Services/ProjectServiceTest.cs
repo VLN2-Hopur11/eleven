@@ -33,7 +33,7 @@ namespace eleven.Tests.Services
             };
             mockDb.projects.Add(p2);
 
-            _service = new ProjectService();
+            _service = new ProjectService(mockDb);
         }
 
         [TestMethod]
