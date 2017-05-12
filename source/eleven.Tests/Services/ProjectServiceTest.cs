@@ -92,10 +92,23 @@ namespace eleven.Tests.Services
         public void TestRemoveProjectFalse()
         {
             // Arrange: 
+            int projectId = 0;
             // Act: var result = service.GetFriendsForUser(user);
-            var result = _service.removePoject(0);
+            var result = _service.removePoject(projectId);
 
             // Assert:  Assert.AreEqual(2, result.Count);
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void TestRemoveProjectOutOfRange()
+        {
+            // Arrange:
+            int projectIdOutOfRange = 10; 
+            // Act: var result = service.GetFriendsForUser(user);
+            var result = _service.removePoject(projectIdOutOfRange);
+
+            // Assert:
             Assert.IsFalse(result);
         }
     }
