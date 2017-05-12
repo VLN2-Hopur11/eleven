@@ -4,6 +4,8 @@
     ViewBag.Title = "NewProject";
 }
 
+@Styles.Render("~/Content/Site.css")
+
 <h2>New Project</h2>
 <hr class="headline-bottom" align="left" width="30%" />
 
@@ -25,7 +27,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "MyProjects", null, new { @class = "actionLinkButton"})
+    @Html.ActionLink("Back to List", "MyProjects", null, new { @class = "btn btn-primary"})
 </div>
 
 @section Scripts {
