@@ -5,6 +5,7 @@ using eleven.Service;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -90,9 +91,21 @@ namespace eleven.Controllers
             {
                 File file = db.files.Where(x => x.Id == changedModel.activeFile.Id).SingleOrDefault();
                 file.content = changedModel.activeFile.content;
+                if (changedModel.activeFile.type != null)
+                {
+                    file.type = changedModel.activeFile.type;
+                }
             }
 
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch(DbEntityValidationException)
+            {
+                return View("Error");
+            }
+            
 
             return RedirectToAction("Index", new { id = changedModel.project.Id });
         }

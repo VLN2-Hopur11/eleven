@@ -106,3 +106,6 @@ $('#mode').change(function () {
     }
 });
 
+$("#editorform").submit(function () {
+    
+})
