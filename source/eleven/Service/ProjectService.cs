@@ -2,6 +2,7 @@
 using eleven.Models.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 
 namespace eleven.Service
@@ -52,7 +53,14 @@ namespace eleven.Service
                 newProject.author = owner.UserName;
                 newProject.users.Add(owner);
                 db.projects.Add(newProject);
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (DbEntityValidationException)
+                {
+                    return 0;
+                }
 
                 return newProject.Id;
             }
@@ -62,7 +70,14 @@ namespace eleven.Service
         public bool removePoject(int id)
         {
             Project project = db.projects.Remove(db.projects.Where(x => x.Id == id).FirstOrDefault());
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException)
+            {
+                return false;
+            }
 
             if (db.projects.Any(x => x.Id == id) || project == null)
             {
@@ -93,7 +108,14 @@ namespace eleven.Service
             newFile.project = project;
             newFile.type = type;
             db.files.Add(newFile);
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException)
+            {
+                return;
+            }
             project.activeFileId = newFile.Id;
         }
 
@@ -101,7 +123,14 @@ namespace eleven.Service
         {
             Project project = db.projects.Where(x => x.Id == projectId).SingleOrDefault();
             project.activeFileId = fileId;
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException)
+            {
+                return;
+            }
         }
 
         public void addFolder(string newFoldername, int projectId)
@@ -111,7 +140,14 @@ namespace eleven.Service
             newFolder.name = newFoldername;
             newFolder.project = project;
             db.folders.Add(newFolder);
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException)
+            {
+                return;
+            }
         }
 
         public bool fileNameExists(string filename, int projectId)
@@ -148,7 +184,14 @@ namespace eleven.Service
             try
             {
                 user.projects.Add(project);
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (DbEntityValidationException)
+                {
+                    return false;
+                }
             }
             catch (NotSupportedException)
             {
