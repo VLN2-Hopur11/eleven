@@ -55,13 +55,13 @@ namespace eleven.Tests.Services
         [TestMethod]
         public void TestchangeProjectName()
         {
-            // Arrange: const string user = "dabs";
+            // Arrange: 
             string newName = "NewProjectName";
 
-            // Act: var result = service.GetFriendsForUser(user);
+            // Act:
             var result = _service.changeProjectName(1, newName);
 
-            // Assert:  Assert.AreEqual(2, result.Count);
+            // Assert: 
             Assert.IsTrue(result);
         }
 
@@ -74,7 +74,7 @@ namespace eleven.Tests.Services
             // Act: Only one line calling the function
             var result = _service.changeProjectName(0, newName);
 
-            // Assert:  Assert.AreEqual(2, result.Count);
+            // Assert:  
             Assert.IsFalse(result);
         }
 
@@ -82,10 +82,10 @@ namespace eleven.Tests.Services
         public void TestRemoveProject()
         {
             // Arrange: 
-            // Act: var result = service.GetFriendsForUser(user);
+            // Act: 
             var result = _service.removePoject(2);
 
-            // Assert:  Assert.AreEqual(2, result.Count);
+            // Assert:  
             Assert.IsTrue(result);
         }
         [TestMethod]
@@ -93,10 +93,10 @@ namespace eleven.Tests.Services
         {
             // Arrange: 
             int projectId = 0;
-            // Act: var result = service.GetFriendsForUser(user);
+            // Act: 
             var result = _service.removePoject(projectId);
 
-            // Assert:  Assert.AreEqual(2, result.Count);
+            // Assert: 
             Assert.IsFalse(result);
         }
 
@@ -105,7 +105,7 @@ namespace eleven.Tests.Services
         {
             // Arrange:
             int projectIdOutOfRange = 10; 
-            // Act: var result = service.GetFriendsForUser(user);
+            // Act: 
             var result = _service.removePoject(projectIdOutOfRange);
 
             // Assert:
