@@ -96,3 +96,55 @@ ul , li {
 .toolbar {
     margin-bottom: 20px;
 }
+
+/*Sidebar Treeview*/
+input[type="checkbox"] {
+  position: absolute;
+  left: -9999px;
+}
+
+.sideBarTree > label, a{
+  display: block;
+  float: left;
+  clear: left;
+  position: relative;
+  margin-left: 25px;
+  padding: 5px;
+  border-radius: 5px;
+  color: #8EBC98;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.sideBarTree > label::before, a::before {
+  display: block;
+  position: absolute;
+  top: 6px;
+  left: -25px;
+}
+
+.sideBarTree > label::before {
+  /* closed folder */
+}
+
+.sideBarTree > input:checked + label::before {
+  /* open folder */
+}
+
+.sideBarTree > a::before {
+  /* Á undan subs */
+}
+
+.sub {
+  display: none;
+  float: left;
+  margin-left: 20px;
+}
+
+input:checked ~ .sub {
+  display: block;
+}
+
+.emptyFolder{
+      color: red;
+}

@@ -33,6 +33,22 @@ namespace eleven.Tests.Services
             };
             mockDb.projects.Add(p2);
 
+            var f1 = new File
+            {
+                Id = 1,
+                name = "FileForTest",
+                type = "html",
+            };
+            mockDb.files.Add(f1);
+
+            var f2 = new File
+            {
+                Id = 2,
+                name = "FileToTest",
+                type = "html",
+            };
+            mockDb.files.Add(f1);
+
             _service = new ProjectService(mockDb);
         }
 
@@ -41,17 +57,46 @@ namespace eleven.Tests.Services
         {
             // Arrange: const string user = "dabs";
             string newName = "NewProjectName";
-            // Undirbua sjalfa profunina, bua til test gogn
-            // var service = new UberService(); 
-            //var service = new ProjectService();
 
             // Act: var result = service.GetFriendsForUser(user);
-            // adeins ein lina, keyra skipunina
             var result = _service.changeProjectName(1, newName);
 
             // Assert:  Assert.AreEqual(2, result.Count);
-            // Er svarid thad sem vid vildum fa, urdu einhver ahrif
             Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void TestchangeProjectNameFalse()
+        {
+            // Arrange: making the test data
+            string newName = "MeetStreet";
+
+            // Act: Only one line calling the function
+            var result = _service.changeProjectName(0, newName);
+
+            // Assert:  Assert.AreEqual(2, result.Count);
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void TestRemoveProject()
+        {
+            // Arrange: 
+            // Act: var result = service.GetFriendsForUser(user);
+            var result = _service.removePoject(2);
+
+            // Assert:  Assert.AreEqual(2, result.Count);
+            Assert.IsTrue(result);
+        }
+        [TestMethod]
+        public void TestRemoveProjectFalse()
+        {
+            // Arrange: 
+            // Act: var result = service.GetFriendsForUser(user);
+            var result = _service.removePoject(0);
+
+            // Assert:  Assert.AreEqual(2, result.Count);
+            Assert.IsFalse(result);
         }
     }
 }

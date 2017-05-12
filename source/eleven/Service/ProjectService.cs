@@ -30,8 +30,6 @@ namespace eleven.Service
         //changes project name if requested
         public bool changeProjectName(int projectID, string newName)
         {
-            //db.FriendConnections, from fc where fc.User1 == userName
-
             Project id = db.projects.SingleOrDefault(x => x.Id == projectID);
             if (id != null)
             {
@@ -83,12 +81,11 @@ namespace eleven.Service
             {
                 return false;
             }
-
             return true;
         }
 
         // changes file name if requiested by user
-        public bool changeFileName( int field, string newName)
+        public bool changeFileName(int field, string newName)
         {
             File fileId = db.files.SingleOrDefault(x => x.Id == field);
             if(fileId == null)
@@ -158,7 +155,6 @@ namespace eleven.Service
             {
                 return true;
             }
-
             return false;
         }
 
@@ -170,10 +166,9 @@ namespace eleven.Service
             {
                 return true;
             }
-
             return false;
         }
-
+        
         //only owner can invite a user to the project and choose if he 
         //wants another owner or a simple user
         public bool inviteUser(string email, int projectId)
