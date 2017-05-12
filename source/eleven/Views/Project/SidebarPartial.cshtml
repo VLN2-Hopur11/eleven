@@ -30,55 +30,46 @@
                 <button type="submit" class="btn btn-primary">Create Folder</button>
             }
         </section>
-
-        @*Ég er að testa filetree hérna*@
-        @*
-    <ul id="explorer">
-        @foreach (var item in Model.project.files)
-        {
-            <li>
-                @Html.ActionLink(item.name, "setActiveFile", "Project", new { fileId = item.Id, projectId = Model.project.Id }, null)
-            </li>
-        }
-    </ul>
-        *@
-        @*
-    <div>
-        @if (Model.folders != null)
-        {
-            foreach (var item in Model.folders)
+        
+        <div class="sidebarTree">
+            @if (Model.folders != null)
             {
-                <input id="n-0" type="checkbox">
-                <label for="n-0">@item.name</label>
-                <div class="sub">
-                    @foreach (var subitem in Model.files.Where(x => x.folder.Id == item.Id))
+                foreach (var item in Model.folders)
+                {
+                    if (item.files != null)
                     {
-                        @Html.ActionLink(subitem.name, "setActiveFile", "Project", new { fileId = subitem.Id, projectId = Model.project.Id }, null)
+                        <input id="@item.Id" type="checkbox">
+                        <label for="@item.Id">@item.name</label>
+                        <div class="sub">
+                            @foreach (var subitem in item.files)
+                            {
+                                if (subitem != null)
+                                {
+                                    @Html.ActionLink(subitem.name, "setActiveFile", "Project", new { fileId = subitem.Id, projectId = Model.project.Id }, null)
+                                }
+                            }
+                        </div>
                     }
-                </div>
+                    else
+                    {
+                        <input id="@item.Id" type="checkbox">
+                        <label for="@item.Id">@item.name</label>
+                    }
+                }
+                foreach (var indivitem in Model.files.Where(x => x.folder == null))
+                {
+                    @Html.ActionLink(indivitem.name, "setActiveFile", "Project", new { fileId = indivitem.Id, projectId = Model.project.Id }, null)
+                }
             }
-            foreach (var indivitem in Model.files.Where(x => x.folder == null))
+            else
             {
-                @Html.ActionLink(indivitem.name, "setActiveFile", "Project", new { fileId = indivitem.Id, projectId = Model.project.Id }, null)
+                foreach (var indivitem in Model.files.Where(x => x.folder == null))
+                {
+                    @Html.ActionLink(indivitem.name, "setActiveFile", "Project", new { fileId = indivitem.Id, projectId = Model.project.Id }, null)
+                }
             }
-            ///
-            @foreach (var subitem in Model.folders.Where(x => x.files == null))
-            {
-                @Html.ActionLink(subitem.name, "setActiveFile", "Project", new { fileId = subitem.Id, projectId = Model.project.Id }, null)
-            }
-            ///
-        }
-        else
-        {
-            foreach (var indivitem in Model.files.Where(x => x.folder == null))
-            {
-                @Html.ActionLink(indivitem.name, "setActiveFile", "Project", new { fileId = indivitem.Id, projectId = Model.project.Id }, null)
-            }
-        }
-
-    </div>
-        *@
-        @*filetree testing endar hérna*@
+        </div>
+        
     </div>
 
     <ul class="nav navbar-nav">
