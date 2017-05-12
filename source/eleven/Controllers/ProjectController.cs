@@ -13,7 +13,7 @@ namespace eleven.Controllers
     public class ProjectController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        private ProjectService service = new ProjectService();
+        private ProjectService service = new ProjectService(null);
 
         [Authorize]
         public ActionResult Index(int id)
