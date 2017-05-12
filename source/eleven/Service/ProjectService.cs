@@ -55,7 +55,7 @@ namespace eleven.Service
             Project project = db.projects.Remove(db.projects.Where(x => x.Id == id).FirstOrDefault());
             db.SaveChanges();
 
-            if (db.projects.Any(x => x.Id == id))
+            if (db.projects.Any(x => x.Id == id) || project == null)
             {
                 return false;
             }
