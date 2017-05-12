@@ -15,6 +15,7 @@ namespace eleven.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private ProjectService service = new ProjectService(null);
+        private FileService fileService = new FileService(null);
 
         [Authorize]
         public ActionResult Index(int id)
@@ -80,34 +81,12 @@ namespace eleven.Controllers
         [ValidateInput(false)]
         public ActionResult Index(ProjectViewModel changedModel)
         {
-            if (changedModel.activeFile.Id == 0)
+            if(fileService.saveCode(changedModel))
             {
-                Project project = db.projects.Where(x => x.Id == changedModel.project.Id).SingleOrDefault();
-                changedModel.activeFile.project = project;
-
-                db.files.Add(changedModel.activeFile);
-            }
-            else
-            {
-                File file = db.files.Where(x => x.Id == changedModel.activeFile.Id).SingleOrDefault();
-                file.content = changedModel.activeFile.content;
-                if (changedModel.activeFile.fileType != null)
-                {
-                    file.fileType = changedModel.activeFile.fileType;
-                }
+                return RedirectToAction("Index", new { id = changedModel.project.Id });
             }
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch(DbEntityValidationException)
-            {
-                return View("Error");
-            }
-            
-
-            return RedirectToAction("Index", new { id = changedModel.project.Id });
+            return View("Error");
         }
 
         [Authorize]
@@ -131,14 +110,14 @@ namespace eleven.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult NewFile(string newFilename, string type, int projectId)
+        public ActionResult NewFile(string newFilename, string fileType, int projectId)
         {
             if (service.fileNameExists(newFilename, projectId))
             {
                 return View("Error");
             }
 
-            service.addFile(newFilename, type, projectId);
+            service.addFile(newFilename, fileType, projectId);
 
             return RedirectToAction("Index", new { id = projectId });
         }

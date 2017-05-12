@@ -97,13 +97,13 @@ namespace eleven.Service
         }
         // adds a new file to existing project, file cannot have the same name as
         // another file 
-        public void addFile(string newFilename, string type, int projectId)
+        public void addFile(string newFilename, string fileType, int projectId)
         {
             Project project = db.projects.Where(x => x.Id == projectId).SingleOrDefault();
             File newFile = new File();
             newFile.name = newFilename;
             newFile.project = project;
-            newFile.fileType = type;
+            newFile.fileType = fileType;
             db.files.Add(newFile);
             try
             {

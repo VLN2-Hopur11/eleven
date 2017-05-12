@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -14,8 +15,10 @@ namespace eleven.Models.Entities
         public string name { get; set; }
         public string fileType { get; set; }
         public string content { get; set; }
-        [Required]
         public virtual Project project { get; set; }
+        [ForeignKey("project")]
+        [Required]
+        public int ProjectId { get; set; }
         public virtual Folder folder { get; set; }
     }
 }

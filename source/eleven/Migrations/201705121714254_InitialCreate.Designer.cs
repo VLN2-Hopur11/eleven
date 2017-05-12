@@ -13,12 +13,12 @@ namespace eleven.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201705081437441_InitialCreate"; }
+            get { return "201705121714254_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source
         {
-            get { return null; }
+            get { return Resources.GetString("Source"); }
         }
         
         string IMigrationMetadata.Target
