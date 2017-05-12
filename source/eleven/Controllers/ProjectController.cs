@@ -92,7 +92,7 @@ namespace eleven.Controllers
         [Authorize]
         public ActionResult setActiveFile(int fileId, int projectId)
         {
-            service.setActiveFile(fileId, projectId);
+            fileService.setActiveFile(fileId, projectId);
 
             return RedirectToAction("Index", new { id = projectId });
         }
@@ -112,12 +112,12 @@ namespace eleven.Controllers
         [HttpPost]
         public ActionResult NewFile(string newFilename, string fileType, int projectId)
         {
-            if (service.fileNameExists(newFilename, projectId))
+            if (fileService.fileNameExists(newFilename, projectId))
             {
                 return View("Error");
             }
 
-            service.addFile(newFilename, fileType, projectId);
+            fileService.addFile(newFilename, fileType, projectId);
 
             return RedirectToAction("Index", new { id = projectId });
         }
@@ -126,12 +126,12 @@ namespace eleven.Controllers
         [HttpPost]
         public ActionResult NewFolder(string newFoldername, int projectId)
         {
-            if (service.folderNameExists(newFoldername, projectId))
+            if (fileService.folderNameExists(newFoldername, projectId))
             {
                 return View("Error");
             }
 
-            service.addFolder(newFoldername, projectId);
+            fileService.addFolder(newFoldername, projectId);
 
             return RedirectToAction("Index", new { id = projectId });
         }
