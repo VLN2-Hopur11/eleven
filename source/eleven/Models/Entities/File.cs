@@ -12,7 +12,7 @@ namespace eleven.Models.Entities
         public int Id { get; set; }
         [Required]
         public string name { get; set; }
-        public string type { get; set; }
+        public string fileType { get; set; }
         public string content { get; set; }
         [Required]
         public virtual Project project { get; set; }
