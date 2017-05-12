@@ -26,19 +26,27 @@ namespace eleven.Models
     }
 
     // New interface, fake one for testing, should look like the one beeneath
-    public interface IAppMyDataContext
+    public interface IAppDataContext
     {
+        //IDbSet<ApplicationUser> users { get; set; }
+
         IDbSet<Project> projects { get; set; }
         IDbSet<File> files { get; set; }
         IDbSet<Folder> folders { get; set; }
         IDbSet<Highlights> highlights { get; set; }
         IDbSet<PickedProjects> pickedprojects { get; set; }
+        IDbSet<ApplicationUser> Users { get; set; }
+
         int SaveChanges();
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IAppMyDataContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IAppDataContext
     {
+        //public DbSet<FriendConnection> FriendConnections { get; set; }
+        //public IDbSet<ApplicationUser> Users { get; set; }
+
         public IDbSet<Project> projects { get; set; }
+        
         public IDbSet<File> files { get; set; }
         public IDbSet<Folder> folders { get; set; }
         public IDbSet<Highlights> highlights { get; set; }

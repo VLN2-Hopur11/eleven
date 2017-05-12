@@ -14,7 +14,7 @@ namespace eleven.Models.Entities
         public string name { get; set; }
         public string author { get; set; }
         public int activeFileId { get; set; }
-        public virtual ICollection<File> files { get; set; }
+        public virtual ICollection<File> files { get; set; } 
         public virtual ICollection<Folder> folders { get; set; }
         public virtual ICollection<ApplicationUser> users { get; set; }
     }

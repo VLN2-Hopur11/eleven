@@ -11,23 +11,26 @@ namespace eleven.Service
 {
     public class ProjectService
     {
-        private ApplicationDbContext db;
+        //private ApplicationDbContext db;
 
-        private readonly IAppMyDataContext _db; //For testing use
-        public ProjectService(IAppMyDataContext context) //For testing use
+        private readonly IAppDataContext db; //For testing use
+
+        public ProjectService(IAppDataContext context) //For testing use
         {
-            _db = context ?? new ApplicationDbContext();
+            db = context ?? new ApplicationDbContext();
         }
 
         public ProjectService()
         {
-            db = new ApplicationDbContext();
-            db.Configuration.LazyLoadingEnabled = true;
-            db.Configuration.ProxyCreationEnabled = true;
+            //db = new ApplicationDbContext();
+            //db.Configuration.LazyLoadingEnabled = true;
+            //db.Configuration.ProxyCreationEnabled = true;
         }
         //changes project name if requested
         public bool changeProjectName(int projectID, string newName)
         {
+            //db.FriendConnections, from fc where fc.User1 == userName
+
             Project id = db.projects.SingleOrDefault(x => x.Id == projectID);
             if (id != null)
             {
