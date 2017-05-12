@@ -73,7 +73,7 @@ namespace eleven.Service
         }
 
         // changes file name if requiested by user
-        public bool changeFileName( int field, string newName)
+        public bool changeFileName(int field, string newName)
         {
             File fileId = db.files.SingleOrDefault(x => x.Id == field);
             if(fileId == null)
