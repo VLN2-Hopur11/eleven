@@ -4,6 +4,8 @@
     ViewBag.Title = "MyProjects";
 }
 
+@Styles.Render("~/Content/myprojects.css")
+
 <h2>My Projects</h2>
 <hr class="headline-bottom" align="left" width="30%" />
 <div>
@@ -21,7 +23,7 @@
                 <section class="well">
                     @{
                         string str;
-                        if (itemj.name.Length > 12)
+                        if (itemj.name.Length > 21)
                         {
                             str = itemj.name.Substring(0, 18) + "...";
                         }
@@ -32,10 +34,30 @@
                     }
                     <h3>@Html.ActionLink(str, "Index", "Project", new { Id = itemj.Id }, null)</h3>
                     <p>Author: @itemj.author</p>
+                    
                 </section>
+            <button type="submit" class="btn btn-danger removeproject" value="@itemj.Id">Remove</button>
         </section>
     }
 </section>
+
+<div class="popup">
+    <h3>Cake or death?</h3>
+    
+    <section class="form-group col-lg-offset-4">
+        <section class="col-lg-3">
+            <button id="cake" class="btn btn-primary">Cake</button>
+        </section>
+        <section class="col-lg-3">
+            @using (Html.BeginForm("RemoveProject", "Project", FormMethod.Post))
+            {
+                <input type="hidden" id="death" value="" name="id" />
+                <button type="submit" class="btn btn-danger">Death</button>
+            }
+        </section>
+    </section>
+    <span class="popup-btn-close">close</span>
+</div>
 
 @section scripts
     {

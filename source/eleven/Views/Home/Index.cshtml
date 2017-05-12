@@ -12,13 +12,13 @@
         <div class="col align-self-center">
             <section class="col-sm-4">
                 <section class="well">
-                    <h4>
+                    <h4 style="font-weight: bold">
                         @Html.DisplayFor(modelItem => item.title)
                     </h4>
                     <p>
                         @Html.DisplayFor(modelItem => item.content)
                     </p>
-                    <a class="btn btn-blog pull-right marginBottom10" href="http://mbl.is">READ MORE</a>
+                    <p style="bottom:0; position: absolute; margin-bottom: 30px;">Written by:<span>@Html.DisplayFor(modelitem => item.author)</span></p>
                 </section>
             </section>
         </div>
@@ -39,7 +39,6 @@
                     <p>
                         @Html.DisplayFor(modelItem => item.content)
                     </p>
-                    <a class="btn-blog" href="http://mbl.is">READ MORE</a>
                 </section>
             </section>
         </div>

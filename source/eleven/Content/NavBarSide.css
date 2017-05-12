@@ -26,3 +26,12 @@
 .navbar-nav{
     margin:0px 0px 0px 0px; 
 }
+
+/*Left dropdown side test*/
+.leftMenu {
+    position:absolute;
+    float:left;
+}
+.leftMenuItems{
+    position:relative;
+}

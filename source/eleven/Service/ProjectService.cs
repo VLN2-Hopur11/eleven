@@ -50,11 +50,12 @@ namespace eleven.Service
             return 0;
         }
         //remove project by removing id
-        public bool removePojectId(int id)
+        public bool removePoject(int id)
         {
             Project project = db.projects.Remove(db.projects.Where(x => x.Id == id).FirstOrDefault());
+            db.SaveChanges();
 
-            if (db.projects.Contains(project))
+            if (db.projects.Any(x => x.Id == id))
             {
                 return false;
             }
